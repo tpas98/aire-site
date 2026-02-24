@@ -10,11 +10,10 @@ const ingredients = [
 
 export default function Ingredients() {
   return (
-    <section id="ingredients" className="bg-navy py-32 px-16 relative overflow-hidden">
+    <section id="ingredients" className="bg-navy py-24 px-6 md:px-16 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none z-0"
         style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")", backgroundRepeat: 'repeat', backgroundSize: '128px' }} />
-      <div className="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full bg-sky-deep/5 blur-3xl pointer-events-none" />
-      <FadeUp className="text-center max-w-[560px] mx-auto mb-16 relative z-10">
+      <FadeUp className="text-center max-w-[560px] mx-auto mb-12 relative z-10">
         <div className="flex items-center justify-center gap-3 mb-5">
           <span className="block w-5 h-px bg-sky-deep" />
           <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-sky-deep">The Formula</span>
@@ -27,10 +26,10 @@ export default function Ingredients() {
           Every ingredient chosen for a reason. Every dose calibrated to actually work.
         </p>
       </FadeUp>
-      <div className="grid grid-cols-5 gap-4 max-w-[1200px] mx-auto relative z-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 max-w-[1200px] mx-auto relative z-10">
         {ingredients.map(({ num, name, desc, badge }, i) => (
           <FadeUp key={num} delay={i * 0.08}>
-            <div className="card-dark group bg-white/[0.07] border border-white/[0.12] rounded-[18px] p-7 text-center h-full flex flex-col">
+            <div className="card-dark group bg-white/[0.07] border border-white/[0.12] rounded-[18px] p-6 text-center h-full flex flex-col">
               <div className="text-[0.62rem] text-sky-deep tracking-[0.15em] font-semibold mb-3">{num}</div>
               <div className="font-serif text-[1.05rem] text-white mb-3 leading-snug">{name}</div>
               <div className="text-[0.75rem] text-white/75 leading-relaxed flex-1">{desc}</div>

@@ -3,8 +3,8 @@ import FadeUp from './FadeUp'
 
 export default function About() {
   return (
-    <section id="science" className="bg-off-white py-32 px-20">
-      <div className="max-w-[1200px] mx-auto grid grid-cols-2 gap-24 items-center">
+    <section id="science" className="bg-off-white py-24 px-6 md:px-20">
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
         <FadeUp>
           <div className="flex items-center gap-3 mb-5">
             <span className="block w-5 h-px bg-accent" />
@@ -26,7 +26,7 @@ export default function About() {
         <FadeUp delay={0.15}>
           <div className="flex justify-center items-center">
             <Image src="/images/open-can.png" alt="Aire open tin with pouches" width={600} height={520}
-              className="w-full max-w-[480px] object-contain" />
+              className="w-full max-w-[380px] md:max-w-[480px] object-contain" />
           </div>
         </FadeUp>
       </div>
