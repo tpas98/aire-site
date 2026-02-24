@@ -62,7 +62,7 @@ export default function Hero() {
         <motion.div className="flex justify-center items-center" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
           <motion.div {...floatAnim}>
             <Image src="/images/three-cans.png" alt="Aire Flow Pouches 3-Pack" width={560} height={560}
-              className="w-full max-w-[520px] object-contain drop-shadow-[0_40px_80px_rgba(26,46,74,0.22)]"
+              className="w-full max-w-[520px] object-contain"
               style={{ mixBlendMode: 'multiply' }} priority />
           </motion.div>
         </motion.div>
