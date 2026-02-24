@@ -61,8 +61,8 @@ export default function Hero() {
         </div>
         <motion.div className="flex justify-center items-center" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
           <motion.div {...floatAnim}>
-            <Image src="/images/three-cans.png" alt="Aire Flow Pouches 3-Pack" width={560} height={560}
-              className="w-full max-w-[520px] object-contain"
+            <Image src="/images/three-cans.png" alt="Aire Flow Pouches 3-Pack" width={720} height={720}
+              className="w-full max-w-[680px] object-contain"
               priority />
           </motion.div>
         </motion.div>
