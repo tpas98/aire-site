@@ -20,17 +20,7 @@ export async function POST(req: NextRequest) {
           profile: {
             data: {
               type: 'profile',
-              attributes: {
-                email: email,
-                subscriptions: {
-                  email: {
-                    marketing: {
-                      consent: 'SUBSCRIBED',
-                      consented_at: new Date().toISOString(),
-                    },
-                  },
-                },
-              },
+              attributes: { email },
             },
           },
         },
@@ -46,11 +36,11 @@ export async function POST(req: NextRequest) {
     }),
   })
 
-  if (!response.ok) {
-    const errorText = await response.text()
-    console.error('Klaviyo error:', errorText)
-    return NextResponse.json({ error: errorText }, { status: 500 })
+  if (response.status === 202 || response.ok) {
+    return NextResponse.json({ success: true })
   }
 
-  return NextResponse.json({ success: true })
+  const errorText = await response.text()
+  console.error('Klaviyo error:', errorText)
+  return NextResponse.json({ error: errorText }, { status: 500 })
 }
