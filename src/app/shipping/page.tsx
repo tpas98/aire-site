@@ -27,7 +27,7 @@ export default function ShippingPage() {
             <p className="mb-4">We currently ship to all 50 U.S. states. International shipping is not available at this time.</p>
             <p className="mb-4"><strong className="text-navy">Processing time:</strong> Orders are processed within 1–2 business days after payment is confirmed. You&apos;ll receive a confirmation email with tracking information once your order ships.</p>
             <p className="mb-4"><strong className="text-navy">Delivery time:</strong> Standard shipping takes 5–7 business days from the date of shipment. Delivery times may vary depending on your location and carrier conditions.</p>
-            <p><strong className="text-navy">Shipping cost:</strong> We offer free standard shipping on all orders.</p>
+            <p><strong className="text-navy">Shipping cost:</strong> Shipping rates are calculated at checkout based on your location and order size.</p>
           </section>
 
           <section>
@@ -45,7 +45,7 @@ export default function ShippingPage() {
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Refunds</h2>
             <p className="mb-4">Once we receive your returned item, we&apos;ll inspect it and process your refund within 5–7 business days. Refunds are issued to the original payment method. Please allow an additional 3–5 business days for the refund to appear on your statement, depending on your bank or card issuer.</p>
-            <p>Original shipping costs are non-refundable unless the return is due to a defective or incorrect product.</p>
+            <p>Shipping costs are non-refundable unless the return is due to a defective or incorrect product.</p>
           </section>
 
           <section>
