@@ -2,19 +2,19 @@
 import FadeUp from './FadeUp'
 
 const mentalBalance = [
-  'Supports stress management',
-  'Distraction-free productivity',
-  'More present, meaningful days',
-  'Decompressing "me-time"',
-  'Relief from overstimulation',
+  'Quiets the noise when life gets loud',
+  'Lock into deep work without burning out',
+  'Show up fully for the moments that matter',
+  'Your daily reset, without the guilt',
+  'A breath of calm in an overstimulated world',
 ]
 
 const consumptionBalance = [
-  'Sub for nicotine, caffeine, nootropics',
-  'Avoid unnecessary overconsumption',
-  'Complements other pouches',
-  'Calmness to soothe cravings',
-  'No jitters or artificial burning',
+  'A smarter alternative to nicotine, caffeine, and harsh stimulants',
+  'Break the cycle without breaking your routine',
+  'Pairs seamlessly with your existing habits',
+  'Soothes cravings without feeding dependency',
+  'Zero burn. Zero crash. Just clean, grounded calm.',
 ]
 
 export default function Balance() {
