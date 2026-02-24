@@ -2,19 +2,17 @@
 import FadeUp from './FadeUp'
 
 const mentalBalance = [
-  'Quiets the noise when life gets loud',
-  'Lock into deep work without burning out',
-  'Show up fully for the moments that matter',
-  'Your daily reset, without the guilt',
-  'A breath of calm in an overstimulated world',
+  { title: 'Stress Relief', body: 'Quiets the noise when life gets loud' },
+  { title: 'Deep Work', body: 'Lock into flow without burning out' },
+  { title: 'Presence', body: 'Show up fully for the moments that matter' },
+  { title: 'Daily Reset', body: 'Your pocket-sized moment of calm, on demand' },
 ]
 
 const consumptionBalance = [
-  'A smarter alternative to nicotine, caffeine, and harsh stimulants',
-  'Break the cycle without breaking your routine',
-  'Pairs seamlessly with your existing habits',
-  'Soothes cravings without feeding dependency',
-  'Zero burn. Zero crash. Just clean, grounded calm.',
+  { title: 'Smarter Substitute', body: 'A clean alternative to nicotine, caffeine & harsh stimulants' },
+  { title: 'Craving Support', body: 'Soothes cravings without feeding dependency' },
+  { title: 'Habit Compatible', body: 'Pairs seamlessly with your existing routine' },
+  { title: 'Zero Compromise', body: 'No burn. No crash. No regrets.' },
 ]
 
 export default function Balance() {
@@ -31,42 +29,48 @@ export default function Balance() {
           </h2>
         </FadeUp>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Light Card */}
           <FadeUp delay={0.1}>
-            <div className="card-hover bg-white rounded-3xl p-8 md:p-10 h-full border border-sky-deep/10">
-              <div className="flex items-center gap-3 mb-7">
-                <div className="w-9 h-9 rounded-full bg-accent/10 flex items-center justify-center">
-                  <span className="text-accent text-[1rem]">✦</span>
-                </div>
-                <h3 className="font-serif text-[1.35rem] text-navy tracking-[-0.01em]">Mental Balance</h3>
-              </div>
-              <ul className="space-y-4">
-                {mentalBalance.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-[3px] w-4 h-4 rounded-full bg-accent/15 flex items-center justify-center flex-shrink-0">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent block" />
-                    </span>
-                    <span className="text-[0.9rem] text-navy-mid font-light leading-[1.6]">{item}</span>
+            <div className="card-hover bg-white rounded-3xl p-10 md:p-12 h-full border border-sky-deep/10">
+              <p className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-accent mb-3">Mental Balance</p>
+              <h3 className="font-serif text-[1.7rem] text-navy leading-[1.15] tracking-[-0.01em] mb-8">
+                Calm your mind.<br />
+                <em className="italic text-navy-mid">Sharpen your focus.</em>
+              </h3>
+              <ul className="flex flex-col">
+                {mentalBalance.map(({ title, body }, i) => (
+                  <li key={title} className={`flex items-start gap-4 py-5 ${i !== 0 ? 'border-t border-sky-deep/10' : ''}`}>
+                    <div className="w-7 h-7 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-accent text-[0.65rem]">✦</span>
+                    </div>
+                    <div>
+                      <p className="text-[0.88rem] font-medium text-navy mb-0.5">{title}</p>
+                      <p className="text-[0.88rem] text-navy-mid font-light leading-[1.65]">{body}</p>
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
           </FadeUp>
+          {/* Dark Card */}
           <FadeUp delay={0.2}>
-            <div className="card-hover bg-navy rounded-3xl p-8 md:p-10 h-full relative overflow-hidden">
-              <div className="absolute top-[-40px] right-[-40px] w-[180px] h-[180px] rounded-full bg-accent/10 blur-3xl pointer-events-none" />
-              <div className="flex items-center gap-3 mb-7">
-                <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
-                  <span className="text-sky-deep text-[1rem]">✦</span>
-                </div>
-                <h3 className="font-serif text-[1.35rem] text-white tracking-[-0.01em]">Consumption Balance</h3>
-              </div>
-              <ul className="space-y-4">
-                {consumptionBalance.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-[3px] w-4 h-4 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-deep block" />
-                    </span>
-                    <span className="text-[0.9rem] text-white/70 font-light leading-[1.6]">{item}</span>
+            <div className="card-hover bg-navy rounded-3xl p-10 md:p-12 h-full relative overflow-hidden">
+              <div className="absolute top-[-60px] right-[-60px] w-[220px] h-[220px] rounded-full bg-accent/8 blur-3xl pointer-events-none" />
+              <p className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-sky-deep mb-3">Consumption Balance</p>
+              <h3 className="font-serif text-[1.7rem] text-white leading-[1.15] tracking-[-0.01em] mb-8">
+                Break the cycle.<br />
+                <em className="italic text-white/50">Keep the ritual.</em>
+              </h3>
+              <ul className="flex flex-col">
+                {consumptionBalance.map(({ title, body }, i) => (
+                  <li key={title} className={`flex items-start gap-4 py-5 ${i !== 0 ? 'border-t border-white/[0.06]' : ''}`}>
+                    <div className="w-7 h-7 rounded-full bg-white/8 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-white/50 text-[0.65rem]">✦</span>
+                    </div>
+                    <div>
+                      <p className="text-[0.88rem] font-medium text-white mb-0.5">{title}</p>
+                      <p className="text-[0.88rem] text-white/60 font-light leading-[1.65]">{body}</p>
+                    </div>
                   </li>
                 ))}
               </ul>
