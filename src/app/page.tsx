@@ -6,6 +6,7 @@ import About from '@/components/About'
 import Ingredients from '@/components/Ingredients'
 import ProductFeature from '@/components/ProductFeature'
 import HowToUse from '@/components/HowToUse'
+import Balance from '@/components/Balance'
 import Testimonials from '@/components/Testimonials'
 import { CTA, Footer } from '@/components/CTAFooter'
 
@@ -20,6 +21,7 @@ export default function Home() {
       <Ingredients />
       <ProductFeature />
       <HowToUse />
+      <Balance />
       <Testimonials />
       <CTA />
       <Footer />
