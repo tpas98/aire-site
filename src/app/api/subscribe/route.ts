@@ -17,20 +17,28 @@ export async function POST(req: NextRequest) {
       data: {
         type: 'subscription',
         attributes: {
-          list_id: 'RSt8aA',
-          subscriptions: {
-            email: {
-              marketing: {
-                consent: 'SUBSCRIBED',
-              },
-            },
-          },
           profile: {
             data: {
               type: 'profile',
               attributes: {
                 email: email,
+                subscriptions: {
+                  email: {
+                    marketing: {
+                      consent: 'SUBSCRIBED',
+                      consented_at: new Date().toISOString(),
+                    },
+                  },
+                },
               },
+            },
+          },
+        },
+        relationships: {
+          list: {
+            data: {
+              type: 'list',
+              id: 'RSt8aA',
             },
           },
         },
