@@ -63,7 +63,7 @@ export default function Hero() {
           <motion.div {...floatAnim}>
             <Image src="/images/three-cans.png" alt="Aire Flow Pouches 3-Pack" width={560} height={560}
               className="w-full max-w-[520px] object-contain"
-              style={{ mixBlendMode: 'multiply' }} priority />
+              priority />
           </motion.div>
         </motion.div>
       </div>
