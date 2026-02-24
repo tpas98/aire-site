@@ -2,6 +2,8 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 
+const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
+
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: (delay = 0) => ({
@@ -42,7 +44,7 @@ export default function Hero() {
             The world's first lifestyle pouch built for calm focus — no nicotine, no caffeine, no compromise. Five science-backed ingredients. One pocket-sized moment of clarity.
           </motion.p>
           <motion.div className="flex items-center gap-4 flex-wrap" variants={fadeUp} initial="hidden" animate="visible" custom={0.3}>
-            <a href="#shop" className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
               Order Aire — $39.99
             </a>
             <a href="#ingredients" className="text-[0.8rem] font-medium text-navy-mid hover:text-accent transition-colors duration-200 flex items-center gap-1.5 group whitespace-nowrap">
