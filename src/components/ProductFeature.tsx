@@ -28,7 +28,7 @@ export default function ProductFeature() {
             <Image src="/images/lifestyle-open-tin.png" alt="Aire open tin lifestyle"
               width={500} height={500}
               className="w-full max-w-[420px] mx-auto object-contain drop-shadow-[0_20px_40px_rgba(26,46,74,0.10)]"
-              style={{ mixBlendMode: 'multiply' }} />
+              />
           </FadeUp>
           <FadeUp delay={0.15}>
             <div className="flex items-center gap-3 mb-5">
@@ -120,7 +120,7 @@ export default function ProductFeature() {
                   transition={{ duration: c.dur, repeat: Infinity, ease: 'easeInOut', delay: c.delay }}>
                   <Image src="/images/three-cans.png" alt="Aire can" width={300} height={300}
                     className="w-full object-contain drop-shadow-[0_16px_32px_rgba(26,46,74,0.18)]"
-                    style={{ mixBlendMode: 'multiply' }} />
+                    />
                 </motion.div>
               ))}
             </div>
