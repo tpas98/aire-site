@@ -6,6 +6,8 @@ export default function EmailPopup() {
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem('aire-popup-dismissed')
@@ -19,13 +21,106 @@ export default function EmailPopup() {
     sessionStorage.setItem('aire-popup-dismissed', 'true')
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => {
-      setVisible(false)
-      sessionStorage.setItem('aire-popup-dismissed', 'true')
-    }, 2500)
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      if (!res.ok) throw new Error('Failed')
+      setSubmitted(true)
+      setTimeout(() => {
+        setVisible(false)
+        sessionStorage.setItem('aire-popup-dismissed', 'true')
+      }, 2500)
+    } catch {
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <>
+          <motion.div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[90]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleDismiss}
+          />
+          <motion.div
+            className="fixed z-[100] bottom-0 left-0 right-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-[480px] w-full"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="bg-navy rounded-t-3xl md:rounded-3xl px-8 py-10 relative overflow-hidden">
+              <div className="absolute top-[-60px] right-[-60px] w-[200px] h-[200px] rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+              <button
+                onClick={handleDismiss}
+                className="absolute top-4 right-5 text-white/30 hover:text-white/60 transition-colors text-xl leading-none"
+              >
+                ✕
+              </button>
+              {!submitted ? (
+                <>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="block w-5 h-px bg-accent" />
+                    <span className="text-[0.65rem] font-semibold tracking-[0.2em] uppercase text-accent">Welcome to Aire</span>
+                  </div>
+cat > ~/Downloads/aire-site/src/components/EmailPopup.tsx << 'EOF'
+'use client'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+
+export default function EmailPopup() {
+  const [visible, setVisible] = useState(false)
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem('aire-popup-dismissed')
+    if (dismissed) return
+    const timer = setTimeout(() => setVisible(true), 5000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const handleDismiss = () => {
+    setVisible(false)
+    sessionStorage.setItem('aire-popup-dismissed', 'true')
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      if (!res.ok) throw new Error('Failed')
+      setSubmitted(true)
+      setTimeout(() => {
+        setVisible(false)
+        sessionStorage.setItem('aire-popup-dismissed', 'true')
+      }, 2500)
+    } catch {
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -78,11 +173,13 @@ export default function EmailPopup() {
                     />
                     <button
                       type="submit"
-                      className="bg-white text-navy px-6 py-3 rounded-full text-[0.78rem] font-semibold tracking-[0.08em] uppercase hover:bg-accent hover:text-white transition-colors whitespace-nowrap"
+                      disabled={loading}
+                      className="bg-white text-navy px-6 py-3 rounded-full text-[0.78rem] font-semibold tracking-[0.08em] uppercase hover:bg-accent hover:text-white transition-colors whitespace-nowrap disabled:opacity-50"
                     >
-                      Claim 10% Off
+                      {loading ? 'Saving...' : 'Claim 10% Off'}
                     </button>
                   </form>
+                  {error && <p className="mt-3 text-[0.75rem] text-red-400">{error}</p>}
                   <button
                     onClick={handleDismiss}
                     className="mt-4 text-[0.72rem] text-white/25 hover:text-white/40 transition-colors w-full text-center"
