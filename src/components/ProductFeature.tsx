@@ -111,22 +111,14 @@ export default function ProductFeature() {
               ))}
             </div>
           </FadeUp>
-          <FadeUp delay={0.15}>
-            <div className="relative flex justify-center items-center min-h-[300px] md:min-h-[380px]">
-              {[
-                { top: '0%', left: '50%', w: '62%', z: 3, y: [0,-16,0], r: [0,1,-1,0], dur: 6, delay: 0 },
-                { top: '42%', left: '12%', w: '50%', z: 2, y: [0,-12,0], r: [0,-1.2,1.2,0], dur: 7, delay: 0.8 },
-                { top: '48%', left: '58%', w: '48%', z: 1, y: [0,-20,0], r: [0,0.8,-0.8,0], dur: 5.5, delay: 0.4 },
-              ].map((c, i) => (
-                <motion.div key={i} className="absolute"
-                  style={{ top: c.top, left: c.left, width: c.w, zIndex: c.z, transform: 'translateX(-50%)' }}
-                  animate={{ y: c.y, rotate: c.r }}
-                  transition={{ duration: c.dur, repeat: Infinity, ease: 'easeInOut', delay: c.delay }}>
-                  <Image src="/images/three-cans.png" alt="Aire can" width={300} height={300}
-                    className="w-full object-contain drop-shadow-[0_16px_32px_rgba(26,46,74,0.18)]" />
-                </motion.div>
-              ))}
-            </div>
+          <FadeUp delay={0.15} className="flex justify-center">
+            <motion.div
+              animate={{ y: [0, -16, 0], rotate: [0, 1, -1, 0] }}
+              transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <Image src="/images/three-cans.png" alt="Aire cans" width={420} height={420}
+                className="w-full max-w-[340px] md:max-w-[420px] object-contain drop-shadow-[0_20px_40px_rgba(26,46,74,0.12)]" />
+            </motion.div>
           </FadeUp>
         </div>
       </section>
