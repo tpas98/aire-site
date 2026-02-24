@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import EmailPopup from '@/components/EmailPopup'
 
 export const metadata: Metadata = {
   title: 'Aire — Find Your Balance',
@@ -18,7 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" scroll-behavior="auto">
-      <body>{children}</body>
+      <body>
+        {children}
+        <EmailPopup />
+      </body>
     </html>
   )
 }
