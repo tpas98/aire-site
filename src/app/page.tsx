@@ -5,6 +5,7 @@ import LifestyleStrip from '@/components/LifestyleStrip'
 import About from '@/components/About'
 import Ingredients from '@/components/Ingredients'
 import ProductFeature from '@/components/ProductFeature'
+import HowToUse from '@/components/HowToUse'
 import Testimonials from '@/components/Testimonials'
 import { CTA, Footer } from '@/components/CTAFooter'
 
@@ -18,6 +19,7 @@ export default function Home() {
       <About />
       <Ingredients />
       <ProductFeature />
+      <HowToUse />
       <Testimonials />
       <CTA />
       <Footer />
