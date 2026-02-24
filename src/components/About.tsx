@@ -14,31 +14,19 @@ export default function About() {
             Built for the gap<br /><em className="italic text-accent">nobody filled.</em>
           </h2>
           <p className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-5">
-            Every pouch on the market was either nicotine-loaded and addictive, or caffeine-heavy
-            and anxious-making. None of them gave you calm, clear energy without a cost to your health.
+            Every pouch on the market was either nicotine-loaded and addictive, or caffeine-heavy and anxious-making. None of them gave you calm, clear energy without a cost to your health.
           </p>
           <p className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-8">
-            So we built Aire from scratch. A lifestyle pouch for people who want to perform without
-            compromise. No dependency. No crash. Just balance, whenever you need it.
+            So we built Aire from scratch. A lifestyle pouch for people who want to perform without compromise. No dependency. No crash. Just balance, whenever you need it.
           </p>
-          <a
-            href="#shop"
-            className="inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase hover:bg-accent hover:-translate-y-0.5 transition-all duration-200 shadow-[0_8px_30px_rgba(26,46,74,0.2)]"
-          >
+          <a href="#shop" className="btn-primary inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase shadow-[0_8px_30px_rgba(26,46,74,0.2)]">
             Try Aire Today
           </a>
         </FadeUp>
-
         <FadeUp delay={0.15}>
-          <div className="rounded-3xl overflow-hidden bg-off-white">
-            <Image
-              src="/images/open-can.png"
-              alt="Aire open tin with pouches"
-              width={600}
-              height={520}
-              className="w-full object-contain"
-              style={{ mixBlendMode: 'multiply' }}
-            />
+          <div className="rounded-3xl overflow-hidden">
+            <Image src="/images/open-can.png" alt="Aire open tin with pouches" width={600} height={520}
+              className="w-full object-contain" style={{ mixBlendMode: 'multiply' }} />
           </div>
         </FadeUp>
       </div>
