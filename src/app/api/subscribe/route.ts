@@ -11,24 +11,37 @@ export async function POST(req: NextRequest) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'revision': '2023-12-15',
+      'revision': '2024-10-15',
     },
     body: JSON.stringify({
       data: {
         type: 'subscription',
         attributes: {
           list_id: 'RSt8aA',
-          subscriptions: { email: { marketing: { consent: 'SUBSCRIBED' } } },
-          profile: { data: { type: 'profile', attributes: { email } } },
+          subscriptions: {
+            email: {
+              marketing: {
+                consent: 'SUBSCRIBED',
+              },
+            },
+          },
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: email,
+              },
+            },
+          },
         },
       },
     }),
   })
 
   if (!response.ok) {
-    const error = await response.text()
-    console.error('Klaviyo error:', error)
-    return NextResponse.json({ error: 'Failed to subscribe' }, { status: 500 })
+    const errorText = await response.text()
+    console.error('Klaviyo error:', errorText)
+    return NextResponse.json({ error: errorText }, { status: 500 })
   }
 
   return NextResponse.json({ success: true })
