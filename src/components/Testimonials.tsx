@@ -19,7 +19,7 @@ export default function Testimonials() {
           Real results.<br /><em className="italic text-accent">Real people.</em>
         </h2>
       </FadeUp>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1080px] mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1080px] mx-auto items-stretch">
         {reviews.map(({ stars, text, author, tag }, i) => (
           <FadeUp key={i} delay={i * 0.1}>
             <div className="card-hover bg-off-white rounded-2xl p-8 border border-sky-deep/15 flex flex-col">
