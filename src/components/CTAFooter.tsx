@@ -19,13 +19,10 @@ const footerLinks = {
 
 export function CTA() {
   return (
-    <section id="shop" className="bg-navy py-36 px-16 relative overflow-hidden">
+    <section id="shop" className="bg-navy py-24 px-6 md:px-16 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.035] pointer-events-none z-0"
         style={{ backgroundImage: grain, backgroundRepeat: 'repeat', backgroundSize: '128px' }} />
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[900px] h-[900px] rounded-full bg-sky-deep/5 blur-3xl" />
-      </div>
-      <div className="relative z-10 max-w-[1100px] mx-auto grid grid-cols-2 gap-16 items-center text-left">
+      <div className="relative z-10 max-w-[1100px] mx-auto">
         <FadeUp>
           <div className="flex items-center gap-3 mb-6">
             <span className="block w-5 h-px bg-sky-deep" />
@@ -45,24 +42,14 @@ export function CTA() {
               </div>
             ))}
           </div>
-          <div className="flex gap-4 flex-wrap">
-            <a href="#" className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a href="#" className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
               Order Now — $39.99 / 4-Pack
             </a>
-            <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 hover:text-white transition-all duration-200">
+            <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 transition-all duration-200 text-center">
               Learn the Science
             </a>
           </div>
-        </FadeUp>
-        <FadeUp delay={0.2}>
-          <motion.div
-            animate={{ y: [0, -16, 0], rotate: [0, 1, -1, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex justify-center">
-            <Image src="/images/three-cans.png" alt="Aire Pouches" width={460} height={460}
-              className="w-full max-w-[400px] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
-              style={{ mixBlendMode: 'screen' }} />
-          </motion.div>
         </FadeUp>
       </div>
     </section>
@@ -71,9 +58,9 @@ export function CTA() {
 
 export function Footer() {
   return (
-    <footer className="bg-navy border-t border-white/5 px-16 pt-16 pb-10 text-white/44">
-      <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-12 mb-12">
-        <div>
+    <footer className="bg-navy border-t border-white/5 px-6 md:px-16 pt-16 pb-10 text-white/44">
+      <div className="grid grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-8 md:gap-12 mb-12">
+        <div className="col-span-2 md:col-span-1">
           <Image src="/images/logo.png" alt="Aire" width={100} height={36} className="h-7 w-auto mb-4 opacity-75"
             style={{ filter: 'brightness(0) invert(1)', mixBlendMode: 'normal' }} />
           <p className="text-[0.82rem] leading-[1.75] mb-5">The calm pouch built for modern life.<br />No nicotine. No caffeine. Just balance.</p>
@@ -94,7 +81,7 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <div className="border-t border-white/5 pt-6 flex justify-between items-start gap-8 flex-wrap text-[0.71rem]">
+      <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between gap-4 text-[0.71rem]">
         <span>© 2026 Aire. All rights reserved.</span>
         <span className="text-[0.62rem] text-white/20 max-w-[540px] leading-relaxed">† These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.</span>
       </div>

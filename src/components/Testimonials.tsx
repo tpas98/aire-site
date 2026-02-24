@@ -8,8 +8,8 @@ const reviews = [
 
 export default function Testimonials() {
   return (
-    <section id="reviews" className="bg-white py-32 px-16">
-      <FadeUp className="text-center mb-16">
+    <section id="reviews" className="bg-white py-24 px-6 md:px-16">
+      <FadeUp className="text-center mb-12">
         <div className="flex items-center justify-center gap-3 mb-5">
           <span className="block w-5 h-px bg-accent" />
           <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">What People Are Saying</span>
@@ -19,10 +19,10 @@ export default function Testimonials() {
           Real results.<br /><em className="italic text-accent">Real people.</em>
         </h2>
       </FadeUp>
-      <div className="grid grid-cols-3 gap-5 max-w-[1080px] mx-auto items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1080px] mx-auto">
         {reviews.map(({ stars, text, author, tag }, i) => (
-          <FadeUp key={i} delay={i * 0.1} className="h-full">
-            <div className="card-hover bg-off-white rounded-2xl p-8 border border-sky-deep/15 h-full flex flex-col">
+          <FadeUp key={i} delay={i * 0.1}>
+            <div className="card-hover bg-off-white rounded-2xl p-8 border border-sky-deep/15 flex flex-col">
               <div className="text-[#e8a820] text-sm mb-4">{'★'.repeat(stars)}</div>
               <p className="text-[0.9rem] text-navy-mid leading-[1.8] italic mb-5 flex-1">{text}</p>
               <div>
