@@ -24,10 +24,15 @@ export default function ProductFeature() {
     <>
       <section className="bg-section-gradient py-24 px-6 md:px-20">
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
-          <FadeUp className="order-2 md:order-1">
-            <Image src="/images/lifestyle-open-tin.png" alt="Aire open tin lifestyle"
-              width={500} height={500}
-              className="w-full max-w-[320px] md:max-w-[420px] mx-auto object-contain drop-shadow-[0_20px_40px_rgba(26,46,74,0.10)]" />
+          <FadeUp className="order-2 md:order-1 flex justify-center">
+            <motion.div
+              animate={{ y: [0, -16, 0], rotate: [0, 1, -1, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <Image src="/images/lifestyle-open-tin.png" alt="Aire open tin lifestyle"
+                width={500} height={500}
+                className="w-full max-w-[320px] md:max-w-[420px] object-contain" />
+            </motion.div>
           </FadeUp>
           <FadeUp delay={0.15} className="order-1 md:order-2">
             <div className="flex items-center gap-3 mb-5">
