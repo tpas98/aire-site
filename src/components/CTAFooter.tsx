@@ -12,9 +12,21 @@ const trust = [
 ]
 
 const footerLinks = {
-  Explore: ['Home', 'Shop Aire', 'The Science', 'About Us'],
-  Support: ['FAQ', 'Shipping & Returns', 'Contact Us'],
-  Legal: ['Privacy Policy', 'Terms of Service'],
+  Explore: [
+    { label: 'Home', href: '/' },
+    { label: 'Shop Aire', href: '#shop' },
+    { label: 'The Science', href: '#ingredients' },
+    { label: 'About Us', href: '#science' },
+  ],
+  Support: [
+    { label: 'FAQ', href: '#shop' },
+    { label: 'Shipping & Returns', href: '#shop' },
+    { label: 'Contact Us', href: '#shop' },
+  ],
+  Legal: [
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms of Service', href: '/terms' },
+  ],
 }
 
 export function CTA() {
@@ -86,8 +98,8 @@ export function Footer() {
           <div key={heading}>
             <h4 className="text-[0.64rem] font-semibold tracking-[0.15em] uppercase text-white/30 mb-4">{heading}</h4>
             <ul className="space-y-2.5">
-              {links.map((link) => (
-                <li key={link}><a href="#" className="text-[0.81rem] text-white/50 hover:text-sky-deep transition-colors duration-200">{link}</a></li>
+              {links.map(({ label, href }) => (
+                <li key={label}><a href={href} className="text-[0.81rem] text-white/50 hover:text-sky-deep transition-colors duration-200">{label}</a></li>
               ))}
             </ul>
           </div>
