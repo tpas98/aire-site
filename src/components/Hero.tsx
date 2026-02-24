@@ -21,13 +21,6 @@ const floatAnim = {
 export default function Hero() {
   return (
     <section className="relative min-h-screen overflow-hidden bg-hero-gradient">
-      <div className="absolute inset-0 z-0">
-        <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-30">
-          <source src="/video/hero.webm" type="video/webm" />
-          <source src="/video/hero.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#ddf0f9]/95 via-[#c8e0f0]/75 to-[#b8d8ee]/40" />
-      </div>
       <div className="absolute top-[-120px] right-[-100px] w-[600px] h-[600px] rounded-full bg-white/15 blur-3xl z-0" />
       <div className="absolute bottom-[-80px] left-[-80px] w-[400px] h-[400px] rounded-full bg-accent/10 blur-3xl z-0" />
       <div className="relative z-10 grid grid-cols-2 items-center gap-8 px-20 pt-36 pb-24 min-h-screen max-w-[1400px] mx-auto">
