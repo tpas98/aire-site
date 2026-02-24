@@ -21,8 +21,8 @@ export default function Testimonials() {
       </FadeUp>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1080px] mx-auto items-stretch">
         {reviews.map(({ stars, text, author, tag }, i) => (
-          <FadeUp key={i} delay={i * 0.1}>
-            <div className="card-hover bg-off-white rounded-2xl p-8 border border-sky-deep/15 flex flex-col">
+          <FadeUp key={i} delay={i * 0.1} className="h-full">
+            <div className="card-hover bg-off-white rounded-2xl p-8 border border-sky-deep/15 h-full flex flex-col">
               <div className="text-[#e8a820] text-sm mb-4">{'★'.repeat(stars)}</div>
               <p className="text-[0.9rem] text-navy-mid leading-[1.8] italic mb-5 flex-1">{text}</p>
               <div>
