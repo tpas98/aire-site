@@ -24,9 +24,9 @@ export default function About() {
           </a>
         </FadeUp>
         <FadeUp delay={0.15}>
-          <div className="rounded-3xl overflow-hidden">
+          <div className="flex justify-center items-center">
             <Image src="/images/open-can.png" alt="Aire open tin with pouches" width={600} height={520}
-              className="w-full object-contain" style={{ mixBlendMode: 'multiply' }} />
+              className="w-full max-w-[480px] object-contain" />
           </div>
         </FadeUp>
       </div>
