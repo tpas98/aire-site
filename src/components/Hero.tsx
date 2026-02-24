@@ -23,7 +23,7 @@ export default function Hero() {
     <section className="relative min-h-screen overflow-hidden bg-hero-gradient">
       <div className="absolute top-[-120px] right-[-100px] w-[600px] h-[600px] rounded-full bg-white/15 blur-3xl z-0" />
       <div className="absolute bottom-[-80px] left-[-80px] w-[400px] h-[400px] rounded-full bg-accent/10 blur-3xl z-0" />
-      <div className="relative z-10 flex flex-col md:grid md:grid-cols-2 items-center gap-8 px-6 md:px-20 pt-14 md:pt-24 pb-16 md:pb-24 min-h-screen max-w-[1400px] mx-auto">
+      <div className="relative z-10 flex flex-col md:grid md:grid-cols-2 items-center gap-8 px-6 md:px-20 pt-7 md:pt-12 pb-16 md:pb-24 min-h-screen max-w-[1400px] mx-auto">
         <div className="max-w-[560px] w-full">
           <motion.div className="flex items-center gap-3 mb-5" variants={fadeUp} initial="hidden" animate="visible" custom={0}>
             <span className="block w-8 h-px bg-accent" />
