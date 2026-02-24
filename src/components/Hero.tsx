@@ -52,14 +52,6 @@ export default function Hero() {
               <span className="group-hover:translate-x-1.5 transition-transform duration-200">→</span>
             </a>
           </motion.div>
-          <motion.div className="flex items-center gap-6 mt-10 pt-8 border-t border-navy/10" variants={fadeUp} initial="hidden" animate="visible" custom={0.4}>
-            {[{ num: '0', label: 'Nicotine' }, { num: '0', label: 'Caffeine' }, { num: '5', label: 'Ingredients' }, { num: '100mg', label: 'L-Theanine' }].map(({ num, label }) => (
-              <div key={label} className="text-center">
-                <div className="font-serif text-[1.5rem] md:text-[1.8rem] text-navy leading-none">{num}</div>
-                <div className="text-[0.58rem] text-muted tracking-[0.12em] uppercase mt-1">{label}</div>
-              </div>
-            ))}
-          </motion.div>
         </div>
         <motion.div className="flex justify-center items-center w-full" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
           <motion.div {...floatAnim}>
