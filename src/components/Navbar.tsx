@@ -2,6 +2,8 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 
+const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
+
 export default function Navbar() {
   return (
     <motion.nav
@@ -20,10 +22,10 @@ export default function Navbar() {
           </li>
         ))}
         <li>
-          <a href="#shop" className="text-[0.78rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-5 py-2.5 rounded-full hover:bg-accent transition-colors duration-200">Shop Now</a>
+          <a href={CHECKOUT_URL} className="text-[0.78rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-5 py-2.5 rounded-full hover:bg-accent transition-colors duration-200">Shop Now</a>
         </li>
       </ul>
-      <a href="#shop" className="md:hidden text-[0.72rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-4 py-2 rounded-full">
+      <a href={CHECKOUT_URL} className="md:hidden text-[0.72rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-4 py-2 rounded-full">
         Shop Now
       </a>
     </motion.nav>

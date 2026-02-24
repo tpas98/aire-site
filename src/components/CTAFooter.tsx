@@ -3,6 +3,8 @@ import Image from 'next/image'
 import FadeUp from './FadeUp'
 import { motion } from 'framer-motion'
 
+const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
+
 const grain = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")"
 
 const trust = [
@@ -14,7 +16,7 @@ const trust = [
 const footerLinks = {
   Explore: [
     { label: 'Home', href: '/' },
-    { label: 'Shop Aire', href: '#shop' },
+    { label: 'Shop Aire', href: CHECKOUT_URL },
     { label: 'The Science', href: '#ingredients' },
     { label: 'About Us', href: '#science' },
   ],
@@ -55,7 +57,7 @@ export function CTA() {
             ))}
           </div>
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <a href="#" className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
+            <a href={CHECKOUT_URL} className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
               Order Now — $39.99 / 4-Pack
             </a>
             <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 transition-all duration-200 text-center">
