@@ -22,7 +22,7 @@ export function CTA() {
     <section id="shop" className="bg-navy py-24 px-6 md:px-16 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.035] pointer-events-none z-0"
         style={{ backgroundImage: grain, backgroundRepeat: 'repeat', backgroundSize: '128px' }} />
-      <div className="relative z-10 max-w-[1100px] mx-auto">
+      <div className="relative z-10 max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <FadeUp>
           <div className="flex items-center gap-3 mb-6">
             <span className="block w-5 h-px bg-sky-deep" />
@@ -50,6 +50,15 @@ export function CTA() {
               Learn the Science
             </a>
           </div>
+        </FadeUp>
+        <FadeUp delay={0.2} className="hidden md:flex justify-center items-center">
+          <motion.div
+            animate={{ y: [0, -18, 0], rotate: [0, 1.2, -1.2, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <Image src="/images/cta-cans.png" alt="Aire Flow Pouches" width={480} height={480}
+              className="w-full max-w-[420px] object-contain" />
+          </motion.div>
         </FadeUp>
       </div>
     </section>
