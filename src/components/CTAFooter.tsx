@@ -19,9 +19,9 @@ const footerLinks = {
     { label: 'About Us', href: '#science' },
   ],
   Support: [
-    { label: 'FAQ', href: '#shop' },
-    { label: 'Shipping & Returns', href: '#shop' },
-    { label: 'Contact Us', href: '#shop' },
+    { label: 'FAQ', href: '/faq' },
+    { label: 'Shipping & Returns', href: '/shipping' },
+    { label: 'Contact Us', href: 'mailto:hello@aire.com' },
   ],
   Legal: [
     { label: 'Privacy Policy', href: '/privacy' },
