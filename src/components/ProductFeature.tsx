@@ -56,34 +56,6 @@ export default function ProductFeature() {
         </div>
       </section>
 
-      <section className="bg-white py-24 px-6 md:px-16">
-        <FadeUp className="text-center max-w-[500px] mx-auto mb-12">
-          <div className="flex items-center justify-center gap-3 mb-5">
-            <span className="block w-5 h-px bg-accent" />
-            <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">How It Works</span>
-            <span className="block w-5 h-px bg-accent" />
-          </div>
-          <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em]">
-            Simple by design.<br /><em className="italic text-accent">Powerful by science.</em>
-          </h2>
-        </FadeUp>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[900px] mx-auto items-stretch">
-          {[
-            { n: '01', title: 'Place the Pouch', desc: 'Tuck one Aire pouch between your gum and lip. Discreet, comfortable, and ready for any moment.' },
-            { n: '02', title: 'Feel It in Minutes', desc: 'Within 10–15 minutes, L-Theanine and Rhodiola begin supporting calm, focused clarity. No jolt. No crash.' },
-            { n: '03', title: 'Stay in the Flow', desc: "Effects build steadily. Mood feels balanced. Mind stays clear. That's your balance — go use it." },
-          ].map(({ n, title, desc }, i) => (
-            <FadeUp key={n} delay={i * 0.1} className="h-full">
-              <div className="card-hover bg-off-white border border-sky-deep/15 rounded-2xl p-8 md:p-10 text-center h-full flex flex-col justify-start">
-                <div className="font-serif text-5xl text-sky-light leading-none mb-4">{n}</div>
-                <div className="font-serif text-[1.18rem] text-navy mb-3">{title}</div>
-                <div className="text-[0.84rem] text-muted leading-relaxed">{desc}</div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
       <section className="bg-off-white py-24 px-6 md:px-20">
         <div className="max-w-[1040px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
           <FadeUp>
