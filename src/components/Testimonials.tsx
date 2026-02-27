@@ -1,3 +1,4 @@
+'use client'
 import FadeUp from './FadeUp'
 
 const reviews = [
@@ -16,12 +17,7 @@ const reviews = [
 
 function ReviewCard({ stars, text, author, tag }: { stars: number; text: string; author: string; tag: string }) {
   return (
-    <div
-      className="bg-off-white rounded-2xl p-8 border border-sky-deep/15 flex flex-col flex-shrink-0 w-[340px] min-h-[260px] mr-5 transition-all duration-300 hover:-translate-y-1.5"
-      style={{ boxShadow: 'none' }}
-      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 24px 56px rgba(26,46,74,0.09)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none' }}
-    >
+    <div className="card-hover bg-off-white rounded-2xl p-8 border border-sky-deep/15 flex flex-col flex-shrink-0 w-[340px] min-h-[260px] mr-5">
       <div className="text-[#e8a820] text-sm mb-4">{'★'.repeat(stars)}</div>
       <p className="text-[0.9rem] text-navy-mid leading-[1.8] italic mb-5 flex-1">{text}</p>
       <div>
