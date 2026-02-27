@@ -34,7 +34,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How many pouches are in each can?</h2>
-            <p>Each can of Aire Flow Pouches contains 10 pouches. A 4-pack ($39.99) gives you 40 pouches total.</p>
+            <p>Each can of Aire Flow Pouches contains 15 pouches. A 4-pack ($39.99) gives you 60 pouches total.</p>
           </section>
 
           <section>

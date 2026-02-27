@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.tryaire.com/sitemap.xml
+Sitemap: https://www.airepouches.com/sitemap.xml
