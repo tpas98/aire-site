@@ -1,7 +1,7 @@
 import FadeUp from './FadeUp'
 
 const ingredients = [
-  { num: '01', name: 'L-Theanine', desc: 'Promotes calm alertness and reduces stress response — no sedation, no drowsiness.', badge: '100mg' },
+  { num: '01', name: 'L-Theanine', desc: 'Promotes calm alertness and reduces stress response — no sedation, no drowsiness.', badge: '75mg' },
   { num: '02', name: 'Rhodiola Rosea', desc: 'Adaptogenic root that combats mental fatigue and builds long-term stress resilience.', badge: 'Adaptogen' },
   { num: '03', name: 'Methylfolate', desc: 'The bioavailable form of folate — supports neurotransmitter production at the source.', badge: 'Active B9' },
   { num: '04', name: 'Vitamin B6', desc: 'Essential co-factor for serotonin and dopamine synthesis. Mood, energy, clarity.', badge: 'P-5-P Form' },

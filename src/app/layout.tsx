@@ -9,6 +9,14 @@ export const metadata: Metadata = {
     title: 'Aire — Find Your Balance',
     description: 'Science-backed calm in a pouch. Zero nicotine. Zero caffeine.',
     images: ['/images/three-cans.png'],
+    siteName: 'Aire',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Aire — Find Your Balance',
+    description: 'Science-backed calm in a pouch. Zero nicotine. Zero caffeine.',
+    images: ['/images/three-cans.png'],
   },
 }
 

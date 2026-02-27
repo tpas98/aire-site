@@ -34,7 +34,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How many pouches are in each can?</h2>
-            <p>Each can of Aire Flow Pouches contains 15 pouches. A 4-pack ($39.99) gives you 60 pouches total.</p>
+            <p>Each can of Aire Flow Pouches contains 10 pouches. A 4-pack ($39.99) gives you 40 pouches total.</p>
           </section>
 
           <section>
@@ -49,7 +49,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What are the active ingredients?</h2>
-            <p>Each Aire pouch contains five active ingredients: L-Theanine (100mg) for calm alertness, Rhodiola Rosea for stress resilience, Methylfolate (active B9) for neurotransmitter support, Vitamin B6 in its active P-5-P form for serotonin and dopamine synthesis, and Affron® — a patented saffron extract clinically shown to support mood balance.</p>
+            <p>Each Aire pouch contains five active ingredients: L-Theanine (75mg) for calm alertness, Rhodiola Rosea for stress resilience, Methylfolate (active B9) for neurotransmitter support, Vitamin B6 in its active P-5-P form for serotonin and dopamine synthesis, and Affron® — a patented saffron extract clinically shown to support mood balance.</p>
           </section>
 
           <section>
@@ -69,7 +69,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How many pouches can I use per day?</h2>
-            <p>We recommend 1–3 pouches per day depending on your needs. Use one in the morning for a focused start, one after lunch to power through the afternoon, or one in the evening to unwind. There&apos;s no nicotine or caffeine, so there&apos;s no crash or dependency risk.</p>
+            <p>We recommend using 4–6 pouches throughout the day for best results. Use one in the morning for a focused start, another mid-morning to stay locked in, one after lunch to power through the afternoon, and one in the evening to unwind. Do not exceed 5 pouches per day. There&apos;s no nicotine or caffeine, so there&apos;s no crash or dependency risk.</p>
           </section>
 
           <section>
