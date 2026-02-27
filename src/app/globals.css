@@ -47,3 +47,15 @@
   .mix-multiply { mix-blend-mode: multiply; }
   .text-balance { text-wrap: balance; }
 }
+
+/* Testimonial carousel */
+@keyframes scroll-carousel {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.carousel-track {
+  animation: scroll-carousel 60s linear infinite;
+}
+.carousel-track:hover {
+  animation-play-state: paused;
+}

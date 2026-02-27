@@ -1,5 +1,3 @@
-'use client'
-import { useEffect, useRef, useState } from 'react'
 import FadeUp from './FadeUp'
 
 const reviews = [
@@ -16,36 +14,25 @@ const reviews = [
   { stars: 5, text: '"As a new mom running on very little sleep, this has been a lifesaver. Gentle enough that I feel comfortable using it and effective enough that I notice when I skip a day."', author: 'Megan D.', tag: 'Verified Buyer · Stay-at-Home Mom' },
 ]
 
+function ReviewCard({ stars, text, author, tag }: { stars: number; text: string; author: string; tag: string }) {
+  return (
+    <div
+      className="bg-off-white rounded-2xl p-8 border border-sky-deep/15 flex flex-col flex-shrink-0 w-[340px] min-h-[260px] mr-5 transition-all duration-300 hover:-translate-y-1.5"
+      style={{ boxShadow: 'none' }}
+      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 24px 56px rgba(26,46,74,0.09)' }}
+      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none' }}
+    >
+      <div className="text-[#e8a820] text-sm mb-4">{'★'.repeat(stars)}</div>
+      <p className="text-[0.9rem] text-navy-mid leading-[1.8] italic mb-5 flex-1">{text}</p>
+      <div>
+        <div className="text-[0.74rem] font-semibold text-navy tracking-[0.05em] uppercase">— {author}</div>
+        <div className="text-[0.66rem] text-accent mt-0.5">✓ {tag}</div>
+      </div>
+    </div>
+  )
+}
+
 export default function Testimonials() {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [isPaused, setIsPaused] = useState(false)
-
-  useEffect(() => {
-    const container = scrollRef.current
-    if (!container) return
-
-    let animationId: number
-    const speed = 0.5 // pixels per frame
-
-    const step = () => {
-      if (!isPaused && container) {
-        container.scrollLeft += speed
-        // When we've scrolled through the first set, jump back seamlessly
-        const halfScroll = container.scrollWidth / 2
-        if (container.scrollLeft >= halfScroll) {
-          container.scrollLeft -= halfScroll
-        }
-      }
-      animationId = requestAnimationFrame(step)
-    }
-
-    animationId = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(animationId)
-  }, [isPaused])
-
-  // Double the reviews for seamless infinite loop
-  const loopedReviews = [...reviews, ...reviews]
-
   return (
     <section id="reviews" className="bg-white py-24">
       <FadeUp className="text-center mb-12 px-6 md:px-16">
@@ -60,27 +47,15 @@ export default function Testimonials() {
       </FadeUp>
 
       <FadeUp delay={0.15}>
-        <div
-          ref={scrollRef}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          className="flex gap-5 overflow-x-hidden px-6 md:px-16"
-          style={{ scrollBehavior: 'auto' }}
-        >
-          {loopedReviews.map(({ stars, text, author, tag }, i) => (
-            <div
-              key={i}
-              className="card-hover bg-off-white rounded-2xl p-8 border border-sky-deep/15 flex flex-col flex-shrink-0"
-              style={{ width: '340px', minHeight: '260px' }}
-            >
-              <div className="text-[#e8a820] text-sm mb-4">{'★'.repeat(stars)}</div>
-              <p className="text-[0.9rem] text-navy-mid leading-[1.8] italic mb-5 flex-1">{text}</p>
-              <div>
-                <div className="text-[0.74rem] font-semibold text-navy tracking-[0.05em] uppercase">— {author}</div>
-                <div className="text-[0.66rem] text-accent mt-0.5">✓ {tag}</div>
-              </div>
-            </div>
-          ))}
+        <div className="overflow-hidden">
+          <div className="carousel-track flex" style={{ width: 'max-content' }}>
+            {reviews.map((review, i) => (
+              <ReviewCard key={`a-${i}`} {...review} />
+            ))}
+            {reviews.map((review, i) => (
+              <ReviewCard key={`b-${i}`} {...review} />
+            ))}
+          </div>
         </div>
       </FadeUp>
     </section>
