@@ -323,12 +323,19 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       // Coin-spin rotation
       canGroup.rotation.y = t * 0.5
 
-      // Gentle floating
-      canGroup.position.y = Math.sin(t * 0.4) * 0.025
+      // Gentle floating bob (matches other product images on site)
+      canGroup.position.y = Math.sin(t * 0.5) * 0.06
 
-      // Mouse-responsive tilt
-      const targetTiltX = baseTiltX + mouseY * 0.12
-      const targetTiltZ = baseTiltZ + mouseX * -0.1
+      // Subtle horizontal sway for organic feel
+      canGroup.position.x = Math.sin(t * 0.3) * 0.015
+
+      // Gentle rocking jiggle layered on top of tilt
+      const jiggleX = Math.sin(t * 0.7) * 0.02
+      const jiggleZ = Math.cos(t * 0.5) * 0.015
+
+      // Mouse-responsive tilt + jiggle
+      const targetTiltX = baseTiltX + mouseY * 0.12 + jiggleX
+      const targetTiltZ = baseTiltZ + mouseX * -0.1 + jiggleZ
       canGroup.rotation.x += (targetTiltX - canGroup.rotation.x) * 0.04
       canGroup.rotation.z += (targetTiltZ - canGroup.rotation.z) * 0.04
 
