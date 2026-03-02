@@ -26,7 +26,7 @@ export default function About() {
         <FadeUp delay={0.15}>
           <div className="flex justify-center items-center">
             <Image src="/images/open-can.png" alt="Aire open tin with pouches" width={600} height={520}
-              className="w-full max-w-[380px] md:max-w-[480px] object-contain" />
+              className="w-full max-w-[304px] md:max-w-[384px] object-contain" />
           </div>
         </FadeUp>
       </div>
