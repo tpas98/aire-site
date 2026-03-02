@@ -19,6 +19,12 @@ export default function ProductFeature() {
             <span className="block w-5 h-px bg-accent" />
             <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">See the Difference</span>
           </div>
+          <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em] mb-5">
+            Aire vs. the<br /><em className="italic text-accent">competition.</em>
+          </h2>
+          <p className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-7">
+            No other pouch combines zero nicotine, zero caffeine, mood support, and adaptogens. Aire exists because nothing else did.
+          </p>
           <div className="border-t border-sky-deep/15">
             <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr_1fr] py-3 text-[0.64rem] font-semibold tracking-[0.1em] uppercase text-muted">
               <div />
