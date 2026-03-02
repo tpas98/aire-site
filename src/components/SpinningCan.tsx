@@ -324,9 +324,9 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       const t = clock.getElapsedTime()
 
       // Eased spin on local Y axis (stays in tilted frame)
-      const cycleTime = 6.0
+      const cycleTime = 4.5
       const progress = (t % cycleTime) / cycleTime
-      const eased = progress - Math.sin(progress * Math.PI * 2) / (Math.PI * 2)
+      const eased = progress - Math.sin(progress * Math.PI * 2) / (Math.PI * 1.4)
       const fullRotations = Math.floor(t / cycleTime)
       canGroup.rotation.y = (fullRotations + eased) * Math.PI * 2
 
