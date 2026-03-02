@@ -320,8 +320,14 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       animId = requestAnimationFrame(animate)
       const t = clock.getElapsedTime()
 
-      // Coin-spin rotation
-      canGroup.rotation.y = t * 0.7
+      // Eased spin — lingers on front face, accelerates through back
+      // Each full rotation takes ~6 seconds
+      const cycleTime = 6.0
+      const progress = (t % cycleTime) / cycleTime // 0→1 per revolution
+      // Sine easing: slow at 0 (front), fast at 0.5 (back), slow at 1 (front again)
+      const eased = progress - Math.sin(progress * Math.PI * 2) / (Math.PI * 2)
+      const fullRotations = Math.floor(t / cycleTime)
+      canGroup.rotation.y = (fullRotations + eased) * Math.PI * 2
 
       // Gentle floating bob (matches other product images on site)
       canGroup.position.y = Math.sin(t * 0.5) * 0.06
