@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Aire — Find Your Balance',
     description: 'Science-backed calm in a pouch. Zero nicotine. Zero caffeine.',
-    images: ['/images/three-cans.png'],
+    images: ['/images/three-cans-new.png'],
     siteName: 'Aire',
     type: 'website',
   },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Aire — Find Your Balance',
     description: 'Science-backed calm in a pouch. Zero nicotine. Zero caffeine.',
-    images: ['/images/three-cans.png'],
+    images: ['/images/three-cans-new.png'],
   },
 }
 
