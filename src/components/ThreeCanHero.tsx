@@ -2,15 +2,22 @@
 import { useRef, useEffect, useState } from 'react'
 import * as THREE from 'three'
 
-// Each can's configuration: position, tilt, spin speed, spin easing, float offset
+// Each can's configuration
 interface CanConfig {
   position: [number, number, number]
   tiltX: number
   tiltZ: number
-  cycleTime: number
-  easingStrength: number
   floatPhase: number  // offset so they don't bob in sync
-  spinDirection: number // 1 or -1
+  // Motion type: 'showcase' = gentle oscillating rock (brand always visible)
+  //              'turntable' = full eased rotation
+  motionType: 'showcase' | 'turntable'
+  // Turntable settings (only used when motionType === 'turntable')
+  cycleTime?: number
+  easingStrength?: number
+  spinDirection?: number // 1 or -1
+  // Showcase settings (only used when motionType === 'showcase')
+  oscillateSpeed?: number    // how fast the gentle rock cycles (lower = slower, more luxurious)
+  oscillateAmplitude?: number // max angle in radians (~0.45 = ±26°)
 }
 
 export default function ThreeCanHero({ className = '' }: { className?: string }) {
@@ -220,34 +227,37 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
       return group
     }
 
-    // === 3 CAN CONFIGURATIONS (matching reference image layout) ===
-    // Top center, bottom-left, bottom-right
+    // === 3 CAN CONFIGURATIONS ===
+    // Top center = showcase (gentle oscillating rock, brand always visible)
+    // Bottom two = turntable spins in opposite directions
     const configs: CanConfig[] = [
       {
-        position: [0, 1.3, 0],          // Top center
+        position: [0, 1.3, 0],          // Top center — the hero
         tiltX: -0.5,
         tiltZ: 0.05,
-        cycleTime: 5.0,
-        easingStrength: 1.4,
         floatPhase: 0,
-        spinDirection: 1,
+        motionType: 'showcase',
+        oscillateSpeed: 0.35,            // Very slow, luxurious rock
+        oscillateAmplitude: 0.45,        // ±26° — shows depth without losing the brand
       },
       {
-        position: [-2.0, -1.1, -0.3],   // Bottom left
+        position: [-2.0, -1.1, -0.3],   // Bottom left — full spin, counter-clockwise
         tiltX: -0.6,
         tiltZ: 0.1,
-        cycleTime: 6.5,
-        easingStrength: 1.6,
         floatPhase: 2.1,
+        motionType: 'turntable',
+        cycleTime: 6.0,
+        easingStrength: 1.6,
         spinDirection: -1,
       },
       {
-        position: [2.0, -1.1, -0.3],    // Bottom right
+        position: [2.0, -1.1, -0.3],    // Bottom right — full spin, clockwise
         tiltX: -0.45,
         tiltZ: -0.08,
-        cycleTime: 5.5,
-        easingStrength: 1.5,
         floatPhase: 4.2,
+        motionType: 'turntable',
+        cycleTime: 5.0,
+        easingStrength: 1.4,
         spinDirection: 1,
       },
     ]
@@ -314,23 +324,41 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
       configs.forEach((cfg, i) => {
         const spinGroup = canSpinGroups[i]
         const tiltGroup = tiltGroups[i]
-
-        // Eased spin — each can at its own speed/direction
-        const progress = (t % cfg.cycleTime) / cfg.cycleTime
-        const eased = progress - Math.sin(progress * Math.PI * 2) / (Math.PI * cfg.easingStrength)
-        const fullRotations = Math.floor(t / cfg.cycleTime)
-        spinGroup.rotation.y = cfg.spinDirection * (fullRotations + eased) * Math.PI * 2
-
-        // Staggered float
         const phase = t + cfg.floatPhase
+
+        if (cfg.motionType === 'showcase') {
+          // === SHOWCASE: gentle oscillating rock ===
+          // Primary Y oscillation — slow sine wave, brand stays mostly front-facing
+          const speed = cfg.oscillateSpeed ?? 0.35
+          const amp = cfg.oscillateAmplitude ?? 0.45
+          spinGroup.rotation.y = Math.sin(t * speed) * amp
+
+          // Secondary subtle X-axis breathing — gives a "being examined" feel
+          spinGroup.rotation.x = Math.sin(t * speed * 0.7) * 0.04
+
+          // Very subtle Z tilt for organic, living motion
+          spinGroup.rotation.z = Math.sin(t * speed * 0.5 + 1.0) * 0.02
+
+        } else {
+          // === TURNTABLE: full eased rotation ===
+          const cycleTime = cfg.cycleTime ?? 5.0
+          const easeStr = cfg.easingStrength ?? 1.4
+          const dir = cfg.spinDirection ?? 1
+          const progress = (t % cycleTime) / cycleTime
+          const eased = progress - Math.sin(progress * Math.PI * 2) / (Math.PI * easeStr)
+          const fullRotations = Math.floor(t / cycleTime)
+          spinGroup.rotation.y = dir * (fullRotations + eased) * Math.PI * 2
+        }
+
+        // Staggered float (all cans)
         tiltGroup.position.y = cfg.position[1] + Math.sin(phase * 0.5) * 0.06
         tiltGroup.position.x = cfg.position[0] + Math.sin(phase * 0.3) * 0.015
 
-        // Gentle jiggle
+        // Gentle jiggle (all cans)
         const jiggleX = Math.sin(phase * 0.7) * 0.015
         const jiggleZ = Math.cos(phase * 0.5) * 0.01
 
-        // Mouse-responsive tilt
+        // Mouse-responsive tilt (all cans)
         const targetTiltX = cfg.tiltX + mouseY * 0.08 + jiggleX
         const targetTiltZ = cfg.tiltZ + mouseX * -0.06 + jiggleZ
         tiltGroup.rotation.x += (targetTiltX - tiltGroup.rotation.x) * 0.03
