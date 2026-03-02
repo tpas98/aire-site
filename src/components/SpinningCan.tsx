@@ -35,9 +35,9 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     // === TIN DIMENSIONS ===
     // Flat wide tin oriented as a coin (circular face toward camera)
     const tinRadius = 1.4
-    const tinDepth = 0.456
-    const lidOverhang = 0.04
-    const lidThickness = 0.05
+    const tinDepth = 0.547
+    const lidOverhang = 0.0
+    const lidThickness = 0.02
 
     const canGroup = new THREE.Group()
 
@@ -132,7 +132,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     canGroup.add(lidRimMesh)
 
     // === SEAM RING (where lid meets body) ===
-    const seamGeo = new THREE.TorusGeometry(tinRadius + 0.008, 0.012, 16, 64)
+    const seamGeo = new THREE.TorusGeometry(tinRadius - 0.005, 0.012, 16, 64)
     const seamColor = new THREE.Color(0.85, 0.87, 0.9)
     const seamMat = new THREE.MeshPhysicalMaterial({
       color: seamColor,
@@ -144,7 +144,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     canGroup.add(seamMesh)
 
     // === BOTTOM RIM ===
-    const bottomRimGeo = new THREE.TorusGeometry(tinRadius + 0.004, 0.01, 16, 64)
+    const bottomRimGeo = new THREE.TorusGeometry(tinRadius - 0.005, 0.01, 16, 64)
     const bottomRimMesh = new THREE.Mesh(bottomRimGeo, seamMat)
     bottomRimMesh.position.z = -tinDepth / 2
     canGroup.add(bottomRimMesh)
