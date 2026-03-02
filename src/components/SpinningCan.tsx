@@ -35,7 +35,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     // === TIN DIMENSIONS ===
     // Flat wide tin oriented as a coin (circular face toward camera)
     const tinRadius = 1.4
-    const tinDepth = 0.38
+    const tinDepth = 0.456
     const lidOverhang = 0.04
     const lidThickness = 0.05
 
