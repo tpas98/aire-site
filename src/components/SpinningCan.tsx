@@ -84,7 +84,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
 
     // === TIN DIMENSIONS ===
     const tinRadius = 1.4
-    const tinDepth = 0.547
+    const tinDepth = 0.602
     const lidThickness = 0.02
     const bevelRadius = 0.03  // Chamfer/bevel on edges
 
@@ -321,7 +321,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       const t = clock.getElapsedTime()
 
       // Coin-spin rotation
-      canGroup.rotation.y = t * 0.5
+      canGroup.rotation.y = t * 0.7
 
       // Gentle floating bob (matches other product images on site)
       canGroup.position.y = Math.sin(t * 0.5) * 0.06
