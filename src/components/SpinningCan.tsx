@@ -161,8 +161,8 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     bottomCapMesh.position.z = -tinDepth / 2
     canGroup.add(bottomCapMesh)
 
-    // Tilt to show lid at an angle (like product render perspective)
-    canGroup.rotation.x = 0.45
+    // Tilt upward to show lid at an angle (like product render perspective)
+    canGroup.rotation.x = -0.45
     canGroup.rotation.z = -0.03
 
     scene.add(canGroup)
@@ -208,7 +208,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     // === ANIMATION ===
     let animId: number
     const clock = new THREE.Clock()
-    const baseTiltX = 0.45
+    const baseTiltX = -0.45
     const baseTiltZ = -0.03
 
     const animate = () => {
