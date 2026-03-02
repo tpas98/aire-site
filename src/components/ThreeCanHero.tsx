@@ -39,8 +39,8 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
     renderer.setSize(width, height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
-    renderer.toneMapping = THREE.LinearToneMapping
-    renderer.toneMappingExposure = 1.0
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
+    renderer.toneMappingExposure = 0.92
     mount.appendChild(renderer.domElement)
 
     // === STUDIO ENVIRONMENT MAP ===
@@ -137,18 +137,16 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
     const seamGeo = new THREE.TorusGeometry(tinRadius - 0.005, 0.01, 16, 96)
     const bottomRimGeo = new THREE.TorusGeometry(tinRadius - 0.005, 0.008, 16, 96)
     const bottomCapGeo = new THREE.CircleGeometry(tinRadius, 96)
-    const notchGeo = new THREE.BoxGeometry(0.28, 0.08, lidThickness + 0.015, 4, 4, 4)
-    const notchRoundGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.28, 16, 1, false, 0, Math.PI)
 
     // === SHARED MATERIALS ===
     const frontMat = new THREE.MeshPhysicalMaterial({
-      map: frontTexture, roughness: 0.35, metalness: 0.01,
-      clearcoat: 0.3, clearcoatRoughness: 0.2, envMapIntensity: 0.1,
+      map: frontTexture, roughness: 0.32, metalness: 0.01,
+      clearcoat: 0.45, clearcoatRoughness: 0.18, envMapIntensity: 0.2,
       transparent: true, side: THREE.FrontSide,
     })
     const backMat = new THREE.MeshPhysicalMaterial({
-      map: backTexture, roughness: 0.35, metalness: 0.01,
-      clearcoat: 0.3, clearcoatRoughness: 0.2, envMapIntensity: 0.1,
+      map: backTexture, roughness: 0.32, metalness: 0.01,
+      clearcoat: 0.45, clearcoatRoughness: 0.18, envMapIntensity: 0.2,
       transparent: true, side: THREE.FrontSide,
     })
     const edgeMat = new THREE.MeshPhysicalMaterial({
@@ -172,13 +170,9 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
       color: new THREE.Color(0.88, 0.91, 0.93), roughness: 0.3, metalness: 0.06,
       envMapIntensity: 0.5,
     })
-    const notchMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.87, 0.90, 0.92), roughness: 0.2, metalness: 0.12,
-      clearcoat: 0.6, clearcoatRoughness: 0.15, envMapIntensity: 0.8,
-    })
 
-    const allMaterials = [frontMat, backMat, edgeMat, bevelMat, lidRimMat, seamMat, bottomCapMat, notchMat]
-    const allGeometries = [frontGeo, backGeo, edgeGeo, frontBevelGeo, backBevelGeo, lidRimGeo, seamGeo, bottomRimGeo, bottomCapGeo, notchGeo, notchRoundGeo]
+    const allMaterials = [frontMat, backMat, edgeMat, bevelMat, lidRimMat, seamMat, bottomCapMat]
+    const allGeometries = [frontGeo, backGeo, edgeGeo, frontBevelGeo, backBevelGeo, lidRimGeo, seamGeo, bottomRimGeo, bottomCapGeo]
 
     // === BUILD A SINGLE CAN ===
     function buildCan(): THREE.Group {
@@ -222,16 +216,6 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
       cap.rotation.y = Math.PI
       cap.position.z = -tinDepth / 2
       group.add(cap)
-
-      const notch = new THREE.Mesh(notchGeo, notchMat)
-      notch.position.set(0, -(tinRadius - 0.04 + 0.01), tinDepth / 2 + lidThickness / 2)
-      group.add(notch)
-
-      const notchR = new THREE.Mesh(notchRoundGeo, notchMat)
-      notchR.rotation.z = Math.PI / 2
-      notchR.rotation.y = Math.PI / 2
-      notchR.position.set(0, -(tinRadius + 0.01), tinDepth / 2 + lidThickness / 2)
-      group.add(notchR)
 
       return group
     }
@@ -285,7 +269,7 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
     })
 
     // === LIGHTING ===
-    scene.add(new THREE.AmbientLight(0xf0f4f8, 0.4))
+    scene.add(new THREE.AmbientLight(0xf5f3f0, 0.45))
 
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.0)
     keyLight.position.set(4, 4, 5)

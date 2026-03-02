@@ -27,8 +27,8 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     renderer.setSize(width, height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
-    renderer.toneMapping = THREE.LinearToneMapping
-    renderer.toneMappingExposure = 1.0
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
+    renderer.toneMappingExposure = 0.92
     mount.appendChild(renderer.domElement)
 
     // === STUDIO ENVIRONMENT MAP (for realistic reflections) ===
@@ -111,11 +111,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const frontGeo = new THREE.PlaneGeometry(faceSize, faceSize)
     const frontMat = new THREE.MeshPhysicalMaterial({
       map: frontTexture,
-      roughness: 0.35,
+      roughness: 0.32,
       metalness: 0.01,
-      clearcoat: 0.3,
-      clearcoatRoughness: 0.2,
-      envMapIntensity: 0.1,
+      clearcoat: 0.45,
+      clearcoatRoughness: 0.18,
+      envMapIntensity: 0.2,
       transparent: true,
       side: THREE.FrontSide,
     })
@@ -133,11 +133,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const backGeo = new THREE.PlaneGeometry(faceSize, faceSize)
     const backMat = new THREE.MeshPhysicalMaterial({
       map: backTexture,
-      roughness: 0.35,
+      roughness: 0.32,
       metalness: 0.01,
-      clearcoat: 0.3,
-      clearcoatRoughness: 0.2,
-      envMapIntensity: 0.1,
+      clearcoat: 0.45,
+      clearcoatRoughness: 0.18,
+      envMapIntensity: 0.2,
       transparent: true,
       side: THREE.FrontSide,
     })
@@ -239,32 +239,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     bottomCapMesh.position.z = -tinDepth / 2
     canGroup.add(bottomCapMesh)
 
-    // === OPENING NOTCH/TAB (small bump on bottom of lid) ===
-    // The notch sits at the bottom of the lid (6 o'clock position)
-    const notchWidth = 0.28
-    const notchHeight = 0.08
-    const notchDepth = lidThickness + 0.015
-    const notchGeo = new THREE.BoxGeometry(notchWidth, notchHeight, notchDepth, 4, 4, 4)
-    const notchMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.87, 0.90, 0.92),
-      roughness: 0.2,
-      metalness: 0.12,
-      clearcoat: 0.6,
-      clearcoatRoughness: 0.15,
-      envMapIntensity: 0.8,
-    })
-    const notchMesh = new THREE.Mesh(notchGeo, notchMat)
-    // Position at 6 o'clock (bottom of circular lid face)
-    notchMesh.position.set(0, -(tinRadius - notchHeight / 2 + 0.01), tinDepth / 2 + lidThickness / 2)
-    canGroup.add(notchMesh)
-
-    // Rounded notch accent — small half-cylinder for smooth look
-    const notchRoundGeo = new THREE.CylinderGeometry(notchHeight / 2, notchHeight / 2, notchWidth, 16, 1, false, 0, Math.PI)
-    const notchRoundMesh = new THREE.Mesh(notchRoundGeo, notchMat)
-    notchRoundMesh.rotation.z = Math.PI / 2
-    notchRoundMesh.rotation.y = Math.PI / 2
-    notchRoundMesh.position.set(0, -(tinRadius + 0.01), tinDepth / 2 + lidThickness / 2)
-    canGroup.add(notchRoundMesh)
+    // Notch/tab removed — it protruded beyond the circular profile during spin
 
     // Outer group holds the fixed tilt (product-shot angle)
     // Inner canGroup spins on its local Y axis within that tilt
@@ -276,7 +251,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     scene.add(tiltGroup)
 
     // === LIGHTING — bright studio setup ===
-    scene.add(new THREE.AmbientLight(0xf0f4f8, 0.4))
+    scene.add(new THREE.AmbientLight(0xf5f3f0, 0.45))
 
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.0)
     keyLight.position.set(4, 4, 5)
@@ -379,8 +354,6 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       bottomCapGeo.dispose()
       frontBevelGeo.dispose()
       backBevelGeo.dispose()
-      notchGeo.dispose()
-      notchRoundGeo.dispose()
       frontMat.dispose()
       backMat.dispose()
       edgeMat.dispose()
@@ -388,7 +361,6 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       seamMat.dispose()
       bottomCapMat.dispose()
       bevelMat.dispose()
-      notchMat.dispose()
       frontTexture?.dispose()
       backTexture?.dispose()
       bandTexture?.dispose()
