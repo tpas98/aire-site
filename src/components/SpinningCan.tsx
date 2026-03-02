@@ -29,7 +29,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.05
+    renderer.toneMappingExposure = 1.35
     mount.appendChild(renderer.domElement)
 
     // === TIN DIMENSIONS ===
@@ -167,26 +167,26 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
 
     scene.add(canGroup)
 
-    // === LIGHTING — clean studio setup ===
-    scene.add(new THREE.AmbientLight(0xf0f4f8, 0.55))
+    // === LIGHTING — bright studio setup to match product renders ===
+    scene.add(new THREE.AmbientLight(0xf4f7fa, 0.7))
 
-    const keyLight = new THREE.DirectionalLight(0xfff8ee, 1.0)
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2)
     keyLight.position.set(4, 4, 5)
     scene.add(keyLight)
 
-    const fillLight = new THREE.DirectionalLight(0xe0eef6, 0.5)
+    const fillLight = new THREE.DirectionalLight(0xeaf2f8, 0.65)
     fillLight.position.set(-4, 2, 4)
     scene.add(fillLight)
 
-    const rimLight = new THREE.DirectionalLight(0xffffff, 0.55)
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.6)
     rimLight.position.set(0, 2, -5)
     scene.add(rimLight)
 
-    const topLight = new THREE.DirectionalLight(0xf0f0ff, 0.2)
+    const topLight = new THREE.DirectionalLight(0xf8f8ff, 0.3)
     topLight.position.set(0, 6, 2)
     scene.add(topLight)
 
-    const bounceLight = new THREE.DirectionalLight(0xd0e0f0, 0.12)
+    const bounceLight = new THREE.DirectionalLight(0xe0ecf4, 0.2)
     bounceLight.position.set(0, -3, 3)
     scene.add(bounceLight)
 
