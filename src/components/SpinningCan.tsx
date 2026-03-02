@@ -14,10 +14,10 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const width = mount.clientWidth
     const height = mount.clientHeight
 
-    /* ── Camera ── */
+    /* ── Camera: product-photo angle — higher to show lid clearly ── */
     const camera = new THREE.PerspectiveCamera(26, width / height, 0.1, 100)
-    camera.position.set(0, 1.5, 7.5)
-    camera.lookAt(0, 0, 0)
+    camera.position.set(0, 4.2, 6.8)
+    camera.lookAt(0, -0.15, 0)
 
     /* ── Renderer ── */
     const renderer = new THREE.WebGLRenderer({
@@ -29,200 +29,215 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.05
+    renderer.toneMappingExposure = 0.95
     mount.appendChild(renderer.domElement)
 
-    /* ═══════════════════════════════════════════════════
-       ENVIRONMENT MAP — clean studio
-       ═══════════════════════════════════════════════════ */
-    const envC = document.createElement('canvas')
-    envC.width = 2048; envC.height = 1024
-    const ec = envC.getContext('2d')!
-
-    const skyGrad = ec.createLinearGradient(0, 0, 0, 1024)
-    skyGrad.addColorStop(0, '#c0d0e4')
-    skyGrad.addColorStop(0.2, '#d8e4f0')
-    skyGrad.addColorStop(0.4, '#eef3f9')
-    skyGrad.addColorStop(0.5, '#fafcff')
-    skyGrad.addColorStop(0.6, '#f0f4fa')
-    skyGrad.addColorStop(0.8, '#dce6f0')
-    skyGrad.addColorStop(1, '#b0c0d4')
-    ec.fillStyle = skyGrad
-    ec.fillRect(0, 0, 2048, 1024)
-
-    function addPanel(x: number, y: number, w: number, h: number, intensity: number) {
-      ec.save()
-      ec.globalAlpha = intensity
-      const g = ec.createLinearGradient(x - w / 2, y, x + w / 2, y)
-      g.addColorStop(0, 'rgba(255,255,255,0)')
-      g.addColorStop(0.15, 'rgba(255,255,255,0.7)')
-      g.addColorStop(0.5, '#ffffff')
-      g.addColorStop(0.85, 'rgba(255,255,255,0.7)')
-      g.addColorStop(1, 'rgba(255,255,255,0)')
-      ec.fillStyle = g
-      ec.fillRect(x - w / 2, y - h / 2, w, h)
-      ec.restore()
-    }
-
-    function addSoft(x: number, y: number, r: number, intensity: number) {
-      ec.save()
-      ec.globalAlpha = intensity
-      const g = ec.createRadialGradient(x, y, 0, x, y, r)
-      g.addColorStop(0, '#ffffff')
-      g.addColorStop(0.4, 'rgba(255,255,255,0.5)')
-      g.addColorStop(1, 'rgba(255,255,255,0)')
-      ec.fillStyle = g
-      ec.beginPath()
-      ec.arc(x, y, r, 0, Math.PI * 2)
-      ec.fill()
-      ec.restore()
-    }
-
-    addPanel(1350, 140, 350, 70, 0.6)
-    addPanel(500, 180, 280, 55, 0.35)
-    addPanel(1024, 480, 900, 35, 0.2)
-    addSoft(850, 40, 400, 0.4)
-    addSoft(1700, 300, 200, 0.15)
-    addPanel(1024, 950, 1400, 50, 0.06)
-
-    const envMap = new THREE.CanvasTexture(envC)
+    /* ── Soft environment map for reflections ── */
+    const eC = document.createElement('canvas')
+    eC.width = 1024; eC.height = 512
+    const eCtx = eC.getContext('2d')!
+    const eGrad = eCtx.createLinearGradient(0, 0, 0, 512)
+    eGrad.addColorStop(0, '#dce8f4')
+    eGrad.addColorStop(0.35, '#f0f5fb')
+    eGrad.addColorStop(0.5, '#ffffff')
+    eGrad.addColorStop(0.65, '#edf2f8')
+    eGrad.addColorStop(1, '#c8d8e8')
+    eCtx.fillStyle = eGrad
+    eCtx.fillRect(0, 0, 1024, 512)
+    eCtx.globalAlpha = 0.12
+    eCtx.fillStyle = '#fff'
+    eCtx.beginPath(); eCtx.arc(380, 100, 180, 0, Math.PI * 2); eCtx.fill()
+    eCtx.beginPath(); eCtx.arc(750, 150, 120, 0, Math.PI * 2); eCtx.fill()
+    eCtx.globalAlpha = 1
+    const envMap = new THREE.CanvasTexture(eC)
     envMap.mapping = THREE.EquirectangularReflectionMapping
 
-    /* ═══════════════════════════════════════════════════
-       TIN — LatheGeometry
-       ═══════════════════════════════════════════════════ */
-    const R = 1.48, lidR = 1.53, D = 0.82, lidH = 0.10
-    const bev = 0.065, groove = 0.018, segs = 16
+    /* ── Can dimensions (matching real Aire tin) ── */
+    const R = 1.50
+    const D = 0.82
+    const lidR = R + 0.045
+    const lidH = 0.09
+    const bev = 0.055
 
-    function buildProfile() {
-      const pts: THREE.Vector2[] = []
-      function arc(cx: number, cy: number, r: number, a0: number, a1: number, n: number) {
-        for (let i = 0; i <= n; i++) {
-          const a = a0 + (a1 - a0) * (i / n)
-          pts.push(new THREE.Vector2(cx + r * Math.cos(a), cy + r * Math.sin(a)))
-        }
-      }
-      const botY = -D / 2, topBody = D / 2, topLid = D / 2 + lidH
-
-      pts.push(new THREE.Vector2(0, botY))
-      pts.push(new THREE.Vector2(R - bev, botY))
-      arc(R - bev, botY + bev, bev, -Math.PI / 2, 0, segs)
-      pts.push(new THREE.Vector2(R, topBody - groove * 3))
-      pts.push(new THREE.Vector2(R - groove * 0.6, topBody - groove * 1.5))
-      pts.push(new THREE.Vector2(R - groove * 0.8, topBody - groove * 0.3))
-      pts.push(new THREE.Vector2(R + groove * 0.3, topBody + 0.003))
-      pts.push(new THREE.Vector2(lidR, topBody + 0.012))
-      pts.push(new THREE.Vector2(lidR, topLid - bev))
-      arc(lidR - bev, topLid - bev, bev, 0, Math.PI / 2, segs)
-      pts.push(new THREE.Vector2(0, topLid))
-      return pts
-    }
-
-    const latheGeo = new THREE.LatheGeometry(buildProfile(), 160)
-    latheGeo.computeVertexNormals()
-
-    const bodyMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.88, 0.90, 0.93),
-      roughness: 0.14,
-      metalness: 0.15,
-      clearcoat: 0.9,
-      clearcoatRoughness: 0.06,
-      envMap,
-      envMapIntensity: 0.7,
-      side: THREE.DoubleSide,
-    })
-    const latheMesh = new THREE.Mesh(latheGeo, bodyMat)
     const canGroup = new THREE.Group()
-    canGroup.add(latheMesh)
-
-    /* ── Textures ── */
     const loader = new THREE.TextureLoader()
+
     let texLoaded = 0
-    const onTex = () => { texLoaded++; if (texLoaded >= 3) setLoaded(true) }
-    const cfgTex = (tex: THREE.Texture) => {
+    const onTex = () => { texLoaded++; if (texLoaded >= 2) setLoaded(true) }
+
+    const configTex = (tex: THREE.Texture) => {
       tex.colorSpace = THREE.SRGBColorSpace
       tex.minFilter = THREE.LinearMipmapLinearFilter
       tex.magFilter = THREE.LinearFilter
       tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy())
     }
 
-    /* ── TOP face (branding) ── */
+    /* ── 1. LID TOP (PlaneGeometry — avoids radial UV distortion) ── */
     const lidTex = loader.load('/images/can-front-texture.png', onTex)
-    cfgTex(lidTex)
-    const topY = D / 2 + lidH
-    const lidSize = lidR * 2 * 0.95
+    configTex(lidTex)
+
+    const lidSize = lidR * 2
     const lidGeo = new THREE.PlaneGeometry(lidSize, lidSize)
     const lidMat = new THREE.MeshPhysicalMaterial({
-      map: lidTex, roughness: 0.24, metalness: 0.0,
-      clearcoat: 0.6, clearcoatRoughness: 0.12,
-      envMap, envMapIntensity: 0.08,
-      transparent: true, alphaTest: 0.01,
+      map: lidTex,
+      roughness: 0.28,
+      metalness: 0.0,
+      clearcoat: 0.55,
+      clearcoatRoughness: 0.18,
+      envMap,
+      envMapIntensity: 0.12,
+      transparent: true,
+      alphaTest: 0.01,
     })
     const lidMesh = new THREE.Mesh(lidGeo, lidMat)
     lidMesh.rotation.x = -Math.PI / 2
     lidMesh.rotation.z = Math.PI
-    lidMesh.position.y = topY + 0.002
+    lidMesh.position.y = D / 2 + lidH + 0.001
     canGroup.add(lidMesh)
 
-    /* ── BOTTOM face (supplement facts) ── */
-    const backTex = loader.load('/images/can-back-texture.png', onTex)
-    cfgTex(backTex)
-    const botY = -D / 2
-    const backSize = R * 2 * 0.93
-    const backGeo = new THREE.PlaneGeometry(backSize, backSize)
-    const backMat = new THREE.MeshPhysicalMaterial({
-      map: backTex, roughness: 0.24, metalness: 0.0,
-      clearcoat: 0.6, clearcoatRoughness: 0.12,
-      envMap, envMapIntensity: 0.08,
-      transparent: true, alphaTest: 0.01,
+    /* ── 2. LID RIM (vertical side) ── */
+    const lidRimGeo = new THREE.CylinderGeometry(lidR, lidR, lidH, 128, 1, true)
+    const lidRimMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0.93, 0.94, 0.96),
+      roughness: 0.15,
+      metalness: 0.06,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.08,
+      envMap,
+      envMapIntensity: 0.35,
     })
-    const backMesh = new THREE.Mesh(backGeo, backMat)
-    backMesh.rotation.x = Math.PI / 2
-    backMesh.rotation.z = Math.PI
-    backMesh.position.y = botY - 0.002
-    canGroup.add(backMesh)
+    const lidRimMesh = new THREE.Mesh(lidRimGeo, lidRimMat)
+    lidRimMesh.position.y = D / 2 + lidH / 2
+    canGroup.add(lidRimMesh)
 
-    /* ── Band texture ── */
+    /* ── 3. LID BEVEL (rounded top edge) ── */
+    const bevGeo = new THREE.TorusGeometry(lidR - bev * 0.4, bev, 24, 128)
+    const bevMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0.92, 0.93, 0.95),
+      roughness: 0.12,
+      metalness: 0.08,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.06,
+      envMap,
+      envMapIntensity: 0.45,
+    })
+    const bevMesh = new THREE.Mesh(bevGeo, bevMat)
+    bevMesh.rotation.x = Math.PI / 2
+    bevMesh.position.y = D / 2 + lidH
+    canGroup.add(bevMesh)
+
+    /* ── 4. LID-BODY SEAM ── */
+    const seamGeo = new THREE.TorusGeometry(R + 0.008, 0.018, 16, 128)
+    const seamMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0.80, 0.82, 0.86),
+      roughness: 0.22,
+      metalness: 0.12,
+      envMap,
+      envMapIntensity: 0.25,
+    })
+    const seamMesh = new THREE.Mesh(seamGeo, seamMat)
+    seamMesh.rotation.x = Math.PI / 2
+    seamMesh.position.y = D / 2 + 0.002
+    canGroup.add(seamMesh)
+
+    /* ── 5. BODY WALL (band texture) ── */
     const bandTex = loader.load('/images/can-band-texture.png', onTex)
-    cfgTex(bandTex)
+    configTex(bandTex)
     bandTex.wrapS = THREE.RepeatWrapping
     bandTex.wrapT = THREE.ClampToEdgeWrapping
-    const bandGeo = new THREE.CylinderGeometry(R + 0.004, R + 0.004, D * 0.94, 160, 1, true)
-    const bandMat = new THREE.MeshPhysicalMaterial({
-      map: bandTex, roughness: 0.22, metalness: 0.04,
-      clearcoat: 0.6, clearcoatRoughness: 0.15,
-      envMap, envMapIntensity: 0.10,
-      side: THREE.FrontSide,
-    })
-    const bandMesh = new THREE.Mesh(bandGeo, bandMat)
-    canGroup.add(bandMesh)
 
+    const bodyGeo = new THREE.CylinderGeometry(R, R, D, 128, 1, true)
+    const bodyMat = new THREE.MeshPhysicalMaterial({
+      map: bandTex,
+      roughness: 0.28,
+      metalness: 0.04,
+      clearcoat: 0.55,
+      clearcoatRoughness: 0.18,
+      envMap,
+      envMapIntensity: 0.15,
+      side: THREE.DoubleSide,
+    })
+    const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat)
+    canGroup.add(bodyMesh)
+
+    /* ── 6. BOTTOM CAP ── */
+    const bottomGeo = new THREE.CircleGeometry(R, 128)
+    const bottomMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0.87, 0.89, 0.92),
+      roughness: 0.35,
+      metalness: 0.04,
+      clearcoat: 0.4,
+      clearcoatRoughness: 0.2,
+      envMap,
+      envMapIntensity: 0.1,
+    })
+    const bottomMesh = new THREE.Mesh(bottomGeo, bottomMat)
+    bottomMesh.rotation.x = Math.PI / 2
+    bottomMesh.position.y = -D / 2
+    canGroup.add(bottomMesh)
+
+    /* ── 7. BOTTOM EDGE RING ── */
+    const bEdgeGeo = new THREE.TorusGeometry(R + 0.003, 0.022, 16, 128)
+    const bEdgeMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0.86, 0.88, 0.91),
+      roughness: 0.18,
+      metalness: 0.08,
+      clearcoat: 0.75,
+      clearcoatRoughness: 0.1,
+      envMap,
+      envMapIntensity: 0.3,
+    })
+    const bEdgeMesh = new THREE.Mesh(bEdgeGeo, bEdgeMat)
+    bEdgeMesh.rotation.x = Math.PI / 2
+    bEdgeMesh.position.y = -D / 2
+    canGroup.add(bEdgeMesh)
+
+    /* ── 8. Inner lid shadow ── */
+    const innerShadowGeo = new THREE.RingGeometry(R - 0.12, R, 128)
+    const innerShadowMat = new THREE.MeshBasicMaterial({
+      color: 0x667788,
+      transparent: true,
+      opacity: 0.08,
+      side: THREE.DoubleSide,
+    })
+    const innerShadowMesh = new THREE.Mesh(innerShadowGeo, innerShadowMat)
+    innerShadowMesh.rotation.x = -Math.PI / 2
+    innerShadowMesh.position.y = D / 2 - 0.01
+    canGroup.add(innerShadowMesh)
+
+    /* ── Position ── */
+    canGroup.rotation.x = -0.18
+    canGroup.rotation.z = 0.025
     scene.add(canGroup)
 
-    /* ══ LIGHTING ══ */
-    scene.add(new THREE.AmbientLight(0xe8eef6, 0.3))
+    /* ══ LIGHTING — Studio setup ══ */
+    scene.add(new THREE.AmbientLight(0xeef2f8, 0.35))
 
-    const keyL = new THREE.DirectionalLight(0xfff2e0, 0.9)
-    keyL.position.set(4, 5, 4)
-    scene.add(keyL)
+    const keyLight = new THREE.DirectionalLight(0xfff4e6, 0.95)
+    keyLight.position.set(4, 5.5, 4.5)
+    scene.add(keyLight)
 
-    const fillL = new THREE.DirectionalLight(0xd8e6f8, 0.4)
-    fillL.position.set(-5, 2, 3)
-    scene.add(fillL)
+    const fillLight = new THREE.DirectionalLight(0xdce8f8, 0.4)
+    fillLight.position.set(-4.5, 2.5, 3)
+    scene.add(fillLight)
 
-    const rimL = new THREE.DirectionalLight(0xffffff, 0.6)
-    rimL.position.set(0, 2, -6)
-    scene.add(rimL)
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.55)
+    rimLight.position.set(0.5, 2, -5.5)
+    scene.add(rimLight)
 
-    const topL = new THREE.DirectionalLight(0xf0f4ff, 0.25)
-    topL.position.set(0, 9, 0)
-    scene.add(topL)
+    const topKick = new THREE.DirectionalLight(0xf4f6ff, 0.2)
+    topKick.position.set(-1, 8, 1)
+    scene.add(topKick)
 
-    const bounceL = new THREE.DirectionalLight(0xf0e8d8, 0.1)
-    bounceL.position.set(0, -4, 2)
-    scene.add(bounceL)
+    const bounceLight = new THREE.DirectionalLight(0xe8ddd0, 0.08)
+    bounceLight.position.set(0, -3, 2)
+    scene.add(bounceLight)
 
-    /* ── Mouse ── */
+    const accentLight = new THREE.PointLight(0xf0f4ff, 0.15, 12)
+    accentLight.position.set(3, 0.5, 2)
+    scene.add(accentLight)
+
+    /* ── Mouse interaction ── */
     let mx = 0, my = 0
     const handleMove = (e: MouseEvent) => {
       const r = mount.getBoundingClientRect()
@@ -233,26 +248,21 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     mount.addEventListener('mousemove', handleMove)
     mount.addEventListener('mouseleave', handleLeave)
 
-    /* ═══════════════════════════════════════════════════
-       ANIMATION — oscillating tilt to show both faces
-       ═══════════════════════════════════════════════════ */
+    /* ── Animation ── */
     let animId: number
     const clock = new THREE.Clock()
-    const SPIN_SPEED = 0.35
-    const TILT_RANGE = 0.5
-    const TILT_CENTER = -0.1
+    const BASE_X = -0.18
+    const BASE_Z = 0.025
 
     const animate = () => {
       animId = requestAnimationFrame(animate)
       const t = clock.getElapsedTime()
 
-      canGroup.rotation.y = t * SPIN_SPEED
-      const tiltPhase = t * SPIN_SPEED
-      canGroup.rotation.x = TILT_CENTER + Math.sin(tiltPhase) * TILT_RANGE
-      canGroup.position.y = Math.sin(t * 0.4) * 0.025
+      canGroup.rotation.y = t * 0.35
+      canGroup.position.y = Math.sin(t * 0.45) * 0.035
 
-      canGroup.rotation.x += my * 0.05
-      canGroup.rotation.z = mx * -0.03
+      canGroup.rotation.x += (BASE_X + my * 0.12 - canGroup.rotation.x) * 0.025
+      canGroup.rotation.z += (BASE_Z - mx * 0.08 - canGroup.rotation.z) * 0.025
 
       renderer.render(scene, camera)
     }
@@ -261,23 +271,32 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     /* ── Resize ── */
     const handleResize = () => {
       if (!mount) return
-      const w = mount.clientWidth, h = mount.clientHeight
+      const w = mount.clientWidth
+      const h = mount.clientHeight
       camera.aspect = w / h
       camera.updateProjectionMatrix()
       renderer.setSize(w, h)
     }
     window.addEventListener('resize', handleResize)
 
+    /* ── Cleanup ── */
     return () => {
       cancelAnimationFrame(animId)
       window.removeEventListener('resize', handleResize)
       mount.removeEventListener('mousemove', handleMove)
       mount.removeEventListener('mouseleave', handleLeave)
       renderer.dispose()
-      ;[latheGeo, lidGeo, backGeo, bandGeo].forEach(g => g.dispose())
-      ;[bodyMat, lidMat, backMat, bandMat].forEach(m => m.dispose())
-      lidTex?.dispose(); backTex?.dispose(); bandTex?.dispose(); envMap?.dispose()
-      if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement)
+      // Dispose geometries
+      ;[lidGeo, lidRimGeo, bevGeo, seamGeo, bodyGeo, bottomGeo, bEdgeGeo, innerShadowGeo].forEach(g => g.dispose())
+      // Dispose materials
+      ;[lidMat, lidRimMat, bevMat, seamMat, bodyMat, bottomMat, bEdgeMat, innerShadowMat].forEach(m => m.dispose())
+      // Dispose textures
+      lidTex?.dispose()
+      bandTex?.dispose()
+      envMap?.dispose()
+      if (mount.contains(renderer.domElement)) {
+        mount.removeChild(renderer.domElement)
+      }
     }
   }, [])
 
