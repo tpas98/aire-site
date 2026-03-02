@@ -1,6 +1,8 @@
 'use client'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import dynamic from 'next/dynamic'
+
+const ThreeCanHero = dynamic(() => import('./ThreeCanHero'), { ssr: false })
 
 const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
 
@@ -46,17 +48,10 @@ export default function Hero() {
           </motion.div>
         </div>
         <motion.div
-          className="flex justify-center items-center w-full"
+          className="flex justify-center items-center w-full h-[320px] md:h-[480px]"
           variants={fadeUp} initial="hidden" animate="visible" custom={0.2}
         >
-          <Image
-            src="/images/three-cans-new.png"
-            alt="Three Aire tins with one open showing pouches"
-            width={800}
-            height={600}
-            priority
-            className="w-full max-w-[480px] md:max-w-[580px] object-contain"
-          />
+          <ThreeCanHero />
         </motion.div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white/30 to-transparent z-10" />
