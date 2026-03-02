@@ -18,7 +18,7 @@
   h1 {
     font-family: Georgia, 'Times New Roman', serif;
     color: #1a2e4a;
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
     text-align: center;
   }
@@ -27,17 +27,17 @@
     font-size: 0.75rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
   #canvas-container {
-    width: 500px;
-    height: 500px;
+    width: 550px;
+    height: 550px;
     cursor: grab;
   }
   .note {
     color: #6b8aa5;
     font-size: 0.85rem;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     text-align: center;
   }
 </style>
@@ -48,7 +48,7 @@
 <div id="canvas-container"></div>
 <p class="note">Move your mouse over the can to interact</p>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="three.min.js"></script>
 <script>
 (function() {
   const mount = document.getElementById('canvas-container');
@@ -58,137 +58,163 @@
   // Scene
   const scene = new THREE.Scene();
 
-  // Camera — slightly elevated, looking almost straight at the can (like Ultra Pouches)
-  const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100);
-  camera.position.set(0, 0.6, 6.0);
-  camera.lookAt(0, 0.05, 0);
+  // Camera — elevated angle to show the lid + side of a flat tin
+  // For a short flat tin, we need to look down at ~30-35 degrees
+  const camera = new THREE.PerspectiveCamera(28, width / height, 0.1, 100);
+  camera.position.set(0, 3.2, 5.5);
+  camera.lookAt(0, 0, 0);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = 1.0;
   mount.appendChild(renderer.domElement);
 
-  // Can dimensions (proportional to a real pouch tin — wide and short)
-  const canRadius = 1.0;
-  const canHeight = 0.65;
-  const lidThickness = 0.08;
-
-  // Colors
-  const canBodyColor = new THREE.Color(0.85, 0.9, 0.93);
-  const rimColor = new THREE.Color(0.92, 0.94, 0.96);
+  // === CAN DIMENSIONS ===
+  // Aire tin is a flat, wide tin — like a mint/snus tin
+  // Proportions: radius ~1.0, height ~0.5 (short!)
+  const canRadius = 1.1;
+  const canHeight = 0.5;
+  const lidOverhang = 0.04;  // lid extends slightly past body
+  const lidThickness = 0.06;
 
   const canGroup = new THREE.Group();
 
   // Texture loader
   const loader = new THREE.TextureLoader();
+  let texturesLoaded = 0;
+  const totalTextures = 2;
 
-  // === CAN BODY ===
+  function onTextureLoad() {
+    texturesLoaded++;
+    console.log('Texture loaded: ' + texturesLoaded + '/' + totalTextures);
+  }
+
+  // === CAN BODY (cylinder side — uses the band texture that wraps around) ===
   const bodyGeo = new THREE.CylinderGeometry(canRadius, canRadius, canHeight, 64, 1, true);
-  const bodyTexture = loader.load('public/images/can-body-texture.png');
-  bodyTexture.encoding = THREE.sRGBEncoding;
-  bodyTexture.wrapS = THREE.RepeatWrapping;
-  bodyTexture.wrapT = THREE.ClampToEdgeWrapping;
+  const bandTexture = loader.load('public/images/can-band-texture.png', onTextureLoad);
+  bandTexture.encoding = THREE.sRGBEncoding;
+  bandTexture.wrapS = THREE.RepeatWrapping;
+  bandTexture.wrapT = THREE.ClampToEdgeWrapping;
+  bandTexture.minFilter = THREE.LinearMipmapLinearFilter;
+  bandTexture.magFilter = THREE.LinearFilter;
+  bandTexture.anisotropy = 8;
+  // No flip needed — default cylinder UV wraps correctly
 
   const bodyMat = new THREE.MeshPhysicalMaterial({
-    map: bodyTexture,
-    roughness: 0.32,
-    metalness: 0.08,
-    clearcoat: 0.4,
-    clearcoatRoughness: 0.35,
+    map: bandTexture,
+    roughness: 0.28,
+    metalness: 0.12,
+    clearcoat: 0.6,
+    clearcoatRoughness: 0.25,
     side: THREE.DoubleSide,
   });
-  canGroup.add(new THREE.Mesh(bodyGeo, bodyMat));
+  const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat);
+  canGroup.add(bodyMesh);
 
   // === BOTTOM CAP ===
   const bottomGeo = new THREE.CircleGeometry(canRadius, 64);
   const bottomMat = new THREE.MeshPhysicalMaterial({
-    color: canBodyColor,
-    roughness: 0.4,
-    metalness: 0.05,
+    color: new THREE.Color(0.88, 0.91, 0.93),
+    roughness: 0.35,
+    metalness: 0.08,
+    clearcoat: 0.3,
   });
   const bottomMesh = new THREE.Mesh(bottomGeo, bottomMat);
   bottomMesh.rotation.x = Math.PI / 2;
   bottomMesh.position.y = -canHeight / 2;
   canGroup.add(bottomMesh);
 
-  // === LID TOP ===
-  const lidRadius = canRadius + 0.03;
-  const lidTexture = loader.load('public/images/can-lid-texture.png');
+  // === LID TOP (the main face you see from above) ===
+  const lidRadius = canRadius + lidOverhang;
+  const lidTexture = loader.load('public/images/can-lid-texture.png', onTextureLoad);
   lidTexture.encoding = THREE.sRGBEncoding;
+  lidTexture.minFilter = THREE.LinearMipmapLinearFilter;
+  lidTexture.magFilter = THREE.LinearFilter;
+  lidTexture.anisotropy = 8;
+  // No flip — test default orientation
 
-  const lidTopGeo = new THREE.CircleGeometry(lidRadius, 64);
+  // Use PlaneGeometry for perfect flat UV mapping (no radial distortion)
+  // The lid texture already contains the circular tin face artwork
+  const lidSize = lidRadius * 2;
+  const lidTopGeo = new THREE.PlaneGeometry(lidSize, lidSize);
   const lidTopMat = new THREE.MeshPhysicalMaterial({
     map: lidTexture,
-    roughness: 0.28,
-    metalness: 0.06,
-    clearcoat: 0.5,
-    clearcoatRoughness: 0.25,
+    roughness: 0.22,
+    metalness: 0.05,
+    clearcoat: 0.7,
+    clearcoatRoughness: 0.15,
+    transparent: true,
   });
   const lidTopMesh = new THREE.Mesh(lidTopGeo, lidTopMat);
   lidTopMesh.rotation.x = -Math.PI / 2;
-  lidTopMesh.position.y = canHeight / 2 + lidThickness;
+  lidTopMesh.position.y = canHeight / 2 + lidThickness + 0.001; // tiny offset to prevent z-fighting
   canGroup.add(lidTopMesh);
 
-  // === LID SIDE (rim) ===
-  const lidGeo = new THREE.CylinderGeometry(lidRadius, lidRadius, lidThickness, 64);
+  // === LID SIDE (thin rim around the lid edge) ===
+  const lidSideGeo = new THREE.CylinderGeometry(lidRadius, lidRadius, lidThickness, 64);
   const lidSideMat = new THREE.MeshPhysicalMaterial({
-    color: rimColor,
-    roughness: 0.25,
-    metalness: 0.1,
-    clearcoat: 0.6,
+    color: new THREE.Color(0.9, 0.92, 0.94),
+    roughness: 0.2,
+    metalness: 0.12,
+    clearcoat: 0.7,
+    clearcoatRoughness: 0.15,
   });
-  const lidSideMesh = new THREE.Mesh(lidGeo, lidSideMat);
+  const lidSideMesh = new THREE.Mesh(lidSideGeo, lidSideMat);
   lidSideMesh.position.y = canHeight / 2 + lidThickness / 2;
   canGroup.add(lidSideMesh);
 
-  // === RIM RING (decorative seam where lid meets body) ===
-  const rimGeo = new THREE.TorusGeometry(canRadius + 0.01, 0.018, 16, 64);
-  const rimMat = new THREE.MeshPhysicalMaterial({
-    color: rimColor,
+  // === SEAM RING (where lid meets body) ===
+  const seamGeo = new THREE.TorusGeometry(canRadius + 0.01, 0.015, 16, 64);
+  const seamMat = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color(0.85, 0.87, 0.9),
     roughness: 0.2,
     metalness: 0.15,
+    clearcoat: 0.5,
   });
-  const rimMesh = new THREE.Mesh(rimGeo, rimMat);
-  rimMesh.rotation.x = Math.PI / 2;
-  rimMesh.position.y = canHeight / 2;
-  canGroup.add(rimMesh);
+  const seamMesh = new THREE.Mesh(seamGeo, seamMat);
+  seamMesh.rotation.x = Math.PI / 2;
+  seamMesh.position.y = canHeight / 2;
+  canGroup.add(seamMesh);
 
-  // === BOTTOM RIM RING ===
-  const bottomRimGeo = new THREE.TorusGeometry(canRadius + 0.005, 0.015, 16, 64);
-  const bottomRimMesh = new THREE.Mesh(bottomRimGeo, rimMat);
+  // === BOTTOM RIM ===
+  const bottomRimGeo = new THREE.TorusGeometry(canRadius + 0.005, 0.012, 16, 64);
+  const bottomRimMesh = new THREE.Mesh(bottomRimGeo, seamMat);
   bottomRimMesh.rotation.x = Math.PI / 2;
   bottomRimMesh.position.y = -canHeight / 2;
   canGroup.add(bottomRimMesh);
 
-  // Slight downward tilt to show a hint of the lid
-  canGroup.rotation.x = -0.12;
   scene.add(canGroup);
 
-  // === LIGHTING ===
-  // Soft ambient fill
-  scene.add(new THREE.AmbientLight(0xf0f4f8, 0.65));
+  // === LIGHTING — studio-quality 5-light setup ===
+  // Soft ambient
+  scene.add(new THREE.AmbientLight(0xf0f4f8, 0.5));
 
-  // Key light — warm, from upper right
-  const keyLight = new THREE.DirectionalLight(0xfff5e6, 1.15);
-  keyLight.position.set(3, 4, 5);
+  // Key light — warm, upper right front
+  const keyLight = new THREE.DirectionalLight(0xfff8ee, 0.95);
+  keyLight.position.set(4, 5, 5);
   scene.add(keyLight);
 
-  // Fill light — cool, from left
-  const fillLight = new THREE.DirectionalLight(0xe0eef6, 0.55);
-  fillLight.position.set(-4, 2, 3);
+  // Fill light — cool, left side
+  const fillLight = new THREE.DirectionalLight(0xe0eef6, 0.65);
+  fillLight.position.set(-5, 3, 3);
   scene.add(fillLight);
 
-  // Rim/back light — highlights edges
-  const rimLight = new THREE.DirectionalLight(0xffffff, 0.45);
-  rimLight.position.set(0, 3, -4);
+  // Rim/back light — highlights the edges
+  const rimLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  rimLight.position.set(0, 4, -5);
   scene.add(rimLight);
 
-  // Subtle bottom bounce
-  const bounceLight = new THREE.DirectionalLight(0xd0e0f0, 0.2);
-  bounceLight.position.set(0, -2, 2);
+  // Top light — gentle, don't wash out the lid artwork
+  const topLight = new THREE.DirectionalLight(0xf8f8ff, 0.15);
+  topLight.position.set(0, 8, 0);
+  scene.add(topLight);
+
+  // Bottom bounce
+  const bounceLight = new THREE.DirectionalLight(0xd0e0f0, 0.15);
+  bounceLight.position.set(0, -3, 2);
   scene.add(bounceLight);
 
   // === MOUSE INTERACTION ===
@@ -198,22 +224,30 @@
     mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
     mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
   });
+  mount.addEventListener('mouseleave', () => {
+    mouseX = 0;
+    mouseY = 0;
+  });
 
   // === ANIMATE ===
   const clock = new THREE.Clock();
+  const baseRotationX = -0.05; // very slight tilt
+
   function animate() {
     requestAnimationFrame(animate);
     const t = clock.getElapsedTime();
 
-    // Smooth continuous rotation (slightly slower so label text is readable)
-    canGroup.rotation.y = t * 0.35;
+    // Smooth continuous Y rotation — shows both sides of label
+    canGroup.rotation.y = t * 0.4;
 
-    // Gentle floating motion
-    canGroup.position.y = Math.sin(t * 0.5) * 0.04;
+    // Gentle floating
+    canGroup.position.y = Math.sin(t * 0.5) * 0.03;
 
-    // Mouse-responsive tilt (subtle)
-    canGroup.rotation.x += (-0.12 + mouseY * 0.06 - canGroup.rotation.x) * 0.025;
-    canGroup.rotation.z += (mouseX * -0.04 - canGroup.rotation.z) * 0.025;
+    // Mouse tilt (subtle)
+    const targetTiltX = baseRotationX + mouseY * 0.1;
+    const targetTiltZ = mouseX * -0.08;
+    canGroup.rotation.x += (targetTiltX - canGroup.rotation.x) * 0.04;
+    canGroup.rotation.z += (targetTiltZ - canGroup.rotation.z) * 0.04;
 
     renderer.render(scene, camera);
   }

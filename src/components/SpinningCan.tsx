@@ -15,9 +15,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
 
     const width = mount.clientWidth
     const height = mount.clientHeight
-    const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100)
-    camera.position.set(0, 0.6, 6.0)
-    camera.lookAt(0, 0.05, 0)
+
+    // Camera — elevated angle to show lid + side of flat tin
+    const camera = new THREE.PerspectiveCamera(28, width / height, 0.1, 100)
+    camera.position.set(0, 3.2, 5.5)
+    camera.lookAt(0, 0, 0)
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -28,141 +30,144 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.15
+    renderer.toneMappingExposure = 1.0
     mount.appendChild(renderer.domElement)
 
-    // Can dimensions (proportional to a real pouch can)
-    const canRadius = 1.0
-    const canHeight = 0.65
-    const lidThickness = 0.08
+    // Can dimensions — flat wide tin (like a mint/snus tin)
+    const canRadius = 1.1
+    const canHeight = 0.5
+    const lidOverhang = 0.04
+    const lidThickness = 0.06
 
-    // Materials
-    const canBodyColor = new THREE.Color(0.85, 0.9, 0.93)    // light sage
-    const navyColor = new THREE.Color(0.1, 0.18, 0.29)       // navy band
-    const accentColor = new THREE.Color(0.35, 0.61, 0.75)    // accent blue
-    const rimColor = new THREE.Color(0.92, 0.94, 0.96)       // white rim
+    const canBodyColor = new THREE.Color(0.88, 0.91, 0.93)
+    const rimColor = new THREE.Color(0.9, 0.92, 0.94)
+    const seamColor = new THREE.Color(0.85, 0.87, 0.9)
 
     // Texture loader
     const textureLoader = new THREE.TextureLoader()
-    let bodyTexture: THREE.Texture | null = null
+    let bandTexture: THREE.Texture | null = null
     let lidTexture: THREE.Texture | null = null
+    let texturesReady = 0
 
-    // Create can group
+    const onTextureLoad = () => {
+      texturesReady++
+      if (texturesReady >= 2) setLoaded(true)
+    }
+
     const canGroup = new THREE.Group()
 
-    // === CAN BODY (cylinder) ===
+    // === CAN BODY (cylinder side — uses band texture) ===
     const bodyGeo = new THREE.CylinderGeometry(canRadius, canRadius, canHeight, 64, 1, true)
-
-    // Load body texture
-    bodyTexture = textureLoader.load('/images/can-body-texture.png', () => {
-      bodyTexture!.colorSpace = THREE.SRGBColorSpace
-      bodyTexture!.wrapS = THREE.RepeatWrapping
-      bodyTexture!.wrapT = THREE.ClampToEdgeWrapping
-      setLoaded(true)
-    })
+    bandTexture = textureLoader.load('/images/can-band-texture.png', onTextureLoad)
+    bandTexture.colorSpace = THREE.SRGBColorSpace
+    bandTexture.wrapS = THREE.RepeatWrapping
+    bandTexture.wrapT = THREE.ClampToEdgeWrapping
+    bandTexture.minFilter = THREE.LinearMipmapLinearFilter
+    bandTexture.magFilter = THREE.LinearFilter
+    bandTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy())
 
     const bodyMat = new THREE.MeshPhysicalMaterial({
-      map: bodyTexture,
-      roughness: 0.32,
-      metalness: 0.08,
-      clearcoat: 0.4,
-      clearcoatRoughness: 0.35,
+      map: bandTexture,
+      roughness: 0.28,
+      metalness: 0.12,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.25,
       side: THREE.DoubleSide,
     })
-    const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat)
-    canGroup.add(bodyMesh)
+    canGroup.add(new THREE.Mesh(bodyGeo, bodyMat))
 
     // === BOTTOM CAP ===
     const bottomGeo = new THREE.CircleGeometry(canRadius, 64)
     const bottomMat = new THREE.MeshPhysicalMaterial({
       color: canBodyColor,
-      roughness: 0.4,
-      metalness: 0.05,
+      roughness: 0.35,
+      metalness: 0.08,
+      clearcoat: 0.3,
     })
     const bottomMesh = new THREE.Mesh(bottomGeo, bottomMat)
     bottomMesh.rotation.x = Math.PI / 2
     bottomMesh.position.y = -canHeight / 2
     canGroup.add(bottomMesh)
 
-    // === LID (slightly larger, sits on top) ===
-    const lidRadius = canRadius + 0.03
-    const lidGeo = new THREE.CylinderGeometry(lidRadius, lidRadius, lidThickness, 64)
+    // === LID TOP (PlaneGeometry for perfect flat UV mapping) ===
+    const lidRadius = canRadius + lidOverhang
+    const lidSize = lidRadius * 2
+    lidTexture = textureLoader.load('/images/can-lid-texture.png', onTextureLoad)
+    lidTexture.colorSpace = THREE.SRGBColorSpace
+    lidTexture.minFilter = THREE.LinearMipmapLinearFilter
+    lidTexture.magFilter = THREE.LinearFilter
+    lidTexture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy())
 
-    // Load lid texture
-    lidTexture = textureLoader.load('/images/can-lid-texture.png', () => {
-      lidTexture!.colorSpace = THREE.SRGBColorSpace
-    })
-
-    const lidTopGeo = new THREE.CircleGeometry(lidRadius, 64)
+    const lidTopGeo = new THREE.PlaneGeometry(lidSize, lidSize)
     const lidTopMat = new THREE.MeshPhysicalMaterial({
       map: lidTexture,
-      roughness: 0.28,
-      metalness: 0.06,
-      clearcoat: 0.5,
-      clearcoatRoughness: 0.25,
+      roughness: 0.22,
+      metalness: 0.05,
+      clearcoat: 0.7,
+      clearcoatRoughness: 0.15,
+      transparent: true,
     })
     const lidTopMesh = new THREE.Mesh(lidTopGeo, lidTopMat)
     lidTopMesh.rotation.x = -Math.PI / 2
-    lidTopMesh.position.y = canHeight / 2 + lidThickness
+    lidTopMesh.position.y = canHeight / 2 + lidThickness + 0.001
     canGroup.add(lidTopMesh)
 
-    // Lid side (rim)
+    // === LID SIDE (rim) ===
+    const lidSideGeo = new THREE.CylinderGeometry(lidRadius, lidRadius, lidThickness, 64)
     const lidSideMat = new THREE.MeshPhysicalMaterial({
       color: rimColor,
       roughness: 0.25,
       metalness: 0.1,
       clearcoat: 0.6,
     })
-    const lidSideMesh = new THREE.Mesh(lidGeo, lidSideMat)
+    const lidSideMesh = new THREE.Mesh(lidSideGeo, lidSideMat)
     lidSideMesh.position.y = canHeight / 2 + lidThickness / 2
     canGroup.add(lidSideMesh)
 
-    // === RIM RING (decorative ring where lid meets body) ===
-    const rimGeo = new THREE.TorusGeometry(canRadius + 0.01, 0.02, 16, 64)
-    const rimMat = new THREE.MeshPhysicalMaterial({
-      color: rimColor,
+    // === SEAM RING (where lid meets body) ===
+    const seamGeo = new THREE.TorusGeometry(canRadius + 0.01, 0.015, 16, 64)
+    const seamMat = new THREE.MeshPhysicalMaterial({
+      color: seamColor,
       roughness: 0.2,
       metalness: 0.15,
+      clearcoat: 0.5,
     })
-    const rimMesh = new THREE.Mesh(rimGeo, rimMat)
-    rimMesh.rotation.x = Math.PI / 2
-    rimMesh.position.y = canHeight / 2
-    canGroup.add(rimMesh)
+    const seamMesh = new THREE.Mesh(seamGeo, seamMat)
+    seamMesh.rotation.x = Math.PI / 2
+    seamMesh.position.y = canHeight / 2
+    canGroup.add(seamMesh)
 
-    // Add bottom rim ring
-    const bottomRimGeo = new THREE.TorusGeometry(canRadius + 0.005, 0.015, 16, 64)
-    const bottomRimMesh = new THREE.Mesh(bottomRimGeo, rimMat)
+    // === BOTTOM RIM ===
+    const bottomRimGeo = new THREE.TorusGeometry(canRadius + 0.005, 0.012, 16, 64)
+    const bottomRimMesh = new THREE.Mesh(bottomRimGeo, seamMat)
     bottomRimMesh.rotation.x = Math.PI / 2
     bottomRimMesh.position.y = -canHeight / 2
     canGroup.add(bottomRimMesh)
 
-    // Slight tilt to show a hint of the lid
-    canGroup.rotation.x = -0.12
     scene.add(canGroup)
 
-    // === LIGHTING ===
-    // Soft ambient
-    const ambient = new THREE.AmbientLight(0xf0f4f8, 0.6)
+    // === LIGHTING — studio-quality 5-light setup ===
+    const ambient = new THREE.AmbientLight(0xf0f4f8, 0.5)
     scene.add(ambient)
 
-    // Key light (warm, from upper right)
-    const keyLight = new THREE.DirectionalLight(0xfff5e6, 1.2)
-    keyLight.position.set(3, 4, 5)
+    const keyLight = new THREE.DirectionalLight(0xfff8ee, 0.95)
+    keyLight.position.set(4, 5, 5)
     scene.add(keyLight)
 
-    // Fill light (cool, from left)
-    const fillLight = new THREE.DirectionalLight(0xe0eef6, 0.6)
-    fillLight.position.set(-4, 2, 3)
+    const fillLight = new THREE.DirectionalLight(0xe0eef6, 0.55)
+    fillLight.position.set(-5, 3, 3)
     scene.add(fillLight)
 
-    // Rim light (behind and above)
-    const rimLight = new THREE.DirectionalLight(0xffffff, 0.4)
-    rimLight.position.set(0, 3, -4)
+    const rimLight = new THREE.DirectionalLight(0xffffff, 0.45)
+    rimLight.position.set(0, 4, -5)
     scene.add(rimLight)
 
-    // Subtle bottom bounce
-    const bounceLight = new THREE.DirectionalLight(0xd0e0f0, 0.2)
-    bounceLight.position.set(0, -2, 2)
+    const topLight = new THREE.DirectionalLight(0xf8f8ff, 0.15)
+    topLight.position.set(0, 8, 0)
+    scene.add(topLight)
+
+    const bounceLight = new THREE.DirectionalLight(0xd0e0f0, 0.15)
+    bounceLight.position.set(0, -3, 2)
     scene.add(bounceLight)
 
     // === MOUSE INTERACTION ===
@@ -173,27 +178,33 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2
       mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2
     }
+    const handleMouseLeave = () => {
+      mouseX = 0
+      mouseY = 0
+    }
     mount.addEventListener('mousemove', handleMouseMove)
+    mount.addEventListener('mouseleave', handleMouseLeave)
 
     // === ANIMATION ===
     let animId: number
     const clock = new THREE.Clock()
+    const baseRotationX = -0.05
 
     const animate = () => {
       animId = requestAnimationFrame(animate)
-      const elapsed = clock.getElapsedTime()
+      const t = clock.getElapsedTime()
 
-      // Smooth continuous rotation (slightly slower so label text is readable)
-      canGroup.rotation.y = elapsed * 0.35
+      // Smooth continuous Y rotation
+      canGroup.rotation.y = t * 0.4
 
-      // Gentle floating motion
-      canGroup.position.y = Math.sin(elapsed * 0.5) * 0.04
+      // Gentle floating
+      canGroup.position.y = Math.sin(t * 0.5) * 0.03
 
       // Mouse-responsive tilt (subtle)
-      const targetTiltX = -0.12 + mouseY * 0.06
-      const targetTiltZ = mouseX * -0.04
-      canGroup.rotation.x += (targetTiltX - canGroup.rotation.x) * 0.025
-      canGroup.rotation.z += (targetTiltZ - canGroup.rotation.z) * 0.025
+      const targetTiltX = baseRotationX + mouseY * 0.1
+      const targetTiltZ = mouseX * -0.08
+      canGroup.rotation.x += (targetTiltX - canGroup.rotation.x) * 0.04
+      canGroup.rotation.z += (targetTiltZ - canGroup.rotation.z) * 0.04
 
       renderer.render(scene, camera)
     }
@@ -215,19 +226,20 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       cancelAnimationFrame(animId)
       window.removeEventListener('resize', handleResize)
       mount.removeEventListener('mousemove', handleMouseMove)
+      mount.removeEventListener('mouseleave', handleMouseLeave)
       renderer.dispose()
       bodyGeo.dispose()
       bottomGeo.dispose()
-      lidGeo.dispose()
       lidTopGeo.dispose()
-      rimGeo.dispose()
+      lidSideGeo.dispose()
+      seamGeo.dispose()
       bottomRimGeo.dispose()
       bodyMat.dispose()
       bottomMat.dispose()
       lidTopMat.dispose()
       lidSideMat.dispose()
-      rimMat.dispose()
-      bodyTexture?.dispose()
+      seamMat.dispose()
+      bandTexture?.dispose()
       lidTexture?.dispose()
       if (mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement)
