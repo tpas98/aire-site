@@ -1,11 +1,11 @@
 import FadeUp from './FadeUp'
 
 const ingredients = [
-  { num: '01', name: 'L-Theanine', desc: 'Promotes calm alertness and reduces stress response — no sedation, no drowsiness.', badge: '75mg' },
-  { num: '02', name: 'Rhodiola Rosea', desc: 'Adaptogenic root that combats mental fatigue and builds long-term stress resilience.', badge: 'Adaptogen' },
-  { num: '03', name: 'Methylfolate', desc: 'The bioavailable form of folate — supports neurotransmitter production at the source.', badge: 'Active B9' },
-  { num: '04', name: 'Vitamin B6', desc: 'Essential co-factor for serotonin and dopamine synthesis. Mood, energy, clarity.', badge: 'P-5-P Form' },
-  { num: '05', name: 'Affron® Saffron', desc: 'Patented, clinically-studied saffron extract for mood balance and emotional resilience.', badge: 'Patented' },
+  { num: '01', name: 'Rhodiola Rosea', desc: 'Supports resilience to mental fatigue and stress, promoting sustained clarity and balanced energy. Adaptogenic herb used to help the body adapt to stress.', badge: '35mg' },
+  { num: '02', name: 'Saffron', desc: 'Supports mood and emotional balance, contributing to a calm, clear headspace. Botanical extract derived from the Crocus sativus flower.', badge: '10mg' },
+  { num: '03', name: 'L-Theanine', desc: 'Promotes a relaxed but alert mental state, helping smooth stress and support focused clarity without drowsiness. Amino acid naturally found in green tea.', badge: '75mg' },
+  { num: '04', name: 'Vitamin B9', desc: 'Supports healthy neurotransmitter production involved in mood balance and cognitive function. Bioactive form compound used directly by the body.', badge: '150mcg' },
+  { num: '05', name: 'Vitamin B6', desc: 'Plays a key role in neurotransmitter synthesis that supports mental clarity, focus, and emotional regulation. Active coenzyme.', badge: '2.5mg' },
 ]
 
 export default function Ingredients() {
@@ -20,10 +20,10 @@ export default function Ingredients() {
           <span className="block w-5 h-px bg-sky-deep" />
         </div>
         <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-white tracking-[-0.02em] mb-5">
-          Five ingredients.<br /><em className="italic text-sky-deep">One perfect outcome.</em>
+          Five active ingredients.<br /><em className="italic text-sky-deep">One perfect outcome.</em>
         </h2>
         <p className="text-[0.95rem] text-white/60 leading-[1.84] font-light">
-          Every ingredient chosen for a reason. Every dose calibrated to actually work.
+          Meticulous ingredient selection. Precision dosing for optimal outcomes.
         </p>
       </FadeUp>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 max-w-[1200px] mx-auto relative z-10">

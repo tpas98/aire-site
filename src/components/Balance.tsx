@@ -11,8 +11,8 @@ const mentalBalance = [
 const consumptionBalance = [
   { title: 'Smarter Substitute', body: 'A clean alternative to nicotine, caffeine & harsh stimulants' },
   { title: 'Craving Support', body: 'Soothes cravings without feeding dependency' },
-  { title: 'Habit Compatible', body: 'Pairs seamlessly with your existing routine' },
-  { title: 'Zero Compromise', body: 'No burn. No crash. No regrets.' },
+  { title: 'Habit Compatible', body: 'Pairs seamlessly with your existing pouch stack' },
+  { title: 'Zero Compromise', body: 'No crash. No regrets.' },
 ]
 
 export default function Balance() {
@@ -34,8 +34,7 @@ export default function Balance() {
             <div className="card-hover bg-white rounded-3xl p-10 md:p-12 h-full border border-sky-deep/10">
               <p className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-accent mb-3">Mental Balance</p>
               <h3 className="font-serif text-[1.7rem] text-navy leading-[1.15] tracking-[-0.01em] mb-8">
-                Calm your mind.<br />
-                <em className="italic text-navy-mid">Sharpen your focus.</em>
+                Calm your mind.
               </h3>
               <ul className="flex flex-col">
                 {mentalBalance.map(({ title, body }, i) => (
@@ -58,8 +57,7 @@ export default function Balance() {
               <div className="absolute top-[-60px] right-[-60px] w-[220px] h-[220px] rounded-full bg-accent/8 blur-3xl pointer-events-none" />
               <p className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-sky-deep mb-3">Consumption Balance</p>
               <h3 className="font-serif text-[1.7rem] text-white leading-[1.15] tracking-[-0.01em] mb-8">
-                Break the cycle.<br />
-                <em className="italic text-white/50">Keep the ritual.</em>
+                Break the cycle.
               </h3>
               <ul className="flex flex-col">
                 {consumptionBalance.map(({ title, body }, i) => (

@@ -3,8 +3,12 @@ import './globals.css'
 import EmailPopup from '@/components/EmailPopup'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.airepouches.com'),
   title: 'Aire — Find Your Balance',
   description: 'The world\'s first lifestyle pouch built for calm focus. No nicotine, no caffeine, no compromise.',
+  icons: {
+    icon: '/favicon.ico',
+  },
   openGraph: {
     title: 'Aire — Find Your Balance',
     description: 'Science-backed calm in a pouch. Zero nicotine. Zero caffeine.',

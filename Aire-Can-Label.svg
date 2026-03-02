@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <!-- Define color palette -->
+    <style>
+      .navy { fill: #1a2e4a; }
+      .mid-blue { fill: #5a9bbf; }
+      .light-blue { fill: #7ec2df; }
+      .very-light-blue { fill: #d4e8f2; }
+      .white { fill: #ffffff; }
+      .dark-text { fill: #1a2e4a; }
+
+      .headline-bold { font-family: Arial, sans-serif; font-weight: 900; font-size: 32px; }
+      .headline-large { font-family: Arial, sans-serif; font-weight: 700; font-size: 28px; }
+      .headline-medium { font-family: Arial, sans-serif; font-weight: 700; font-size: 20px; }
+      .body-text { font-family: Arial, sans-serif; font-weight: 400; font-size: 12px; }
+      .small-text { font-family: Arial, sans-serif; font-weight: 400; font-size: 10px; }
+      .tiny-text { font-family: Arial, sans-serif; font-weight: 400; font-size: 8px; }
+    </style>
+
+    <!-- Path for curved text along circle -->
+    <path id="topCurve" d="M 100,300 A 200,200 0 0,1 500,100" fill="none"/>
+    <path id="bottomCurve" d="M 500,100 A 200,200 0 0,1 100,300" fill="none"/>
+  </defs>
+
+  <!-- ============ SECTION 1: LID (Top of Can - Circular) ============ -->
+  <g id="lid-section">
+    <!-- Circular background -->
+    <circle cx="300" cy="300" r="200" class="very-light-blue" stroke="#1a2e4a" stroke-width="2"/>
+
+    <!-- Top curved text: "NO NICOTINE. NO CAFFEINE. PURE BALANCE" -->
+    <g id="top-text-curve">
+      <text class="small-text dark-text" font-weight="600" letter-spacing="2">
+        <textPath href="#topCurve" startOffset="50%" text-anchor="middle">
+          NO NICOTINE • NO CAFFEINE • PURE BALANCE
+        </textPath>
+      </text>
+    </g>
+
+    <!-- "Dietary Supplement" text -->
+    <text x="300" y="180" class="tiny-text dark-text" text-anchor="middle" font-style="italic">
+      Dietary Supplement
+    </text>
+
+    <!-- Aire Logo -->
+    <g id="aire-logo-center">
+      <!-- Light blue swoosh/feather above the 'a' -->
+      <path d="M 260 220 Q 270 210 280 215 Q 285 220 280 225 Q 270 228 260 220"
+            fill="none" stroke="#7ec2df" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- "aire" text in navy -->
+      <text x="300" y="260" class="headline-bold dark-text" text-anchor="middle" font-size="56" letter-spacing="-2">
+        aire
+      </text>
+    </g>
+
+    <!-- "FIND YOUR BALANCE" tagline -->
+    <text x="300" y="310" class="headline-medium dark-text" text-anchor="middle" font-style="italic">
+      FIND YOUR BALANCE
+    </text>
+
+    <!-- "15 Calm Mint Pouches" -->
+    <text x="300" y="340" class="body-text dark-text" text-anchor="middle" font-weight="600">
+      15 Calm Mint Pouches
+    </text>
+
+    <!-- Ingredient highlights -->
+    <text x="300" y="365" class="small-text mid-blue" text-anchor="middle">
+      Rhodiola Rosea • L-Theanine
+    </text>
+  </g>
+
+  <!-- ============ SECTION 2: LABEL WRAP (Rectangular) ============ -->
+  <!-- Starting at y=550 to give space -->
+  <g id="label-wrap">
+
+    <!-- Label background -->
+    <rect x="50" y="550" width="1100" height="220" class="very-light-blue" stroke="#1a2e4a" stroke-width="2"/>
+
+    <!-- ===== FRONT PANEL (Left Section) ===== -->
+    <g id="front-panel">
+      <rect x="50" y="550" width="220" height="220" class="white" stroke="#d4d4d4" stroke-width="1"/>
+
+      <!-- "FIND YOUR BALANCE" large bold italic -->
+      <text x="160" y="600" class="headline-bold dark-text" text-anchor="middle" font-size="24" font-style="italic" font-weight="900">
+        FIND YOUR
+      </text>
+      <text x="160" y="630" class="headline-bold dark-text" text-anchor="middle" font-size="24" font-style="italic" font-weight="900">
+        BALANCE
+      </text>
+    </g>
+
+    <!-- ===== CENTER PANEL (Warning Text - Rotated) ===== -->
+    <g id="center-warning-panel">
+      <rect x="270" y="550" width="140" height="220" class="white" stroke="#d4d4d4" stroke-width="1"/>
+
+      <!-- Warning text rotated 90 degrees (reading bottom-to-top) -->
+      <g transform="translate(340, 650) rotate(-90)">
+        <text x="0" y="0" class="tiny-text dark-text" text-anchor="middle" font-weight="600">
+          Not recommended for children, pregnant, or breastfeeding women.
+        </text>
+        <text x="0" y="12" class="tiny-text dark-text" text-anchor="middle">
+          Please consult your physician before using this product,
+        </text>
+        <text x="0" y="24" class="tiny-text dark-text" text-anchor="middle">
+          especially if pregnant, nursing, or taking medications.
+        </text>
+      </g>
+    </g>
+
+    <!-- ===== SUPPLEMENT FACTS PANEL (Center-Right) ===== -->
+    <g id="supplement-facts-panel">
+      <rect x="410" y="550" width="340" height="220" class="white" stroke="#1a2e4a" stroke-width="2"/>
+
+      <!-- "SUPPLEMENT FACTS" header -->
+      <rect x="410" y="550" width="340" height="28" class="navy"/>
+      <text x="580" y="572" class="headline-medium white" text-anchor="middle" font-weight="900" font-size="16">
+        SUPPLEMENT FACTS
+      </text>
+
+      <!-- Serving info -->
+      <text x="420" y="595" class="body-text dark-text" font-weight="600">
+        Serving Size: 1 Pouch
+      </text>
+      <text x="420" y="612" class="body-text dark-text" font-weight="600">
+        Servings Per Container: 15
+      </text>
+
+      <!-- Table divider -->
+      <line x1="410" y1="625" x2="750" y2="625" stroke="#1a2e4a" stroke-width="1"/>
+
+      <!-- Table header -->
+      <text x="420" y="642" class="tiny-text dark-text" font-weight="700">
+        AMOUNT PER SERVING
+      </text>
+      <text x="700" y="642" class="tiny-text dark-text" font-weight="700" text-anchor="end">
+        %DV*
+      </text>
+
+      <!-- Table divider -->
+      <line x1="410" y1="648" x2="750" y2="648" stroke="#1a2e4a" stroke-width="0.5"/>
+
+      <!-- Ingredients rows -->
+      <text x="420" y="663" class="tiny-text dark-text" font-weight="500">
+        Rhodiola Rosea Extract
+      </text>
+      <text x="740" y="663" class="tiny-text dark-text" text-anchor="end">
+        35mg*
+      </text>
+
+      <text x="420" y="678" class="tiny-text dark-text" font-weight="500">
+        L-Theanine
+      </text>
+      <text x="740" y="678" class="tiny-text dark-text" text-anchor="end">
+        75mg*
+      </text>
+
+      <text x="420" y="693" class="tiny-text dark-text" font-weight="500">
+        Vitamin B9 (L-Methylfolate)
+      </text>
+      <text x="740" y="693" class="tiny-text dark-text" text-anchor="end">
+        150mcg (64%**)
+      </text>
+
+      <text x="420" y="708" class="tiny-text dark-text" font-weight="500">
+        Vitamin B6 (P-5-P)
+      </text>
+      <text x="740" y="708" class="tiny-text dark-text" text-anchor="end">
+        2.5mg (147%**)
+      </text>
+
+      <text x="420" y="723" class="tiny-text dark-text" font-weight="500">
+        Saffron
+      </text>
+      <text x="740" y="723" class="tiny-text dark-text" text-anchor="end">
+        5mg*
+      </text>
+
+      <!-- Table divider -->
+      <line x1="410" y1="730" x2="750" y2="730" stroke="#1a2e4a" stroke-width="1"/>
+
+      <!-- Footnotes -->
+      <text x="420" y="745" class="tiny-text dark-text">
+        *Daily Value (DV) not established
+      </text>
+      <text x="420" y="757" class="tiny-text dark-text">
+        **Percent Daily Values (%DV) based on a 2,000-calorie diet
+      </text>
+
+      <!-- Other Ingredients -->
+      <text x="420" y="772" class="tiny-text dark-text" font-weight="600">
+        Other Ingredients:
+      </text>
+      <text x="420" y="784" class="tiny-text dark-text">
+        Microcrystalline Cellulose, Mint Extract,
+      </text>
+      <text x="420" y="796" class="tiny-text dark-text">
+        Menthol, Leaf Alcohol, Sweetener, Malitol
+      </text>
+
+      <!-- FDA Disclaimer -->
+      <text x="420" y="732" class="tiny-text dark-text" font-weight="600" font-style="italic">
+        *These statements have not been evaluated by the FDA.
+      </text>
+      <text x="420" y="742" class="tiny-text dark-text" font-style="italic">
+        This product is not intended to diagnose, treat, cure, or prevent any disease.
+      </text>
+    </g>
+
+    <!-- ===== RIGHT PANEL (How to Use) ===== -->
+    <g id="right-panel">
+      <rect x="750" y="550" width="400" height="220" class="white" stroke="#d4d4d4" stroke-width="1"/>
+
+      <!-- "HOW TO USE:" heading -->
+      <text x="760" y="575" class="headline-medium dark-text" font-weight="900">
+        HOW TO USE:
+      </text>
+
+      <!-- Instructions -->
+      <text x="760" y="600" class="body-text dark-text">
+        Place one or more pouches between
+      </text>
+      <text x="760" y="615" class="body-text dark-text">
+        gum and lip. Enjoy for up to 1 hour.
+      </text>
+      <text x="760" y="630" class="body-text dark-text">
+        Discard after use. Use 4-6 pouches
+      </text>
+      <text x="760" y="645" class="body-text dark-text">
+        throughout the day for best results.
+      </text>
+
+      <!-- Distributed By section -->
+      <text x="760" y="675" class="body-text dark-text" font-weight="600">
+        Distributed By:
+      </text>
+      <text x="760" y="695" class="headline-medium dark-text" font-weight="700">
+        Drifts LLC
+      </text>
+      <text x="760" y="715" class="body-text dark-text">
+        New York, NY
+      </text>
+    </g>
+
+    <!-- ===== BOTTOM STRIP (Runs across entire label) ===== -->
+    <g id="bottom-strip">
+      <rect x="50" y="770" width="1100" height="40" class="navy"/>
+
+      <!-- Aire logo (small, left) -->
+      <g id="aire-logo-bottom-left" transform="translate(80, 775)">
+        <text class="body-text white" font-weight="700" font-size="14">
+          aire
+        </text>
+      </g>
+
+      <!-- "Calm Mint" text on navy bar (center-left) -->
+      <text x="250" y="800" class="headline-medium white" font-weight="700">
+        Calm Mint
+      </text>
+
+      <!-- "FIND YOUR BALANCE" in navy italic (center-right) -->
+      <text x="600" y="800" class="body-text white" font-weight="600" font-style="italic">
+        FIND YOUR BALANCE
+      </text>
+
+      <!-- Website URL (right) -->
+      <text x="1040" y="800" class="body-text white" text-anchor="end" font-weight="600">
+        airepouches.com
+      </text>
+    </g>
+  </g>
+
+  <!-- ============ SECTION 3: BACK LABEL (Optional secondary view) ============ -->
+  <!-- This creates a secondary label area for the back of the can -->
+  <g id="back-label-section" transform="translate(0, 0)">
+    <!-- You can add additional back label content here if needed -->
+  </g>
+
+</svg>

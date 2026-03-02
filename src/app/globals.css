@@ -59,3 +59,15 @@
 .carousel-track:hover {
   animation-play-state: paused;
 }
+
+/* Lifestyle strip horizontal scroll */
+@keyframes scroll-lifestyle {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.lifestyle-track {
+  animation: scroll-lifestyle 40s linear infinite;
+}
+.lifestyle-track:hover {
+  animation-play-state: paused;
+}

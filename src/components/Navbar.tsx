@@ -12,7 +12,7 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-[64px] bg-white/80 backdrop-blur-xl border-b border-sky-deep/20"
     >
-      <a href="#">
+      <a href="/">
         <Image src="/images/logo.png" alt="Aire" width={120} height={40} className="h-7 w-auto" style={{ mixBlendMode: 'multiply' }} />
       </a>
       <ul className="hidden md:flex items-center gap-10 list-none">

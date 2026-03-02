@@ -2,17 +2,16 @@
 import FadeUp from './FadeUp'
 
 const reviews = [
-  { stars: 5, text: '"I tried quitting Zyn three times. Aire is the only thing that made it stick. I actually feel better, not worse."', author: 'Marcus T.', tag: 'Verified Buyer · Former Zyn User' },
-  { stars: 5, text: '"As someone who cannot do caffeine, finding a pouch that actually helps me focus without wiring me up was a game changer."', author: 'Priya S.', tag: 'Verified Buyer · Wellness Enthusiast' },
-  { stars: 5, text: '"I use it before big meetings. The calm is real. Not sedating, just steady. My whole team noticed a difference."', author: 'James R.', tag: 'Verified Buyer · Executive' },
-  { stars: 5, text: '"Honestly was skeptical at first but after a week I stopped reaching for my vape. The mint flavor is clean and the focus is subtle but definitely there."', author: 'Devon A.', tag: 'Verified Buyer · College Student' },
-  { stars: 5, text: '"My therapist actually recommended looking into adaptogens for stress. Aire makes it easy. I keep a can at my desk and one in my car."', author: 'Rachel M.', tag: 'Verified Buyer · Teacher' },
-  { stars: 4, text: '"Love the concept and the ingredients. Only reason for four stars is I wish each can had a few more pouches. I go through them fast because they actually work."', author: 'Tyler K.', tag: 'Verified Buyer · Software Engineer' },
-  { stars: 5, text: '"Replaced my afternoon coffee with Aire and I sleep so much better now. No crash, no jitters, just a smooth kind of alertness."', author: 'Nina L.', tag: 'Verified Buyer · Nurse' },
-  { stars: 5, text: '"Bought these for a long road trip and they kept me locked in without the shaky feeling energy drinks give me. Ordering more before my next one."', author: 'Chris W.', tag: 'Verified Buyer · Sales Rep' },
-  { stars: 5, text: '"I have tried every wellness supplement out there and most of them are all marketing. This one I can actually feel working within about twenty minutes."', author: 'Samira H.', tag: 'Verified Buyer · Yoga Instructor' },
-  { stars: 5, text: '"Got my whole friend group on these. We use them before pickup basketball and everyone says they feel more dialed in. Way better than pre-workout."', author: 'Jordan P.', tag: 'Verified Buyer · Personal Trainer' },
-  { stars: 5, text: '"As a new mom running on very little sleep, this has been a lifesaver. Gentle enough that I feel comfortable using it and effective enough that I notice when I skip a day."', author: 'Megan D.', tag: 'Verified Buyer · Stay-at-Home Mom' },
+  { stars: 5, text: '"I used to go through a full can of nicotine pouches on a night out. Mixing these in has cut my nicotine use down a lot. The calm vibe actually pairs better with going out — and I feel noticeably better the next morning."', author: 'Colin', tag: 'MBA Student' },
+  { stars: 5, text: '"Staying calm and collected is how I operate at my best. I keep a can in my desk and use one before big meetings instead of reaching for caffeine. It takes the edge off without killing my energy. I feel more controlled and less reactive."', author: 'Vivek', tag: 'Entrepreneur' },
+  { stars: 5, text: '"What I like most is that I can use these morning or night and not worry about messing up my sleep. I\'ll use one during work and maybe another after dinner. No jitters, no crash — just steady."', author: 'Alex', tag: 'Private Equity Professional' },
+  { stars: 5, text: '"My mind usually spirals during long workouts. I tried these before a long run and was surprised how steady I felt mentally. I still have energy — I\'m just not arguing with myself the whole time. Love them pre- and post-workout."', author: 'Cameron', tag: 'Content Creator / Athlete' },
+  { stars: 5, text: '"I started using these after realizing how much nicotine was hurting my sleep. I take one a couple hours before bed while winding down. Falling asleep feels easier and I don\'t feel wired at night."', author: 'Lucas', tag: 'Management Consultant' },
+  { stars: 5, text: '"These have become part of my daily routine. When my mind is racing or I feel overwhelmed, I\'ll pop one in and within about 10 minutes I feel more centered. Not sleepy — just clearer and more present."', author: 'Mitch', tag: 'Engineering Student' },
+  { stars: 5, text: '"I work long hours and can get pretty irritable when I\'m deep in problem-solving. These help me stay level. Calm, steady focus without feeling dulled out."', author: 'Anthony', tag: 'Computer Scientist' },
+  { stars: 5, text: '"I was chaining nicotine pouches more than I wanted to admit. Swapping these in when the urge hits has helped a lot. Cravings feel more manageable, and I don\'t get that edgy buzz."', author: 'Tim', tag: 'Various Jobs / Skating and Surfing' },
+  { stars: 5, text: '"Perfect for school, home, or working on passion projects. When I\'m creating, I tend to overthink everything — these help me drop into the work instead of analyzing it. It\'s not dramatic, just smoother and easier to stay in flow."', author: 'Thomas', tag: 'Marketing Professional' },
+  { stars: 5, text: '"These completely replaced nicotine for me. Whether I\'m at school, gaming, or driving, I feel grounded and focused. It\'s the right level of calm — I never feel tired or sedated."', author: 'Jake', tag: 'Corporate Law' },
 ]
 
 function ReviewCard({ stars, text, author, tag }: { stars: number; text: string; author: string; tag: string }) {
@@ -22,7 +21,7 @@ function ReviewCard({ stars, text, author, tag }: { stars: number; text: string;
       <p className="text-[0.9rem] text-navy-mid leading-[1.8] italic mb-5 flex-1">{text}</p>
       <div>
         <div className="text-[0.74rem] font-semibold text-navy tracking-[0.05em] uppercase">— {author}</div>
-        <div className="text-[0.66rem] text-accent mt-0.5">✓ {tag}</div>
+        <div className="text-[0.66rem] text-accent mt-0.5">{tag}</div>
       </div>
     </div>
   )

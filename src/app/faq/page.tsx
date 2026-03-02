@@ -69,7 +69,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How many pouches can I use per day?</h2>
-            <p>We recommend using 4–6 pouches throughout the day for best results. Use one in the morning for a focused start, another mid-morning to stay locked in, one after lunch to power through the afternoon, and one in the evening to unwind. Do not exceed 5 pouches per day. There&apos;s no nicotine or caffeine, so there&apos;s no crash or dependency risk.</p>
+            <p>We recommend using 4–5 pouches throughout the day for best results. Use one in the morning for a focused start, another mid-morning to stay locked in, one after lunch to power through the afternoon, and one in the evening to unwind. Do not exceed 5 pouches per day. There&apos;s no nicotine or caffeine, so there&apos;s no crash or dependency risk.</p>
           </section>
 
           <section>

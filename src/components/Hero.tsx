@@ -29,7 +29,7 @@ export default function Hero() {
         <div className="max-w-[560px] w-full">
           <motion.div className="flex items-center gap-3 mb-5" variants={fadeUp} initial="hidden" animate="visible" custom={0}>
             <span className="block w-8 h-px bg-accent" />
-            <span className="text-[0.67rem] font-semibold tracking-[0.22em] uppercase text-accent">The calm pouch, reimagined</span>
+            <span className="text-[0.67rem] font-semibold tracking-[0.22em] uppercase text-accent">The lifestyle pouch, reimagined</span>
           </motion.div>
           <motion.h1
             className="font-serif leading-[1.04] text-navy tracking-[-0.03em] mb-5"
@@ -41,7 +41,7 @@ export default function Hero() {
             Instantly.
           </motion.h1>
           <motion.p className="text-[0.95rem] md:text-[1rem] text-navy-mid leading-[1.7] font-light mb-7 max-w-[440px]" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
-            The world's first lifestyle pouch built for calm focus — no nicotine, no caffeine, no compromise. Five science-backed ingredients. One pocket-sized moment of clarity.
+            The future of pouches is here – calmness, clarity, and mental presence, anytime of the day. Five science-backed active ingredients. One pocket-sized moment of clarity.
           </motion.p>
           <motion.div className="flex items-center gap-4 flex-wrap" variants={fadeUp} initial="hidden" animate="visible" custom={0.3}>
             <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">

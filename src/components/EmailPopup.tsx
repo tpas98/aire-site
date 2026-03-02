@@ -67,6 +67,7 @@ export default function EmailPopup() {
               <button
                 onClick={handleDismiss}
                 className="absolute top-4 right-5 text-white/30 hover:text-white/60 transition-colors text-xl leading-none"
+                aria-label="Close"
               >
                 ✕
               </button>

@@ -46,7 +46,7 @@ export function CTA() {
             Your <em className="italic text-sky-deep">balance</em> is<br />one pouch away.
           </h2>
           <p className="text-[0.96rem] text-white/55 font-light leading-[1.84] max-w-[400px] mb-8">
-            Join the Aire community. Science-backed calm, delivered to your door.
+            Join the Aire community. Science-backed botanicals and adaptogens, delivered to your door.
           </p>
           <div className="flex flex-col gap-3 mb-8">
             {trust.map(({ icon, label }) => (
@@ -89,7 +89,7 @@ export function Footer() {
         <div className="col-span-2 md:col-span-1">
           <Image src="/images/logo.png" alt="Aire" width={100} height={36} className="h-7 w-auto mb-4"
             style={{ filter: 'brightness(0) invert(1)' }} />
-          <p className="text-[0.82rem] text-white/50 leading-[1.75] mb-5">The calm pouch built for modern life.<br />No nicotine. No caffeine. Just balance.</p>
+          <p className="text-[0.82rem] text-white/50 leading-[1.75] mb-5">The lifestyle pouch promoting peak enjoyment from every pursuit.<br />No nicotine. No caffeine. Pure balance.</p>
           <div className="flex gap-3">
             {['IG', '𝕏'].map((s) => (
               <a key={s} href="#" className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-[0.7rem] text-white/40 hover:border-sky-deep hover:text-sky-deep transition-all duration-200">{s}</a>

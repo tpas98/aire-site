@@ -20,9 +20,9 @@ export default function Home() {
       <About />
       <Ingredients />
       <ProductFeature />
-      <HowToUse />
       <Balance />
       <Testimonials />
+      <HowToUse />
       <CTA />
       <Footer />
     </>

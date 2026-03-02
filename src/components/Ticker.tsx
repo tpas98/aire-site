@@ -1,8 +1,8 @@
 export default function Ticker() {
   const items = [
-    '75mg L-Theanine', 'Rhodiola Rosea', 'Methylfolate',
-    'Vitamin B6', 'Affron® Saffron', 'Zero Nicotine',
-    'Zero Caffeine', 'Calm Mint · Flow Pouches', 'Find Your Balance',
+    'L-Theanine', 'Rhodiola Rosea', 'Vitamin B9',
+    'Vitamin B6', 'Saffron', 'Zero Nicotine',
+    'Zero Caffeine', 'Calm Mint',
   ]
 
   const doubled = [...items, ...items]

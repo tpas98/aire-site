@@ -5,7 +5,7 @@ const steps = [
   {
     number: '01',
     title: 'Place the Pouch',
-    description: 'Tuck one Aire pouch comfortably between your upper lip and gum. No chewing needed.',
+    description: 'Tuck one or more Aire pouches comfortably between your lip and gum. No chewing needed.',
   },
   {
     number: '02',
@@ -14,8 +14,8 @@ const steps = [
   },
   {
     number: '03',
-    title: 'Find Your Flow',
-    description: 'Stay in your Flow State for 1–2 hours. Keep the pouch in up to 60 minutes for full absorption.',
+    title: 'Find Your Balance',
+    description: 'Enjoy the pouch for up to 60 minutes. Discard after use. Do not consume.',
   },
 ]
 
@@ -29,7 +29,7 @@ export default function HowToUse() {
             <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">Simple by Design</span>
           </div>
           <h2 className="font-serif text-[clamp(2rem,4vw,3.2rem)] text-navy tracking-[-0.02em] leading-[1.1] mb-14">
-            Three steps to <em className="italic text-navy-mid">calm focus.</em>
+            Three steps to <em className="italic text-navy-mid">find your balance.</em>
           </h2>
         </FadeUp>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
