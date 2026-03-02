@@ -1,6 +1,8 @@
 'use client'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
+import dynamic from 'next/dynamic'
+
+const SpinningCan = dynamic(() => import('./SpinningCan'), { ssr: false })
 
 const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
 
@@ -10,14 +12,6 @@ const fadeUp = {
     opacity: 1, y: 0,
     transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay },
   }),
-}
-
-const floatAnim = {
-  animate: {
-    y: [0, -18, 0],
-    rotate: [0, 1.2, -1.2, 0],
-    transition: { duration: 7, repeat: Infinity, ease: 'easeInOut' },
-  },
 }
 
 export default function Hero() {
@@ -53,12 +47,11 @@ export default function Hero() {
             </a>
           </motion.div>
         </div>
-        <motion.div className="flex justify-center items-center w-full" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
-          <motion.div {...floatAnim}>
-            <Image src="/images/three-cans-new.png" alt="Aire Flow Pouches 3-Pack" width={720} height={720}
-              className="w-full max-w-[218px] md:max-w-[462px] object-contain"
-              priority />
-          </motion.div>
+        <motion.div
+          className="flex justify-center items-center w-full h-[280px] md:h-[460px]"
+          variants={fadeUp} initial="hidden" animate="visible" custom={0.2}
+        >
+          <SpinningCan />
         </motion.div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white/30 to-transparent z-10" />
