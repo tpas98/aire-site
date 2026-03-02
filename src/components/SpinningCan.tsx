@@ -15,9 +15,9 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
 
     const width = mount.clientWidth
     const height = mount.clientHeight
-    const camera = new THREE.PerspectiveCamera(32, width / height, 0.1, 100)
-    camera.position.set(0, 1.8, 6.5)
-    camera.lookAt(0, 0.3, 0)
+    const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100)
+    camera.position.set(0, 0.6, 6.0)
+    camera.lookAt(0, 0.05, 0)
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -28,7 +28,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.1
+    renderer.toneMappingExposure = 1.15
     mount.appendChild(renderer.domElement)
 
     // Can dimensions (proportional to a real pouch can)
@@ -63,10 +63,10 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
 
     const bodyMat = new THREE.MeshPhysicalMaterial({
       map: bodyTexture,
-      roughness: 0.35,
-      metalness: 0.05,
-      clearcoat: 0.3,
-      clearcoatRoughness: 0.4,
+      roughness: 0.32,
+      metalness: 0.08,
+      clearcoat: 0.4,
+      clearcoatRoughness: 0.35,
       side: THREE.DoubleSide,
     })
     const bodyMesh = new THREE.Mesh(bodyGeo, bodyMat)
@@ -96,10 +96,10 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const lidTopGeo = new THREE.CircleGeometry(lidRadius, 64)
     const lidTopMat = new THREE.MeshPhysicalMaterial({
       map: lidTexture,
-      roughness: 0.3,
-      metalness: 0.05,
-      clearcoat: 0.4,
-      clearcoatRoughness: 0.3,
+      roughness: 0.28,
+      metalness: 0.06,
+      clearcoat: 0.5,
+      clearcoatRoughness: 0.25,
     })
     const lidTopMesh = new THREE.Mesh(lidTopGeo, lidTopMat)
     lidTopMesh.rotation.x = -Math.PI / 2
@@ -109,9 +109,9 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     // Lid side (rim)
     const lidSideMat = new THREE.MeshPhysicalMaterial({
       color: rimColor,
-      roughness: 0.3,
-      metalness: 0.08,
-      clearcoat: 0.5,
+      roughness: 0.25,
+      metalness: 0.1,
+      clearcoat: 0.6,
     })
     const lidSideMesh = new THREE.Mesh(lidGeo, lidSideMat)
     lidSideMesh.position.y = canHeight / 2 + lidThickness / 2
@@ -129,8 +129,15 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     rimMesh.position.y = canHeight / 2
     canGroup.add(rimMesh)
 
-    // Slight tilt for more dynamic viewing angle
-    canGroup.rotation.x = -0.15
+    // Add bottom rim ring
+    const bottomRimGeo = new THREE.TorusGeometry(canRadius + 0.005, 0.015, 16, 64)
+    const bottomRimMesh = new THREE.Mesh(bottomRimGeo, rimMat)
+    bottomRimMesh.rotation.x = Math.PI / 2
+    bottomRimMesh.position.y = -canHeight / 2
+    canGroup.add(bottomRimMesh)
+
+    // Slight tilt to show a hint of the lid
+    canGroup.rotation.x = -0.12
     scene.add(canGroup)
 
     // === LIGHTING ===
@@ -176,17 +183,17 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       animId = requestAnimationFrame(animate)
       const elapsed = clock.getElapsedTime()
 
-      // Smooth continuous rotation
-      canGroup.rotation.y = elapsed * 0.4
+      // Smooth continuous rotation (slightly slower so label text is readable)
+      canGroup.rotation.y = elapsed * 0.35
 
       // Gentle floating motion
-      canGroup.position.y = Math.sin(elapsed * 0.6) * 0.06
+      canGroup.position.y = Math.sin(elapsed * 0.5) * 0.04
 
       // Mouse-responsive tilt (subtle)
-      const targetTiltX = -0.15 + mouseY * 0.08
-      const targetTiltZ = mouseX * -0.06
-      canGroup.rotation.x += (targetTiltX - canGroup.rotation.x) * 0.03
-      canGroup.rotation.z += (targetTiltZ - canGroup.rotation.z) * 0.03
+      const targetTiltX = -0.12 + mouseY * 0.06
+      const targetTiltZ = mouseX * -0.04
+      canGroup.rotation.x += (targetTiltX - canGroup.rotation.x) * 0.025
+      canGroup.rotation.z += (targetTiltZ - canGroup.rotation.z) * 0.025
 
       renderer.render(scene, camera)
     }
@@ -214,6 +221,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       lidGeo.dispose()
       lidTopGeo.dispose()
       rimGeo.dispose()
+      bottomRimGeo.dispose()
       bodyMat.dispose()
       bottomMat.dispose()
       lidTopMat.dispose()

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aire — Spinning Can Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg, #e8f0f6 0%, #d4e4ee 40%, #f3f8fc 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    color: #1a2e4a;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  .subtitle {
+    color: #5a9bbf;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  #canvas-container {
+    width: 500px;
+    height: 500px;
+    cursor: grab;
+  }
+  .note {
+    color: #6b8aa5;
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="subtitle">The Lifestyle Pouch, Reimagined</div>
+<h1>Spinning Can Preview</h1>
+<div id="canvas-container"></div>
+<p class="note">Move your mouse over the can to interact</p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const mount = document.getElementById('canvas-container');
+  const width = mount.clientWidth;
+  const height = mount.clientHeight;
+
+  // Scene
+  const scene = new THREE.Scene();
+
+  // Camera — slightly elevated, looking almost straight at the can (like Ultra Pouches)
+  const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100);
+  camera.position.set(0, 0.6, 6.0);
+  camera.lookAt(0, 0.05, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+  mount.appendChild(renderer.domElement);
+
+  // Can dimensions (proportional to a real pouch tin — wide and short)
+  const canRadius = 1.0;
+  const canHeight = 0.65;
+  const lidThickness = 0.08;
+
+  // Colors
+  const canBodyColor = new THREE.Color(0.85, 0.9, 0.93);
+  const rimColor = new THREE.Color(0.92, 0.94, 0.96);
+
+  const canGroup = new THREE.Group();
+
+  // Texture loader
+  const loader = new THREE.TextureLoader();
+
+  // === CAN BODY ===
+  const bodyGeo = new THREE.CylinderGeometry(canRadius, canRadius, canHeight, 64, 1, true);
+  const bodyTexture = loader.load('public/images/can-body-texture.png');
+  bodyTexture.encoding = THREE.sRGBEncoding;
+  bodyTexture.wrapS = THREE.RepeatWrapping;
+  bodyTexture.wrapT = THREE.ClampToEdgeWrapping;
+
+  const bodyMat = new THREE.MeshPhysicalMaterial({
+    map: bodyTexture,
+    roughness: 0.32,
+    metalness: 0.08,
+    clearcoat: 0.4,
+    clearcoatRoughness: 0.35,
+    side: THREE.DoubleSide,
+  });
+  canGroup.add(new THREE.Mesh(bodyGeo, bodyMat));
+
+  // === BOTTOM CAP ===
+  const bottomGeo = new THREE.CircleGeometry(canRadius, 64);
+  const bottomMat = new THREE.MeshPhysicalMaterial({
+    color: canBodyColor,
+    roughness: 0.4,
+    metalness: 0.05,
+  });
+  const bottomMesh = new THREE.Mesh(bottomGeo, bottomMat);
+  bottomMesh.rotation.x = Math.PI / 2;
+  bottomMesh.position.y = -canHeight / 2;
+  canGroup.add(bottomMesh);
+
+  // === LID TOP ===
+  const lidRadius = canRadius + 0.03;
+  const lidTexture = loader.load('public/images/can-lid-texture.png');
+  lidTexture.encoding = THREE.sRGBEncoding;
+
+  const lidTopGeo = new THREE.CircleGeometry(lidRadius, 64);
+  const lidTopMat = new THREE.MeshPhysicalMaterial({
+    map: lidTexture,
+    roughness: 0.28,
+    metalness: 0.06,
+    clearcoat: 0.5,
+    clearcoatRoughness: 0.25,
+  });
+  const lidTopMesh = new THREE.Mesh(lidTopGeo, lidTopMat);
+  lidTopMesh.rotation.x = -Math.PI / 2;
+  lidTopMesh.position.y = canHeight / 2 + lidThickness;
+  canGroup.add(lidTopMesh);
+
+  // === LID SIDE (rim) ===
+  const lidGeo = new THREE.CylinderGeometry(lidRadius, lidRadius, lidThickness, 64);
+  const lidSideMat = new THREE.MeshPhysicalMaterial({
+    color: rimColor,
+    roughness: 0.25,
+    metalness: 0.1,
+    clearcoat: 0.6,
+  });
+  const lidSideMesh = new THREE.Mesh(lidGeo, lidSideMat);
+  lidSideMesh.position.y = canHeight / 2 + lidThickness / 2;
+  canGroup.add(lidSideMesh);
+
+  // === RIM RING (decorative seam where lid meets body) ===
+  const rimGeo = new THREE.TorusGeometry(canRadius + 0.01, 0.018, 16, 64);
+  const rimMat = new THREE.MeshPhysicalMaterial({
+    color: rimColor,
+    roughness: 0.2,
+    metalness: 0.15,
+  });
+  const rimMesh = new THREE.Mesh(rimGeo, rimMat);
+  rimMesh.rotation.x = Math.PI / 2;
+  rimMesh.position.y = canHeight / 2;
+  canGroup.add(rimMesh);
+
+  // === BOTTOM RIM RING ===
+  const bottomRimGeo = new THREE.TorusGeometry(canRadius + 0.005, 0.015, 16, 64);
+  const bottomRimMesh = new THREE.Mesh(bottomRimGeo, rimMat);
+  bottomRimMesh.rotation.x = Math.PI / 2;
+  bottomRimMesh.position.y = -canHeight / 2;
+  canGroup.add(bottomRimMesh);
+
+  // Slight downward tilt to show a hint of the lid
+  canGroup.rotation.x = -0.12;
+  scene.add(canGroup);
+
+  // === LIGHTING ===
+  // Soft ambient fill
+  scene.add(new THREE.AmbientLight(0xf0f4f8, 0.65));
+
+  // Key light — warm, from upper right
+  const keyLight = new THREE.DirectionalLight(0xfff5e6, 1.15);
+  keyLight.position.set(3, 4, 5);
+  scene.add(keyLight);
+
+  // Fill light — cool, from left
+  const fillLight = new THREE.DirectionalLight(0xe0eef6, 0.55);
+  fillLight.position.set(-4, 2, 3);
+  scene.add(fillLight);
+
+  // Rim/back light — highlights edges
+  const rimLight = new THREE.DirectionalLight(0xffffff, 0.45);
+  rimLight.position.set(0, 3, -4);
+  scene.add(rimLight);
+
+  // Subtle bottom bounce
+  const bounceLight = new THREE.DirectionalLight(0xd0e0f0, 0.2);
+  bounceLight.position.set(0, -2, 2);
+  scene.add(bounceLight);
+
+  // === MOUSE INTERACTION ===
+  let mouseX = 0, mouseY = 0;
+  mount.addEventListener('mousemove', (e) => {
+    const rect = mount.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+    mouseY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+  });
+
+  // === ANIMATE ===
+  const clock = new THREE.Clock();
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+
+    // Smooth continuous rotation (slightly slower so label text is readable)
+    canGroup.rotation.y = t * 0.35;
+
+    // Gentle floating motion
+    canGroup.position.y = Math.sin(t * 0.5) * 0.04;
+
+    // Mouse-responsive tilt (subtle)
+    canGroup.rotation.x += (-0.12 + mouseY * 0.06 - canGroup.rotation.x) * 0.025;
+    canGroup.rotation.z += (mouseX * -0.04 - canGroup.rotation.z) * 0.025;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // === RESIZE ===
+  window.addEventListener('resize', () => {
+    const w = mount.clientWidth;
+    const h = mount.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+})();
+</script>
+</body>
+</html>
