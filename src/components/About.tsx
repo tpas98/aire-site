@@ -1,5 +1,15 @@
+'use client'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import FadeUp from './FadeUp'
+
+const floatAnim = {
+  animate: {
+    y: [0, -14, 0],
+    rotate: [0, 0.8, -0.8, 0],
+    transition: { duration: 8, repeat: Infinity, ease: 'easeInOut' },
+  },
+}
 
 export default function About() {
   return (
@@ -25,8 +35,10 @@ export default function About() {
         </FadeUp>
         <FadeUp delay={0.15}>
           <div className="flex justify-center items-center">
-            <Image src="/images/open-can.png" alt="Aire open tin with pouches" width={600} height={520}
-              className="w-full max-w-[304px] md:max-w-[384px] object-contain" />
+            <motion.div {...floatAnim}>
+              <Image src="/images/open-can.png" alt="Aire open tin with pouches" width={600} height={520}
+                className="w-full max-w-[304px] md:max-w-[384px] object-contain" />
+            </motion.div>
           </div>
         </FadeUp>
       </div>
