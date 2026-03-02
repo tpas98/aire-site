@@ -14,12 +14,14 @@ export default function LifestyleStrip() {
   return (
     <section className="bg-white py-16 overflow-hidden">
       <div className="text-center mb-10 px-6">
+        <div className="flex items-center justify-center gap-3 mb-5">
+          <span className="block w-5 h-px bg-accent" />
+          <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">All-Day Balance</span>
+          <span className="block w-5 h-px bg-accent" />
+        </div>
         <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em] mb-3">
-          All-Day Balance
+          Bringing you back to the <em className="italic text-navy-mid">moment when it matters most.</em>
         </h2>
-        <p className="text-[0.95rem] text-navy-mid font-light">
-          Bringing you back to the moment when it matters most
-        </p>
       </div>
       <div className="overflow-hidden">
         <div className="lifestyle-track flex" style={{ width: 'max-content' }}>
