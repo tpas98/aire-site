@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spinning Can – Aire (v7 Premium)</title>
+  <title>Spinning Can – Aire (v8 both faces)</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -25,10 +25,10 @@
 
     const scene = new THREE.Scene();
 
-    /* ── Camera — slightly closer, more dramatic angle ── */
-    const camera = new THREE.PerspectiveCamera(24, W / H, 0.1, 100);
-    camera.position.set(0, 3.5, 7.0);
-    camera.lookAt(0, -0.05, 0);
+    /* ── Camera ── */
+    const camera = new THREE.PerspectiveCamera(26, W / H, 0.1, 100);
+    camera.position.set(0, 1.5, 7.5);
+    camera.lookAt(0, 0, 0);
 
     /* ── Renderer ── */
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -36,82 +36,69 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
+    renderer.toneMappingExposure = 1.05;
     renderer.physicallyCorrectLights = true;
     wrap.appendChild(renderer.domElement);
 
     /* ═══════════════════════════════════════════════════
-       PREMIUM ENVIRONMENT MAP — studio HDRI simulation
-       Sharp specular highlights + soft diffuse fill
+       ENVIRONMENT MAP — clean studio
        ═══════════════════════════════════════════════════ */
     const envC = document.createElement('canvas');
     envC.width = 2048; envC.height = 1024;
     const ec = envC.getContext('2d');
 
-    // Base: neutral studio grey gradient
     const skyGrad = ec.createLinearGradient(0, 0, 0, 1024);
-    skyGrad.addColorStop(0, '#b8c8dc');
-    skyGrad.addColorStop(0.15, '#d0dcea');
-    skyGrad.addColorStop(0.35, '#e8eff6');
-    skyGrad.addColorStop(0.5, '#f8fbff');
-    skyGrad.addColorStop(0.55, '#f0f4fa');
-    skyGrad.addColorStop(0.7, '#dce6f0');
-    skyGrad.addColorStop(0.85, '#c8d4e2');
-    skyGrad.addColorStop(1, '#a8b8cc');
+    skyGrad.addColorStop(0, '#c0d0e4');
+    skyGrad.addColorStop(0.2, '#d8e4f0');
+    skyGrad.addColorStop(0.4, '#eef3f9');
+    skyGrad.addColorStop(0.5, '#fafcff');
+    skyGrad.addColorStop(0.6, '#f0f4fa');
+    skyGrad.addColorStop(0.8, '#dce6f0');
+    skyGrad.addColorStop(1, '#b0c0d4');
     ec.fillStyle = skyGrad;
     ec.fillRect(0, 0, 2048, 1024);
 
-    // Sharp studio light panels (creates those premium specular streaks)
-    function addSoftLight(x, y, rx, ry, intensity, color) {
-      ec.save();
-      ec.globalAlpha = intensity;
-      const g = ec.createRadialGradient(x, y, 0, x, y, Math.max(rx, ry));
-      g.addColorStop(0, color || '#ffffff');
-      g.addColorStop(0.3, color ? color.replace(')', ',0.6)').replace('rgb', 'rgba') : 'rgba(255,255,255,0.6)');
-      g.addColorStop(0.7, 'rgba(255,255,255,0.15)');
-      g.addColorStop(1, 'rgba(255,255,255,0)');
-      ec.fillStyle = g;
-      ec.beginPath();
-      ec.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
-      ec.fill();
-      ec.restore();
-    }
-
-    // Rectangular light panels (creates long specular streaks on curved surfaces)
-    function addPanelLight(x, y, w, h, intensity) {
+    // Panel lights for specular streaks
+    function addPanel(x, y, w, h, intensity) {
       ec.save();
       ec.globalAlpha = intensity;
       const g = ec.createLinearGradient(x - w/2, y, x + w/2, y);
       g.addColorStop(0, 'rgba(255,255,255,0)');
-      g.addColorStop(0.2, 'rgba(255,255,255,0.8)');
+      g.addColorStop(0.15, 'rgba(255,255,255,0.7)');
       g.addColorStop(0.5, '#ffffff');
-      g.addColorStop(0.8, 'rgba(255,255,255,0.8)');
+      g.addColorStop(0.85, 'rgba(255,255,255,0.7)');
       g.addColorStop(1, 'rgba(255,255,255,0)');
       ec.fillStyle = g;
       ec.fillRect(x - w/2, y - h/2, w, h);
       ec.restore();
     }
 
-    // Key light panel (upper right — main specular)
-    addPanelLight(1400, 160, 300, 80, 0.55);
-    // Fill panel (upper left — softer)
-    addPanelLight(400, 200, 250, 60, 0.3);
-    // Rim panel (behind — creates edge highlight)
-    addPanelLight(1024, 500, 800, 40, 0.25);
-    // Top overhead softbox
-    addSoftLight(900, 50, 500, 100, 0.35);
-    // Side accent (warm)
-    addSoftLight(1700, 350, 200, 150, 0.15, 'rgb(255,248,230)');
-    // Cool side accent
-    addSoftLight(200, 400, 180, 120, 0.1, 'rgb(220,230,248)');
-    // Ground bounce (warm subtle)
-    addPanelLight(1024, 900, 1200, 80, 0.08);
+    function addSoft(x, y, r, intensity) {
+      ec.save();
+      ec.globalAlpha = intensity;
+      const g = ec.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, '#ffffff');
+      g.addColorStop(0.4, 'rgba(255,255,255,0.5)');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ec.fillStyle = g;
+      ec.beginPath();
+      ec.arc(x, y, r, 0, Math.PI * 2);
+      ec.fill();
+      ec.restore();
+    }
+
+    addPanel(1350, 140, 350, 70, 0.6);
+    addPanel(500, 180, 280, 55, 0.35);
+    addPanel(1024, 480, 900, 35, 0.2);
+    addSoft(850, 40, 400, 0.4);
+    addSoft(1700, 300, 200, 0.15);
+    addPanel(1024, 950, 1400, 50, 0.06);
 
     const envMap = new THREE.CanvasTexture(envC);
     envMap.mapping = THREE.EquirectangularReflectionMapping;
 
     /* ═══════════════════════════════════════════════════
-       TIN PROFILE — LatheGeometry with refined cross-section
+       TIN — LatheGeometry for smooth profile
        ═══════════════════════════════════════════════════ */
     const R      = 1.48;
     const lidR   = 1.53;
@@ -119,11 +106,10 @@
     const lidH   = 0.10;
     const bev    = 0.065;
     const groove = 0.018;
-    const segments = 16;
+    const segs   = 16;
 
     function buildProfile() {
       const pts = [];
-
       function arc(cx, cy, r, a0, a1, n) {
         for (let i = 0; i <= n; i++) {
           const a = a0 + (a1 - a0) * (i / n);
@@ -135,31 +121,24 @@
       const topBody = D / 2;
       const topLid = D / 2 + lidH;
 
-      // 1. Center of bottom
+      // Center of bottom
       pts.push(new THREE.Vector2(0, botY));
-
-      // 2. Bottom face (flat)
+      // Bottom face
       pts.push(new THREE.Vector2(R - bev, botY));
-
-      // 3. Bottom corner — smooth bevel
-      arc(R - bev, botY + bev, bev, -Math.PI / 2, 0, segments);
-
-      // 4. Body wall
+      // Bottom bevel
+      arc(R - bev, botY + bev, bev, -Math.PI / 2, 0, segs);
+      // Body wall
       pts.push(new THREE.Vector2(R, topBody - groove * 3));
-
-      // 5. Seam groove (refined)
+      // Seam
       pts.push(new THREE.Vector2(R - groove * 0.6, topBody - groove * 1.5));
       pts.push(new THREE.Vector2(R - groove * 0.8, topBody - groove * 0.3));
       pts.push(new THREE.Vector2(R + groove * 0.3, topBody + 0.003));
-
-      // 6. Lid shoulder — slight step out
+      // Lid shoulder
       pts.push(new THREE.Vector2(lidR, topBody + 0.012));
       pts.push(new THREE.Vector2(lidR, topLid - bev));
-
-      // 7. Lid top corner — smooth bevel
-      arc(lidR - bev, topLid - bev, bev, 0, Math.PI / 2, segments);
-
-      // 8. Lid top surface (flat to center)
+      // Lid top bevel
+      arc(lidR - bev, topLid - bev, bev, 0, Math.PI / 2, segs);
+      // Lid center
       pts.push(new THREE.Vector2(0, topLid));
 
       return pts;
@@ -169,11 +148,6 @@
     const latheGeo = new THREE.LatheGeometry(profile, 160);
     latheGeo.computeVertexNormals();
 
-    /* ═══════════════════════════════════════════════════
-       MATERIALS
-       ═══════════════════════════════════════════════════ */
-
-    // Main body — premium tin with subtle warmth
     const bodyMat = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(0.88, 0.90, 0.93),
       roughness: 0.14,
@@ -181,49 +155,73 @@
       clearcoat: 0.9,
       clearcoatRoughness: 0.06,
       envMap: envMap,
-      envMapIntensity: 0.75,
+      envMapIntensity: 0.7,
       side: THREE.DoubleSide,
     });
     const latheMesh = new THREE.Mesh(latheGeo, bodyMat);
     const canGroup = new THREE.Group();
     canGroup.add(latheMesh);
 
-    /* ── Texture loading ── */
+    /* ── Textures ── */
     const loader = new THREE.TextureLoader();
-    function configTex(tex) {
+    function cfgTex(tex) {
       tex.encoding = THREE.sRGBEncoding;
       tex.minFilter = THREE.LinearMipmapLinearFilter;
       tex.magFilter = THREE.LinearFilter;
       tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
     }
 
-    /* ── Lid top face ── */
+    /* ── TOP face (front branding) ── */
     const lidTex = loader.load('/public/images/can-front-texture.png');
-    configTex(lidTex);
+    cfgTex(lidTex);
 
     const topY = D / 2 + lidH;
-    const lidFaceSize = lidR * 2 * 0.95;
-    const lidFaceGeo = new THREE.PlaneGeometry(lidFaceSize, lidFaceSize);
-    const lidFaceMat = new THREE.MeshPhysicalMaterial({
+    const lidSize = lidR * 2 * 0.95;
+    const lidGeo = new THREE.PlaneGeometry(lidSize, lidSize);
+    const lidMat = new THREE.MeshPhysicalMaterial({
       map: lidTex,
-      roughness: 0.22,
+      roughness: 0.24,
       metalness: 0.0,
-      clearcoat: 0.65,
+      clearcoat: 0.6,
       clearcoatRoughness: 0.12,
       envMap: envMap,
       envMapIntensity: 0.08,
       transparent: true,
       alphaTest: 0.01,
     });
-    const lidFaceMesh = new THREE.Mesh(lidFaceGeo, lidFaceMat);
-    lidFaceMesh.rotation.x = -Math.PI / 2;
-    lidFaceMesh.rotation.z = Math.PI;
-    lidFaceMesh.position.y = topY + 0.002;
-    canGroup.add(lidFaceMesh);
+    const lidMesh = new THREE.Mesh(lidGeo, lidMat);
+    lidMesh.rotation.x = -Math.PI / 2;
+    lidMesh.rotation.z = Math.PI;
+    lidMesh.position.y = topY + 0.002;
+    canGroup.add(lidMesh);
 
-    /* ── Body band texture ── */
+    /* ── BOTTOM face (supplement facts / back) ── */
+    const backTex = loader.load('/public/images/can-back-texture.png');
+    cfgTex(backTex);
+
+    const botY = -D / 2;
+    const backSize = R * 2 * 0.93;
+    const backGeo = new THREE.PlaneGeometry(backSize, backSize);
+    const backMat = new THREE.MeshPhysicalMaterial({
+      map: backTex,
+      roughness: 0.24,
+      metalness: 0.0,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.12,
+      envMap: envMap,
+      envMapIntensity: 0.08,
+      transparent: true,
+      alphaTest: 0.01,
+    });
+    const backMesh = new THREE.Mesh(backGeo, backMat);
+    backMesh.rotation.x = Math.PI / 2;  // face downward
+    backMesh.rotation.z = Math.PI;
+    backMesh.position.y = botY - 0.002;
+    canGroup.add(backMesh);
+
+    /* ── Band texture ── */
     const bandTex = loader.load('/public/images/can-band-texture.png');
-    configTex(bandTex);
+    cfgTex(bandTex);
     bandTex.wrapS = THREE.RepeatWrapping;
     bandTex.wrapT = THREE.ClampToEdgeWrapping;
 
@@ -236,83 +234,40 @@
       clearcoatRoughness: 0.15,
       envMap: envMap,
       envMapIntensity: 0.10,
-      transparent: false,
       side: THREE.FrontSide,
     });
     const bandMesh = new THREE.Mesh(bandGeo, bandMat);
     bandMesh.position.y = 0;
     canGroup.add(bandMesh);
 
-    /* ── Ground shadow (elliptical dark disc below the can) ── */
-    const shadowGeo = new THREE.PlaneGeometry(4.2, 4.2);
-    const shadowMat = new THREE.MeshBasicMaterial({
-      color: 0x445566,
-      transparent: true,
-      opacity: 0.12,
-      depthWrite: false,
-    });
-    const shadowMesh = new THREE.Mesh(shadowGeo, shadowMat);
-    shadowMesh.rotation.x = -Math.PI / 2;
-    shadowMesh.position.y = -D / 2 - 0.08;
-    // Scale to ellipse (wider than deep for perspective)
-    shadowMesh.scale.set(1, 0.5, 1);
-    scene.add(shadowMesh);
+    /* ── NO shadow/reflection planes — clean background only ── */
 
-    /* ── Reflection plane (subtle floor reflection) ── */
-    const reflGeo = new THREE.PlaneGeometry(6, 6);
-    const reflMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.92, 0.94, 0.97),
-      roughness: 0.7,
-      metalness: 0.0,
-      transparent: true,
-      opacity: 0.25,
-      envMap: envMap,
-      envMapIntensity: 0.05,
-    });
-    const reflMesh = new THREE.Mesh(reflGeo, reflMat);
-    reflMesh.rotation.x = -Math.PI / 2;
-    reflMesh.position.y = -D / 2 - 0.06;
-    scene.add(reflMesh);
-
-    /* ── Position ── */
-    canGroup.rotation.x = -0.14;
-    canGroup.rotation.z = 0.02;
     scene.add(canGroup);
 
     /* ═══════════════════════════════════════════════════
-       LIGHTING — Refined 6-point studio with color temp variation
+       LIGHTING
        ═══════════════════════════════════════════════════ */
-    scene.add(new THREE.AmbientLight(0xe8eef6, 0.25));
+    scene.add(new THREE.AmbientLight(0xe8eef6, 0.3));
 
-    // Key light — warm, from upper right
-    const key = new THREE.DirectionalLight(0xfff2e0, 0.95);
-    key.position.set(4, 6, 4);
+    const key = new THREE.DirectionalLight(0xfff2e0, 0.9);
+    key.position.set(4, 5, 4);
     scene.add(key);
 
-    // Fill light — cool, from left
     const fill = new THREE.DirectionalLight(0xd8e6f8, 0.4);
-    fill.position.set(-5, 2.5, 3);
+    fill.position.set(-5, 2, 3);
     scene.add(fill);
 
-    // Rim light — strong, from behind for edge separation
-    const rim = new THREE.DirectionalLight(0xffffff, 0.65);
-    rim.position.set(0, 3, -6);
+    const rim = new THREE.DirectionalLight(0xffffff, 0.6);
+    rim.position.set(0, 2, -6);
     scene.add(rim);
 
-    // Top kicker — subtle overhead fill
-    const topKick = new THREE.DirectionalLight(0xf0f4ff, 0.22);
-    topKick.position.set(-1, 9, 0);
-    scene.add(topKick);
+    const top = new THREE.DirectionalLight(0xf0f4ff, 0.25);
+    top.position.set(0, 9, 0);
+    scene.add(top);
 
-    // Underside bounce — warm, very subtle
-    const bounce = new THREE.DirectionalLight(0xf0e8d8, 0.08);
-    bounce.position.set(0, -3, 2);
+    const bounce = new THREE.DirectionalLight(0xf0e8d8, 0.1);
+    bounce.position.set(0, -4, 2);
     scene.add(bounce);
-
-    // Side accent — cool highlight on left edge
-    const accent = new THREE.DirectionalLight(0xe0eaff, 0.18);
-    accent.position.set(-6, 1, -1);
-    scene.add(accent);
 
     /* ── Mouse ── */
     let mx = 0, my = 0;
@@ -323,27 +278,37 @@
     });
     wrap.addEventListener('mouseleave', () => { mx = 0; my = 0; });
 
-    /* ── Animate ── */
+    /* ═══════════════════════════════════════════════════
+       ANIMATION — oscillating tilt to show both faces
+       The can spins around Y, and the X tilt rocks back
+       and forth: tilted toward camera shows the TOP (branding),
+       tilted away shows the BOTTOM (supplement facts).
+       One full tilt cycle per Y revolution.
+       ═══════════════════════════════════════════════════ */
     const clock = new THREE.Clock();
+    const SPIN_SPEED = 0.35;   // Y rotation speed (radians/sec)
+    const TILT_RANGE = 0.5;    // max tilt in each direction
+    const TILT_CENTER = -0.1;  // slight bias toward showing the top
+
     (function animate() {
       requestAnimationFrame(animate);
       const t = clock.getElapsedTime();
 
-      // Smooth, elegant rotation
-      canGroup.rotation.y = t * 0.32;
+      // Y rotation — main spin
+      canGroup.rotation.y = t * SPIN_SPEED;
+
+      // Oscillating X tilt — synced to Y rotation so:
+      //   front-facing = tilted to show top lid (branding)
+      //   back-facing = tilted to show bottom (supplement facts)
+      const tiltPhase = t * SPIN_SPEED; // same frequency as Y spin
+      canGroup.rotation.x = TILT_CENTER + Math.sin(tiltPhase) * TILT_RANGE;
+
+      // Gentle float
       canGroup.position.y = Math.sin(t * 0.4) * 0.025;
 
       // Mouse parallax (subtle)
-      canGroup.rotation.x += (-0.14 + my * 0.08 - canGroup.rotation.x) * 0.02;
-      canGroup.rotation.z += (0.02 - mx * 0.05 - canGroup.rotation.z) * 0.02;
-
-      // Shadow follows can
-      shadowMesh.position.x = canGroup.position.x;
-      shadowMesh.position.z = canGroup.position.z;
-      // Shadow scales inversely with can height (higher = larger/softer shadow)
-      const sh = 1 + canGroup.position.y * 0.15;
-      shadowMesh.scale.set(sh, 0.5 * sh, sh);
-      shadowMesh.material.opacity = 0.12 - canGroup.position.y * 0.02;
+      canGroup.rotation.x += my * 0.05;
+      canGroup.rotation.z = mx * -0.03;
 
       renderer.render(scene, camera);
     })();
