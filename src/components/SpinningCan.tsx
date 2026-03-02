@@ -111,11 +111,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const frontGeo = new THREE.PlaneGeometry(faceSize, faceSize)
     const frontMat = new THREE.MeshPhysicalMaterial({
       map: frontTexture,
-      roughness: 0.28,
-      metalness: 0.02,
-      clearcoat: 0.6,
-      clearcoatRoughness: 0.15,
-      envMapIntensity: 0.25,
+      roughness: 0.35,
+      metalness: 0.01,
+      clearcoat: 0.3,
+      clearcoatRoughness: 0.2,
+      envMapIntensity: 0.1,
       transparent: true,
       side: THREE.FrontSide,
     })
@@ -133,11 +133,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const backGeo = new THREE.PlaneGeometry(faceSize, faceSize)
     const backMat = new THREE.MeshPhysicalMaterial({
       map: backTexture,
-      roughness: 0.28,
-      metalness: 0.02,
-      clearcoat: 0.6,
-      clearcoatRoughness: 0.15,
-      envMapIntensity: 0.25,
+      roughness: 0.35,
+      metalness: 0.01,
+      clearcoat: 0.3,
+      clearcoatRoughness: 0.2,
+      envMapIntensity: 0.1,
       transparent: true,
       side: THREE.FrontSide,
     })

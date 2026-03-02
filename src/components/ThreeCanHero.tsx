@@ -142,13 +142,13 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
 
     // === SHARED MATERIALS ===
     const frontMat = new THREE.MeshPhysicalMaterial({
-      map: frontTexture, roughness: 0.28, metalness: 0.02,
-      clearcoat: 0.6, clearcoatRoughness: 0.15, envMapIntensity: 0.25,
+      map: frontTexture, roughness: 0.35, metalness: 0.01,
+      clearcoat: 0.3, clearcoatRoughness: 0.2, envMapIntensity: 0.1,
       transparent: true, side: THREE.FrontSide,
     })
     const backMat = new THREE.MeshPhysicalMaterial({
-      map: backTexture, roughness: 0.28, metalness: 0.02,
-      clearcoat: 0.6, clearcoatRoughness: 0.15, envMapIntensity: 0.25,
+      map: backTexture, roughness: 0.35, metalness: 0.01,
+      clearcoat: 0.3, clearcoatRoughness: 0.2, envMapIntensity: 0.1,
       transparent: true, side: THREE.FrontSide,
     })
     const edgeMat = new THREE.MeshPhysicalMaterial({
