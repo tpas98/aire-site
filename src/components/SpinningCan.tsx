@@ -28,7 +28,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.35
+    renderer.toneMappingExposure = 1.15
     mount.appendChild(renderer.domElement)
 
     // === STUDIO ENVIRONMENT MAP (for realistic reflections) ===
@@ -111,11 +111,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const frontGeo = new THREE.PlaneGeometry(faceSize, faceSize)
     const frontMat = new THREE.MeshPhysicalMaterial({
       map: frontTexture,
-      roughness: 0.22,
+      roughness: 0.28,
       metalness: 0.02,
-      clearcoat: 0.8,
-      clearcoatRoughness: 0.12,
-      envMapIntensity: 0.6,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.15,
+      envMapIntensity: 0.25,
       transparent: true,
       side: THREE.FrontSide,
     })
@@ -133,11 +133,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const backGeo = new THREE.PlaneGeometry(faceSize, faceSize)
     const backMat = new THREE.MeshPhysicalMaterial({
       map: backTexture,
-      roughness: 0.22,
+      roughness: 0.28,
       metalness: 0.02,
-      clearcoat: 0.8,
-      clearcoatRoughness: 0.12,
-      envMapIntensity: 0.6,
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.15,
+      envMapIntensity: 0.25,
       transparent: true,
       side: THREE.FrontSide,
     })
@@ -158,11 +158,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
 
     const edgeMat = new THREE.MeshPhysicalMaterial({
       map: bandTexture,
-      roughness: 0.2,
+      roughness: 0.25,
       metalness: 0.08,
-      clearcoat: 0.6,
-      clearcoatRoughness: 0.18,
-      envMapIntensity: 0.8,
+      clearcoat: 0.5,
+      clearcoatRoughness: 0.2,
+      envMapIntensity: 0.45,
       side: THREE.DoubleSide,
     })
     const edgeMesh = new THREE.Mesh(edgeGeo, edgeMat)
