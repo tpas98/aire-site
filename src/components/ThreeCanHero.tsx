@@ -39,8 +39,8 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
     renderer.setSize(width, height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.outputColorSpace = THREE.SRGBColorSpace
-    renderer.toneMapping = THREE.ACESFilmicToneMapping
-    renderer.toneMappingExposure = 1.15
+    renderer.toneMapping = THREE.LinearToneMapping
+    renderer.toneMappingExposure = 1.0
     mount.appendChild(renderer.domElement)
 
     // === STUDIO ENVIRONMENT MAP ===
@@ -285,9 +285,9 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
     })
 
     // === LIGHTING ===
-    scene.add(new THREE.AmbientLight(0xf4f7fa, 0.5))
+    scene.add(new THREE.AmbientLight(0xf0f4f8, 0.4))
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.3)
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.0)
     keyLight.position.set(4, 4, 5)
     scene.add(keyLight)
 
