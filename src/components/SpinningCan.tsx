@@ -27,10 +27,9 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     })
     renderer.setSize(width, height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.outputEncoding = THREE.sRGBEncoding
+    renderer.outputColorSpace = THREE.SRGBColorSpace
     renderer.toneMapping = THREE.ACESFilmicToneMapping
     renderer.toneMappingExposure = 0.95
-    renderer.physicallyCorrectLights = true
     mount.appendChild(renderer.domElement)
 
     /* ── Soft environment map for reflections ── */
@@ -67,7 +66,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const onTex = () => { texLoaded++; if (texLoaded >= 2) setLoaded(true) }
 
     const configTex = (tex: THREE.Texture) => {
-      tex.encoding = THREE.sRGBEncoding
+      tex.colorSpace = THREE.SRGBColorSpace
       tex.minFilter = THREE.LinearMipmapLinearFilter
       tex.magFilter = THREE.LinearFilter
       tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy())
