@@ -266,11 +266,14 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     notchRoundMesh.position.set(0, -(tinRadius + 0.01), tinDepth / 2 + lidThickness / 2)
     canGroup.add(notchRoundMesh)
 
-    // Tilt upward to show lid at an angle
-    canGroup.rotation.x = -0.45
-    canGroup.rotation.z = -0.03
+    // Outer group holds the fixed tilt (product-shot angle)
+    // Inner canGroup spins on its local Y axis within that tilt
+    const tiltGroup = new THREE.Group()
+    tiltGroup.rotation.x = -0.55  // Looking slightly down at lid
+    tiltGroup.rotation.z = -0.03
+    tiltGroup.add(canGroup)
 
-    scene.add(canGroup)
+    scene.add(tiltGroup)
 
     // === LIGHTING — bright studio setup ===
     scene.add(new THREE.AmbientLight(0xf4f7fa, 0.5))
@@ -313,37 +316,33 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     // === ANIMATION ===
     let animId: number
     const clock = new THREE.Clock()
-    const baseTiltX = -0.45
+    const baseTiltX = -0.55
     const baseTiltZ = -0.03
 
     const animate = () => {
       animId = requestAnimationFrame(animate)
       const t = clock.getElapsedTime()
 
-      // Eased spin — lingers on front face, accelerates through back
-      // Each full rotation takes ~6 seconds
+      // Eased spin on local Y axis (stays in tilted frame)
       const cycleTime = 6.0
-      const progress = (t % cycleTime) / cycleTime // 0→1 per revolution
-      // Sine easing: slow at 0 (front), fast at 0.5 (back), slow at 1 (front again)
+      const progress = (t % cycleTime) / cycleTime
       const eased = progress - Math.sin(progress * Math.PI * 2) / (Math.PI * 2)
       const fullRotations = Math.floor(t / cycleTime)
       canGroup.rotation.y = (fullRotations + eased) * Math.PI * 2
 
-      // Gentle floating bob (matches other product images on site)
-      canGroup.position.y = Math.sin(t * 0.5) * 0.06
+      // Float and jiggle on the outer tilt group
+      tiltGroup.position.y = Math.sin(t * 0.5) * 0.06
+      tiltGroup.position.x = Math.sin(t * 0.3) * 0.015
 
-      // Subtle horizontal sway for organic feel
-      canGroup.position.x = Math.sin(t * 0.3) * 0.015
-
-      // Gentle rocking jiggle layered on top of tilt
+      // Gentle rocking jiggle
       const jiggleX = Math.sin(t * 0.7) * 0.02
       const jiggleZ = Math.cos(t * 0.5) * 0.015
 
-      // Mouse-responsive tilt + jiggle
+      // Mouse-responsive tilt on the outer group
       const targetTiltX = baseTiltX + mouseY * 0.12 + jiggleX
       const targetTiltZ = baseTiltZ + mouseX * -0.1 + jiggleZ
-      canGroup.rotation.x += (targetTiltX - canGroup.rotation.x) * 0.04
-      canGroup.rotation.z += (targetTiltZ - canGroup.rotation.z) * 0.04
+      tiltGroup.rotation.x += (targetTiltX - tiltGroup.rotation.x) * 0.04
+      tiltGroup.rotation.z += (targetTiltZ - tiltGroup.rotation.z) * 0.04
 
       renderer.render(scene, camera)
     }
