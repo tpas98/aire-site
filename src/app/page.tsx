@@ -8,6 +8,8 @@ import ProductFeature from '@/components/ProductFeature'
 import HowToUse from '@/components/HowToUse'
 import Balance from '@/components/Balance'
 import Testimonials from '@/components/Testimonials'
+import FAQ from '@/components/FAQ'
+import StickyMobileCTA from '@/components/StickyMobileCTA'
 import { CTA, Footer } from '@/components/CTAFooter'
 
 export default function Home() {
@@ -16,15 +18,17 @@ export default function Home() {
       <Navbar />
       <Ticker />
       <Hero />
+      <HowToUse />
+      <Testimonials />
       <LifestyleStrip />
       <About />
       <Ingredients />
       <ProductFeature />
       <Balance />
-      <Testimonials />
-      <HowToUse />
+      <FAQ />
       <CTA />
       <Footer />
+      <StickyMobileCTA />
     </>
   )
 }

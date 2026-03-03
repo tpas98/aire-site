@@ -11,6 +11,7 @@ const trust = [
   { icon: '🚚', label: 'Free Shipping Over $50' },
   { icon: '🧪', label: '5 Clinically-Studied Ingredients' },
   { icon: '✦', label: 'Zero Nicotine. Zero Caffeine.' },
+  { icon: '🛡', label: '30-Day Satisfaction Guarantee' },
 ]
 
 const footerLinks = {
@@ -21,7 +22,7 @@ const footerLinks = {
     { label: 'About Us', href: '#science' },
   ],
   Support: [
-    { label: 'FAQ', href: '/faq' },
+    { label: 'FAQ', href: '#faq' },
     { label: 'Shipping & Returns', href: '/shipping' },
     { label: 'Contact Us', href: 'mailto:hello@aire.com' },
   ],

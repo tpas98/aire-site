@@ -21,7 +21,7 @@ const steps = [
 
 export default function HowToUse() {
   return (
-    <section className="bg-off-white py-20 px-6 md:px-16">
+    <section id="how-to-use" className="bg-off-white py-20 px-6 md:px-16">
       <div className="max-w-[1100px] mx-auto">
         <FadeUp>
           <div className="flex items-center gap-3 mb-4">

@@ -37,12 +37,18 @@ export default function Hero() {
           <motion.p className="text-[0.95rem] md:text-[1rem] text-navy-mid leading-[1.7] font-light mb-7 max-w-[440px]" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
             The future of pouches is here – calmness, clarity, and mental presence, anytime of the day. Five science-backed active ingredients. One pocket-sized moment of clarity.
           </motion.p>
+          <motion.div className="flex items-center gap-3 mb-5" variants={fadeUp} initial="hidden" animate="visible" custom={0.25}>
+            <div className="flex items-center gap-0.5 text-[#e8a820]">
+              {[...Array(5)].map((_, i) => <span key={i} className="text-sm">★</span>)}
+            </div>
+            <span className="text-[0.78rem] text-navy-mid font-medium">Loved by 200+ customers</span>
+          </motion.div>
           <motion.div className="flex items-center gap-4 flex-wrap" variants={fadeUp} initial="hidden" animate="visible" custom={0.3}>
             <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
-              Order Aire
+              Get Your 4-Pack
             </a>
-            <a href="#ingredients" className="text-[0.8rem] font-medium text-navy-mid hover:text-accent transition-colors duration-200 flex items-center gap-1.5 group whitespace-nowrap">
-              See the science
+            <a href="#how-to-use" className="text-[0.8rem] font-medium text-navy-mid hover:text-accent transition-colors duration-200 flex items-center gap-1.5 group whitespace-nowrap">
+              How it works
               <span className="group-hover:translate-x-1.5 transition-transform duration-200">→</span>
             </a>
           </motion.div>
