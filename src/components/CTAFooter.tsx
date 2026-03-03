@@ -52,7 +52,7 @@ export function CTA() {
           <div className="flex flex-col gap-3 mb-8">
             {trust.map(({ icon, label }) => (
               <div key={label} className="flex items-center gap-3 text-[0.83rem] text-white/60">
-                <span className="text-sky-deep">{icon}</span>
+                <span className="w-5 text-center text-sky-deep flex-shrink-0">{icon}</span>
                 <span>{label}</span>
               </div>
             ))}
