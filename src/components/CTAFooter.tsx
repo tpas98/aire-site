@@ -58,7 +58,7 @@ export function CTA() {
           </div>
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <a href={CHECKOUT_URL} className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
-              Order Now — $39.99 / 4-Pack
+              Order Now — $45.99 / 4-Pack
             </a>
             <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 transition-all duration-200 text-center">
               Learn the Science
