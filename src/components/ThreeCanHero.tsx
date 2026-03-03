@@ -262,9 +262,10 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
       },
     ]
 
-    // Build all 3 cans with their tilt wrappers
+    // Build all 3 cans with their tilt wrappers inside a responsive parent group
     const canSpinGroups: THREE.Group[] = []
     const tiltGroups: THREE.Group[] = []
+    const sceneGroup = new THREE.Group()  // Parent group for responsive scaling
 
     configs.forEach((cfg) => {
       const spinGroup = buildCan()
@@ -273,10 +274,36 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
       tiltGroup.rotation.z = cfg.tiltZ
       tiltGroup.add(spinGroup)
       tiltGroup.position.set(...cfg.position)
-      scene.add(tiltGroup)
+      sceneGroup.add(tiltGroup)
       canSpinGroups.push(spinGroup)
       tiltGroups.push(tiltGroup)
     })
+    scene.add(sceneGroup)
+
+    // === RESPONSIVE: adjust scale + camera for narrow/mobile viewports ===
+    function updateResponsiveLayout() {
+      const aspect = mount!.clientWidth / mount!.clientHeight
+      if (aspect < 0.75) {
+        // Very narrow (phone portrait) — scale down significantly, pull camera back
+        const s = 0.62
+        sceneGroup.scale.set(s, s, s)
+        camera.position.z = 12.5
+        camera.position.y = 0.1
+      } else if (aspect < 1.1) {
+        // Tablet / narrow — moderate scale down
+        const s = 0.78
+        sceneGroup.scale.set(s, s, s)
+        camera.position.z = 11
+        camera.position.y = 0.15
+      } else {
+        // Desktop — full size
+        sceneGroup.scale.set(1, 1, 1)
+        camera.position.z = 10
+        camera.position.y = 0.2
+      }
+      camera.updateProjectionMatrix()
+    }
+    updateResponsiveLayout()
 
     // === LIGHTING ===
     scene.add(new THREE.AmbientLight(0xf5f3f0, 0.45))
@@ -377,6 +404,7 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
       camera.aspect = w / h
       camera.updateProjectionMatrix()
       renderer.setSize(w, h)
+      updateResponsiveLayout()
     }
     window.addEventListener('resize', handleResize)
 

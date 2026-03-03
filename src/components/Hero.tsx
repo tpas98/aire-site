@@ -48,7 +48,7 @@ export default function Hero() {
           </motion.div>
         </div>
         <motion.div
-          className="flex justify-center items-center w-full h-[320px] md:h-[480px]"
+          className="flex justify-center items-center w-full h-[380px] md:h-[480px]"
           variants={fadeUp} initial="hidden" animate="visible" custom={0.2}
         >
           <ThreeCanHero />
