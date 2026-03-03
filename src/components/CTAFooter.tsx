@@ -68,13 +68,13 @@ export function CTA() {
             † These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.
           </p>
         </FadeUp>
-        <FadeUp delay={0.2} className="hidden md:flex justify-center items-center">
+        <FadeUp delay={0.2} className="flex justify-center items-center">
           <motion.div
             animate={{ y: [0, -18, 0], rotate: [0, 1.2, -1.2, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <Image src="/images/cta-cans.png" alt="Aire Flow Pouches" width={560} height={560}
-              className="w-full max-w-[520px] object-contain" />
+            <Image src="/images/open-can.png" alt="Aire tin open showing pouches" width={560} height={560}
+              className="w-full max-w-[280px] md:max-w-[520px] object-contain" />
           </motion.div>
         </FadeUp>
       </div>
