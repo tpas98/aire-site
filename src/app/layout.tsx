@@ -13,6 +13,7 @@ export const metadata: Metadata = {
       { url: '/aire-icon-192.png', sizes: '192x192', type: 'image/png' },
       { url: '/aire-icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
+    shortcut: '/aire-icon-32.png',
     apple: '/aire-apple-icon.png',
   },
   openGraph: {
@@ -38,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en" scroll-behavior="auto">
       <head>
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1a2e4a" />
+        <link rel="shortcut icon" type="image/png" href="/aire-icon-32.png" />
       </head>
       <body>
         {children}
