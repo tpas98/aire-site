@@ -8,14 +8,12 @@ export const metadata: Metadata = {
   description: 'The world\'s first lifestyle pouch built for calm focus. No nicotine, no caffeine, no compromise.',
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: '48x48' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/icon-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+      { url: '/aire-icon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/aire-icon-16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/aire-icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/aire-icon-512.png', sizes: '512x512', type: 'image/png' },
     ],
-    apple: '/apple-touch-icon.png',
+    apple: '/aire-apple-icon.png',
   },
   openGraph: {
     title: 'Aire — Find Your Balance',
