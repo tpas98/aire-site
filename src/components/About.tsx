@@ -7,7 +7,7 @@ const SpinningCan = dynamic(() => import('./SpinningCan'), { ssr: false })
 
 export default function About() {
   return (
-    <section id="science" className="bg-off-white py-24 px-6 md:px-20">
+    <section id="science" className="bg-off-white pt-16 pb-24 px-6 md:px-20">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
         <FadeUp>
           <div className="flex items-center gap-3 mb-5">

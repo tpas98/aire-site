@@ -115,7 +115,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function FAQ() {
   return (
-    <section id="faq" className="bg-off-white py-24 px-6 md:px-16">
+    <section id="faq" className="bg-off-white pt-16 pb-24 px-6 md:px-16">
       <div className="max-w-[720px] mx-auto">
         <FadeUp>
           <div className="flex items-center gap-3 mb-5">

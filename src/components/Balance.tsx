@@ -17,7 +17,7 @@ const consumptionBalance = [
 
 export default function Balance() {
   return (
-    <section className="bg-section-gradient py-24 px-6 md:px-16 overflow-hidden">
+    <section className="bg-section-gradient pt-24 pb-16 px-6 md:px-16 overflow-hidden">
       <div className="max-w-[1100px] mx-auto">
         <FadeUp>
           <div className="flex items-center gap-3 mb-4">

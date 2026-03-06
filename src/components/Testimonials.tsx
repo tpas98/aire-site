@@ -52,16 +52,26 @@ function ReviewCard({ stars, text, author, tag }: { stars: number; text: string;
 
 export default function Testimonials() {
   return (
-    <section id="reviews" className="bg-white pt-12 pb-24">
+    <section id="reviews" className="bg-white pt-12 pb-16">
       <FadeUp className="text-center mb-12 px-6 md:px-16">
         <div className="flex items-center justify-center gap-3 mb-5">
           <span className="block w-5 h-px bg-accent" />
           <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">What Customers Are Saying</span>
           <span className="block w-5 h-px bg-accent" />
         </div>
-        <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em]">
+        <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em] mb-4">
           Real results.<br /><em className="italic text-accent">Real people.</em>
         </h2>
+        <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center gap-0.5 text-[#e8a820] text-sm">
+            {'★★★★'}
+            <span className="relative inline-block w-[1em] overflow-hidden">
+              <span className="text-[#e8a820]/20">★</span>
+              <span className="absolute top-0 left-0 overflow-hidden" style={{ width: '75%' }}>★</span>
+            </span>
+          </div>
+          <span className="text-[0.78rem] text-navy-mid font-medium">4.8 average from 200+ customers</span>
+        </div>
       </FadeUp>
 
       <FadeUp delay={0.15}>
