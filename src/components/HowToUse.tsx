@@ -15,7 +15,7 @@ const steps = [
   {
     number: '03',
     title: 'Find Your Balance',
-    description: 'Enjoy the pouch for up to 60 minutes. Discard after use. Do not consume.',
+    description: 'Enjoy the pouch for up to 60 minutes. Discard after use. Do not consume. Enjoy 4-6 pouches throughout the day for best results.',
   },
 ]
 

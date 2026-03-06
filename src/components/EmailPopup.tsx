@@ -78,7 +78,7 @@ export default function EmailPopup() {
                     <span className="text-[0.65rem] font-semibold tracking-[0.2em] uppercase text-accent">Welcome to Aire</span>
                   </div>
                   <h2 className="font-serif text-[1.9rem] leading-[1.1] text-white tracking-[-0.02em] mb-2">
-                    Find Your Flow.<br />
+                    Find Your Balance.<br />
                     <em className="italic text-sky-deep">Save 10%.</em>
                   </h2>
                   <p className="text-[0.85rem] text-white/50 font-light leading-[1.7] mb-6">

@@ -2,10 +2,10 @@
 import FadeUp from './FadeUp'
 
 const compRows = [
-  { label: 'Supports calm productivity', aire: true, nicotine: false, nootropic: false, caffeine: false },
-  { label: 'Supports mood', aire: true, nicotine: false, nootropic: false, caffeine: false },
+  { label: 'Supports calm productivity†', aire: true, nicotine: false, nootropic: true, caffeine: false },
+  { label: 'Supports mood†', aire: true, nicotine: false, nootropic: false, caffeine: false },
   { label: 'Non-addictive', aire: true, nicotine: false, nootropic: true, caffeine: false },
-  { label: 'Anytime use', aire: true, nicotine: false, nootropic: true, caffeine: false },
+  { label: 'Anytime use', aire: true, nicotine: true, nootropic: true, caffeine: false },
   { label: 'Sleep friendly', aire: true, nicotine: false, nootropic: true, caffeine: false },
   { label: 'Me-time protocol', aire: true, nicotine: false, nootropic: false, caffeine: false },
 ]
@@ -23,7 +23,7 @@ export default function ProductFeature() {
             Aire vs. the<br /><em className="italic text-accent">competition.</em>
           </h2>
           <p className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-7">
-            No other pouch combines zero nicotine, zero caffeine, mood support, and adaptogens. Aire exists because nothing else did.
+            No other pouch works to continuously support quality of life and well-being through encouraging balance.
           </p>
           <div className="border-t border-sky-deep/15">
             <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr_1fr] py-3 text-[0.64rem] font-semibold tracking-[0.1em] uppercase text-muted">
@@ -43,6 +43,9 @@ export default function ProductFeature() {
               </div>
             ))}
           </div>
+          <p className="text-[0.62rem] text-muted/50 leading-relaxed mt-6">
+            † These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.
+          </p>
         </FadeUp>
       </div>
     </section>

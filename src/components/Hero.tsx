@@ -35,11 +35,15 @@ export default function Hero() {
             Instantly.
           </motion.h1>
           <motion.p className="text-[0.95rem] md:text-[1rem] text-navy-mid leading-[1.7] font-light mb-7 max-w-[440px]" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
-            The future of pouches is here – calmness, clarity, and mental presence, anytime of the day. Five science-backed active ingredients. One pocket-sized moment of clarity.
+            The future of pouches is here – calmness, clarity, and mental presence, anytime of the day.† Five science-backed active ingredients. One pocket-sized moment of clarity.
           </motion.p>
           <motion.div className="flex items-center gap-3 mb-5" variants={fadeUp} initial="hidden" animate="visible" custom={0.25}>
             <div className="flex items-center gap-0.5 text-[#e8a820]">
-              {[...Array(5)].map((_, i) => <span key={i} className="text-sm">★</span>)}
+              {[...Array(4)].map((_, i) => <span key={i} className="text-sm">★</span>)}
+              <span className="text-sm relative inline-block w-[1em] overflow-hidden">
+                <span className="text-[#e8a820]/20">★</span>
+                <span className="absolute top-0 left-0 overflow-hidden" style={{ width: '75%' }}>★</span>
+              </span>
             </div>
             <span className="text-[0.78rem] text-navy-mid font-medium">Loved by 200+ customers</span>
           </motion.div>

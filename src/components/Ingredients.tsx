@@ -1,11 +1,11 @@
 import FadeUp from './FadeUp'
 
 const ingredients = [
-  { num: '01', name: 'Rhodiola Rosea', desc: 'Supports resilience to mental fatigue and stress, promoting sustained clarity and balanced energy. Adaptogenic herb used to help the body adapt to stress.', badge: '35mg' },
-  { num: '02', name: 'Saffron', desc: 'Supports mood and emotional balance, contributing to a calm, clear headspace. Botanical extract derived from the Crocus sativus flower.', badge: '10mg' },
-  { num: '03', name: 'L-Theanine', desc: 'Promotes a relaxed but alert mental state, helping smooth stress and support focused clarity without drowsiness. Amino acid naturally found in green tea.', badge: '75mg' },
-  { num: '04', name: 'Vitamin B9', desc: 'Supports healthy neurotransmitter production involved in mood balance and cognitive function. Bioactive form compound used directly by the body.', badge: '150mcg' },
-  { num: '05', name: 'Vitamin B6', desc: 'Plays a key role in neurotransmitter synthesis that supports mental clarity, focus, and emotional regulation. Active coenzyme.', badge: '2.5mg' },
+  { num: '01', name: 'Rhodiola Rosea', desc: 'Supports resilience to mental fatigue and stress, promoting sustained clarity and balanced energy.† Adaptogenic herb used to help the body adapt to stress.' },
+  { num: '02', name: 'Affron® Saffron', desc: 'Supports mood and emotional balance, contributing to a calm, clear headspace.† Botanical extract derived from the Crocus sativus flower.' },
+  { num: '03', name: 'L-Theanine', desc: 'Promotes a relaxed but alert mental state, helping smooth stress and support focused clarity without drowsiness.† Amino acid naturally found in green tea.' },
+  { num: '04', name: 'Vitamin B9', desc: 'Supports healthy neurotransmitter production involved in mood balance and cognitive function.† Bioactive form compound used directly by the body.' },
+  { num: '05', name: 'Vitamin B6', desc: 'Plays a key role in neurotransmitter synthesis that supports mental clarity, focus, and emotional regulation.† Active coenzyme.' },
 ]
 
 export default function Ingredients() {
@@ -20,24 +20,26 @@ export default function Ingredients() {
           <span className="block w-5 h-px bg-sky-deep" />
         </div>
         <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-white tracking-[-0.02em] mb-5">
-          Five active ingredients.<br /><em className="italic text-sky-deep">One perfect outcome.</em>
+          The AireComplex<br /><em className="italic text-sky-deep">Five active ingredients. One perfect outcome.</em>
         </h2>
         <p className="text-[0.95rem] text-white/60 leading-[1.84] font-light">
-          Meticulous ingredient selection. Precision dosing for optimal outcomes.
+          Meticulous ingredient selection and precision dosing for optimal outcomes.
         </p>
       </FadeUp>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 max-w-[1200px] mx-auto relative z-10">
-        {ingredients.map(({ num, name, desc, badge }, i) => (
+        {ingredients.map(({ num, name, desc }, i) => (
           <FadeUp key={num} delay={i * 0.08}>
             <div className="card-dark group bg-white/[0.07] border border-white/[0.12] rounded-[18px] p-6 text-center h-full flex flex-col">
               <div className="text-[0.62rem] text-sky-deep tracking-[0.15em] font-semibold mb-3">{num}</div>
               <div className="font-serif text-[1.05rem] text-white mb-3 leading-snug">{name}</div>
               <div className="text-[0.75rem] text-white/75 leading-relaxed flex-1">{desc}</div>
-              <div className="inline-block mt-4 px-3 py-1 rounded-full bg-sky-deep/15 text-[0.6rem] tracking-[0.1em] uppercase text-sky-deep self-center">{badge}</div>
             </div>
           </FadeUp>
         ))}
       </div>
+      <p className="text-[0.62rem] text-white/25 leading-relaxed max-w-[540px] mx-auto text-center mt-10 relative z-10">
+        † These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.
+      </p>
     </section>
   )
 }

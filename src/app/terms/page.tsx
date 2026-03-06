@@ -54,7 +54,7 @@ export default function TermsOfService() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">6. Returns and Refunds</h2>
-            <p>If you are not fully satisfied with your purchase, contact us at <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a> within 30 days of the delivery date. To be eligible for a return, products must be unopened, unused, and in their original, undamaged packaging. Aire reserves the right to deny returns that do not meet these criteria.</p>
+            <p>If you are not fully satisfied with your purchase, contact us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> within 30 days of the delivery date. To be eligible for a return, products must be unopened, unused, and in their original, undamaged packaging. Aire reserves the right to deny returns that do not meet these criteria.</p>
             <p className="mt-3">Approved returns will receive a refund to the original payment method within 5–10 business days of our receipt of the returned product. Return shipping costs are the customer&apos;s responsibility unless the return is due to our error (e.g., incorrect or defective product). Original shipping charges are non-refundable.</p>
           </section>
 
@@ -124,7 +124,7 @@ export default function TermsOfService() {
             <p className="mt-3"><strong>ARBITRATION PROCEDURES:</strong> Arbitration shall be conducted by the American Arbitration Association (AAA) under its Consumer Arbitration Rules, available at www.adr.org. The arbitration will take place in Michigan, or via telephone or video conference at either party&apos;s election. The arbitrator&apos;s award shall be final and binding and may be entered as a judgment in any court of competent jurisdiction.</p>
             <p className="mt-3"><strong>CLASS ACTION WAIVER:</strong> YOU AND AIRE AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS, COLLECTIVE, OR REPRESENTATIVE PROCEEDING. The arbitrator may not consolidate more than one person&apos;s claims and may not preside over any form of a class or representative proceeding.</p>
             <p className="mt-3"><strong>JURY TRIAL WAIVER:</strong> BY AGREEING TO ARBITRATION, BOTH PARTIES WAIVE THEIR RIGHT TO A JURY TRIAL.</p>
-            <p className="mt-3"><strong>OPT-OUT:</strong> You may opt out of this arbitration agreement by sending written notice to <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a> within 30 days of your first purchase from Aire, with &ldquo;Arbitration Opt-Out&rdquo; in the subject line.</p>
+            <p className="mt-3"><strong>OPT-OUT:</strong> You may opt out of this arbitration agreement by sending written notice to <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> within 30 days of your first purchase from Aire, with &ldquo;Arbitration Opt-Out&rdquo; in the subject line.</p>
           </section>
 
           <section>
@@ -151,7 +151,7 @@ export default function TermsOfService() {
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">20. Contact Us</h2>
             <p>For questions about these Terms of Service, please contact us:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
-              <li>Email: <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a></li>
+              <li>Email: <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a></li>
               {/* TODO: Add physical mailing address before launch — required for CAN-SPAM compliance */}
               <li>Mailing Address: [Address coming soon]</li>
             </ul>

@@ -32,14 +32,14 @@ export default function ShippingPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Order Tracking</h2>
-            <p>Once your order ships, you&apos;ll receive an email with a tracking number. You can use this to monitor your delivery status. If you haven&apos;t received tracking information within 3 business days of placing your order, please contact us at <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a>.</p>
+            <p>Once your order ships, you&apos;ll receive an email with a tracking number. You can use this to monitor your delivery status. If you haven&apos;t received tracking information within 3 business days of placing your order, please contact us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a>.</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Returns</h2>
             <p className="mb-4">We want you to love Aire. If you&apos;re not completely satisfied, we accept returns within 30 days of delivery for a full refund.</p>
             <p className="mb-4"><strong className="text-navy">Eligibility:</strong> To be eligible for a return, items must be unopened and in their original packaging. Opened or used products cannot be returned for hygiene reasons, unless the product is defective.</p>
-            <p><strong className="text-navy">How to initiate a return:</strong> Email us at <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a> with your order number and reason for return. We&apos;ll provide you with a return shipping label and instructions within 1–2 business days.</p>
+            <p><strong className="text-navy">How to initiate a return:</strong> Email us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> with your order number and reason for return. We&apos;ll provide you with a return shipping label and instructions within 1–2 business days.</p>
           </section>
 
           <section>
@@ -50,7 +50,7 @@ export default function ShippingPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Damaged or Defective Products</h2>
-            <p>If your order arrives damaged or you receive a defective product, please contact us within 7 days of delivery at <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a>. Include your order number and a photo of the issue, and we&apos;ll send a free replacement or issue a full refund — your choice.</p>
+            <p>If your order arrives damaged or you receive a defective product, please contact us within 7 days of delivery at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a>. Include your order number and a photo of the issue, and we&apos;ll send a free replacement or issue a full refund — your choice.</p>
           </section>
 
           <section>
@@ -60,7 +60,7 @@ export default function ShippingPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Questions?</h2>
-            <p>For any shipping or return questions, reach out to <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a>. We typically respond within 24–48 hours.</p>
+            <p>For any shipping or return questions, reach out to <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a>. We typically respond within 24–48 hours.</p>
           </section>
 
         </div>

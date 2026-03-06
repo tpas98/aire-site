@@ -2,15 +2,15 @@
 import FadeUp from './FadeUp'
 
 const mentalBalance = [
-  { title: 'Stress Relief', body: 'Quiets the noise when life gets loud' },
-  { title: 'Deep Work', body: 'Lock into flow without burning out' },
+  { title: 'Stress Relief', body: 'Quiets the noise when life gets loud†' },
+  { title: 'Deep Work', body: 'Lock into flow without burning out†' },
   { title: 'Presence', body: 'Show up fully for the moments that matter' },
   { title: 'Daily Reset', body: 'Your pocket-sized moment of calm, on demand' },
 ]
 
 const consumptionBalance = [
   { title: 'Smarter Substitute', body: 'A clean alternative to nicotine, caffeine & harsh stimulants' },
-  { title: 'Craving Support', body: 'Soothes cravings without feeding dependency' },
+  { title: 'Craving Support', body: 'Satisfy fixation without feeding dependency' },
   { title: 'Habit Compatible', body: 'Pairs seamlessly with your existing pouch stack' },
   { title: 'Zero Compromise', body: 'No crash. No regrets.' },
 ]
@@ -75,6 +75,9 @@ export default function Balance() {
             </div>
           </FadeUp>
         </div>
+        <p className="text-[0.62rem] text-muted/50 leading-relaxed mt-8 text-center max-w-[540px] mx-auto">
+          † These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.
+        </p>
       </div>
     </section>
   )

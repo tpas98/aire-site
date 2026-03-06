@@ -1,7 +1,7 @@
 export default function Ticker() {
   const items = [
     'L-Theanine', 'Rhodiola Rosea', 'Vitamin B9',
-    'Vitamin B6', 'Saffron', 'Zero Nicotine',
+    'Vitamin B6', 'Affron® Saffron', 'Zero Nicotine',
     'Zero Caffeine', 'Calm Mint',
   ]
 

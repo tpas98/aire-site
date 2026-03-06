@@ -114,7 +114,7 @@ export default function PrivacyPolicy() {
               <li><strong>Right to Object:</strong> Object to certain types of processing, including direct marketing</li>
               <li><strong>Right to Opt Out of Sale/Sharing:</strong> See California Rights section below</li>
             </ul>
-            <p className="mt-3">To exercise any of these rights, please contact us at <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a>. We will respond within 30 days (45 days for California residents). We may ask you to verify your identity before processing your request.</p>
+            <p className="mt-3">To exercise any of these rights, please contact us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a>. We will respond within 30 days (45 days for California residents). We may ask you to verify your identity before processing your request.</p>
           </section>
 
           <section>
@@ -122,7 +122,7 @@ export default function PrivacyPolicy() {
             <p>We send marketing emails only with your consent. You may opt out of marketing communications at any time by:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
               <li>Clicking the &ldquo;Unsubscribe&rdquo; link at the bottom of any marketing email</li>
-              <li>Emailing us at <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a> with &ldquo;Unsubscribe&rdquo; in the subject line</li>
+              <li>Emailing us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> with &ldquo;Unsubscribe&rdquo; in the subject line</li>
             </ul>
             <p className="mt-3">Opting out of marketing communications will not affect transactional communications related to your orders (order confirmations, shipping updates, etc.).</p>
           </section>
@@ -138,7 +138,7 @@ export default function PrivacyPolicy() {
               <li><strong>Right to Limit Use of Sensitive Personal Information:</strong> You may direct us to limit use of sensitive personal information to what is necessary to provide our products and services.</li>
               <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising any of your CCPA/CPRA rights.</li>
             </ul>
-            <p className="mt-3">To submit a California privacy request, email <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a> with &ldquo;California Privacy Request&rdquo; in the subject line. We will acknowledge receipt within 10 business days and respond substantively within 45 days.</p>
+            <p className="mt-3">To submit a California privacy request, email <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> with &ldquo;California Privacy Request&rdquo; in the subject line. We will acknowledge receipt within 10 business days and respond substantively within 45 days.</p>
           </section>
 
           <section>
@@ -153,7 +153,7 @@ export default function PrivacyPolicy() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">13. Children&apos;s Privacy</h2>
-            <p>Our website and products are intended for individuals 18 years of age and older. We do not knowingly collect personal information from individuals under 18. If you are a parent or guardian and believe we have inadvertently collected personal information from a minor, please contact us immediately at <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a> and we will delete such information promptly.</p>
+            <p>Our website and products are intended for individuals 18 years of age and older. We do not knowingly collect personal information from individuals under 18. If you are a parent or guardian and believe we have inadvertently collected personal information from a minor, please contact us immediately at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> and we will delete such information promptly.</p>
           </section>
 
           <section>
@@ -165,7 +165,7 @@ export default function PrivacyPolicy() {
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">15. Contact Us</h2>
             <p>For questions, concerns, or to exercise your privacy rights, please contact us:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
-              <li>Email: <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a></li>
+              <li>Email: <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a></li>
               {/* TODO: Add physical mailing address before launch — required for CAN-SPAM compliance */}
               <li>Mailing Address: [Address coming soon]</li>
             </ul>

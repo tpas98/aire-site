@@ -24,32 +24,80 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What is Aire?</h2>
-            <p>Aire is a premium wellness oral pouch designed for calm focus. Each pouch contains 5 science-backed ingredients — L-Theanine, Rhodiola Rosea, Methylfolate, Vitamin B6, and Affron® Saffron — that work together to support mood, mental clarity, and stress resilience. Aire is 100% nicotine-free and caffeine-free.</p>
+            <p>Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 5 science-backed ingredients — L-Theanine, Rhodiola Rosea, Vitamin B9, Vitamin B6, and Affron® Saffron — working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How do I use Aire pouches?</h2>
-            <p>Place one pouch between your upper lip and gum. Leave it in for 20–40 minutes while the ingredients absorb. No chewing required — just place it and go about your day. Most people feel the effects within 5–15 minutes.</p>
+            <p>Most people feel the effects within 5–15 minutes. Place the pouch between your upper lip and gum. The botanicals and adaptogens absorb through your gum tissue. A gentle tingle lets you know it&apos;s working. Enjoy for up to 60 minutes.</p>
+          </section>
+
+          <section>
+            <h2 className="font-serif text-[1.4rem] text-navy mb-3">What&apos;s in a can? And what&apos;s in a pouch?</h2>
+            <p className="mb-4">Each can of Aire contains 15 pouches. Here are the full supplement facts per pouch:</p>
+            <div className="border border-navy/20 rounded-xl overflow-hidden mb-4 max-w-[420px]">
+              <div className="bg-navy text-white px-4 py-3">
+                <div className="text-[0.95rem] font-bold tracking-wide">Supplement Facts</div>
+                <div className="text-[0.72rem] text-white/70 mt-0.5">Serving Size: 1 Pouch &nbsp;|&nbsp; Servings Per Container: 15</div>
+              </div>
+              <div className="bg-white">
+                <div className="grid grid-cols-[1fr_auto] px-4 py-2 border-b-2 border-navy/30 text-[0.72rem] font-bold text-navy uppercase tracking-wide">
+                  <span>Amount Per Serving</span>
+                  <span>% DV</span>
+                </div>
+                <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
+                  <div>
+                    <span className="font-medium text-navy">Vitamin B6</span>
+                    <span className="text-navy-mid"> (as pyridoxal-5-phosphate)</span>
+                    <span className="ml-2">2.5mg</span>
+                  </div>
+                  <span className="text-navy-mid">147%*</span>
+                </div>
+                <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
+                  <div>
+                    <span className="font-medium text-navy">Folate</span>
+                    <span className="text-navy-mid"> (150 mcg L-Methylfolate)</span>
+                    <span className="ml-2">255mcg DFE</span>
+                  </div>
+                  <span className="text-navy-mid">64%*</span>
+                </div>
+                <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
+                  <div>
+                    <span className="font-bold text-navy">AireComplex Blend</span>
+                    <span className="ml-2">115mg</span>
+                  </div>
+                  <span className="text-navy-mid">**</span>
+                </div>
+                <div className="px-4 py-2 text-[0.75rem] text-navy-mid border-b border-navy/10 pl-8">
+                  L-Theanine, Rhodiola Rosea Extract, Saffron (Affron®)
+                </div>
+                <div className="px-4 py-2.5 text-[0.7rem] text-navy-mid leading-relaxed">
+                  <p>*Percent Daily Values (%DV) based on a 2,000-calorie diet</p>
+                  <p>**Daily Value (DV) not established</p>
+                </div>
+              </div>
+            </div>
+            <p><strong className="text-navy">Other Ingredients:</strong> Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Malitol, Cooling Agent</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How many pouches are in each can?</h2>
-            <p>Each can of Aire Flow Pouches contains 15 pouches. A 4-pack ($45.99) gives you 60 pouches total.</p>
+            <p>Each can of Aire contains 15 pouches. A 4-pack ($45.99) gives you 60 pouches total.</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What does Aire taste like?</h2>
-            <p>Aire Flow Pouches come in Calm Mint — a smooth, refreshing mint flavor that&apos;s not overpowering. It&apos;s designed to be pleasant and subtle so you can use it comfortably throughout the day.</p>
+            <p>Aire comes in Calm Mint — a smooth, refreshing mint flavor that&apos;s not overpowering. It&apos;s designed to be pleasant and subtle so you can use it comfortably throughout the day.</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Is Aire a nicotine replacement or cessation product?</h2>
-            <p>Aire is not marketed as a nicotine replacement therapy or smoking cessation product. It&apos;s a wellness pouch designed for anyone looking for calm focus — whether you&apos;re replacing a nicotine habit or simply looking for a healthier daily ritual. Many of our customers are former Zyn and nicotine pouch users who wanted a clean alternative.</p>
+            <p>Aire is not marketed as a nicotine replacement therapy. It&apos;s a wellness pouch for anyone who wants support in finding their balance — whether you&apos;re replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former Zyn and nicotine pouch users who wanted a clean alternative.</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What are the active ingredients?</h2>
-            <p>Each Aire pouch contains five active ingredients: L-Theanine (75mg) for calm alertness, Rhodiola Rosea for stress resilience, Methylfolate (active B9) for neurotransmitter support, Vitamin B6 in its active P-5-P form for serotonin and dopamine synthesis, and Affron® — a patented saffron extract clinically shown to support mood balance.</p>
+            <p>Each Aire pouch contains five active ingredients: L-Theanine for calm alertness,† Rhodiola Rosea for stress resilience,† Folate (active B9) for neurotransmitter support,† Vitamin B6 in its active P-5-P form for serotonin and dopamine synthesis,† and Affron® — a patented saffron extract to support mood balance.†</p>
           </section>
 
           <section>
@@ -69,20 +117,24 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How many pouches can I use per day?</h2>
-            <p>We recommend using 4–5 pouches throughout the day for best results. Use one in the morning for a focused start, another mid-morning to stay locked in, one after lunch to power through the afternoon, and one in the evening to unwind. Do not exceed 5 pouches per day. There&apos;s no nicotine or caffeine, so there&apos;s no crash or dependency risk.</p>
+            <p>We recommend 4–6 pouches throughout the day. No nicotine or caffeine means no crash, dependency risk, or sleep consequences.</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Where do you ship?</h2>
-            <p>We currently ship within the United States only. For full details on shipping times and our return policy, visit our <Link href="/shipping" className="text-accent hover:underline">Shipping &amp; Returns</Link> page.</p>
+            <p>We currently ship within the United States. Most orders ship within 1–2 business days and arrive within 3–5 business days. Free shipping on orders over $50.</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How do I contact Aire?</h2>
-            <p>Have a question that&apos;s not covered here? Reach out to us at <a href="mailto:hello@aire.com" className="text-accent hover:underline">hello@aire.com</a> and we&apos;ll get back to you within 24–48 hours.</p>
+            <p>Have a question that&apos;s not covered here? Reach out to us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> and we&apos;ll get back to you within 24–48 hours.</p>
           </section>
 
         </div>
+
+        <p className="mt-12 text-[0.72rem] text-muted leading-relaxed">
+          † These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.
+        </p>
       </div>
 
       <footer className="border-t border-navy/10 px-6 md:px-16 py-8 text-center">

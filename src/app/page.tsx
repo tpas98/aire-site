@@ -18,13 +18,13 @@ export default function Home() {
       <Navbar />
       <Ticker />
       <Hero />
-      <HowToUse />
-      <Testimonials />
       <LifestyleStrip />
+      <Testimonials />
       <About />
       <Ingredients />
       <ProductFeature />
       <Balance />
+      <HowToUse />
       <FAQ />
       <CTA />
       <Footer />

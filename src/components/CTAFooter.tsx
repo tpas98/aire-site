@@ -24,7 +24,7 @@ const footerLinks = {
   Support: [
     { label: 'FAQ', href: '#faq' },
     { label: 'Shipping & Returns', href: '/shipping' },
-    { label: 'Contact Us', href: 'mailto:hello@aire.com' },
+    { label: 'Contact Us', href: 'mailto:hello@airepouches.com' },
   ],
   Legal: [
     { label: 'Privacy Policy', href: '/privacy' },
