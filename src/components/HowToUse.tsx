@@ -54,10 +54,12 @@ export default function HowToUse() {
           {steps.map(({ number, title, description, icon }, i) => (
             <FadeUp key={number} delay={i * 0.1}>
               <div className="flex flex-col gap-4">
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent">
-                  {icon}
+                <div className="flex items-center gap-3">
+                  <span className="font-serif text-[3.5rem] leading-none text-accent/30 tracking-[-0.04em]">{number}</span>
+                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                    {icon}
+                  </div>
                 </div>
-                <span className="font-serif text-[3.5rem] leading-none text-accent/30 tracking-[-0.04em]">{number}</span>
                 <div className="w-10 h-px bg-accent/40" />
                 <h3 className="font-sans font-semibold text-[1.05rem] text-navy">{title}</h3>
                 <p className="text-[0.88rem] text-navy-mid leading-[1.75] font-light">{description}</p>
