@@ -12,7 +12,7 @@ const images = [
 
 export default function LifestyleStrip() {
   return (
-    <section className="bg-white py-16 overflow-hidden">
+    <section className="bg-white pt-16 pb-8 overflow-hidden">
       <div className="text-center mb-10 px-6">
         <div className="flex items-center justify-center gap-3 mb-5">
           <span className="block w-5 h-px bg-accent" />

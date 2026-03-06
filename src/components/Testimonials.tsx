@@ -52,7 +52,7 @@ function ReviewCard({ stars, text, author, tag }: { stars: number; text: string;
 
 export default function Testimonials() {
   return (
-    <section id="reviews" className="bg-white py-24">
+    <section id="reviews" className="bg-white pt-12 pb-24">
       <FadeUp className="text-center mb-12 px-6 md:px-16">
         <div className="flex items-center justify-center gap-3 mb-5">
           <span className="block w-5 h-px bg-accent" />
