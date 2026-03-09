@@ -36,10 +36,10 @@ export default function ProductFeature() {
             {compRows.map(({ label, aire, nicotine, nootropic, caffeine }) => (
               <div key={label} className="grid grid-cols-[1.6fr_1fr_1fr_1fr_1fr] py-3 border-t border-sky-deep/15 text-[0.83rem] items-center">
                 <div className="text-navy">{label}</div>
-                <div className="text-center text-green-500">{aire ? '✓' : '✗'}</div>
-                <div className="text-center text-red-400">{nicotine ? '✓' : '✗'}</div>
+                <div className={`text-center ${aire ? 'text-green-500' : 'text-red-400'}`}>{aire ? '✓' : '✗'}</div>
+                <div className={`text-center ${nicotine ? 'text-green-500' : 'text-red-400'}`}>{nicotine ? '✓' : '✗'}</div>
                 <div className={`text-center ${nootropic ? 'text-green-500' : 'text-red-400'}`}>{nootropic ? '✓' : '✗'}</div>
-                <div className="text-center text-red-400">{caffeine ? '✓' : '✗'}</div>
+                <div className={`text-center ${caffeine ? 'text-green-500' : 'text-red-400'}`}>{caffeine ? '✓' : '✗'}</div>
               </div>
             ))}
           </div>
