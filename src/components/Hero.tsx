@@ -31,7 +31,7 @@ export default function Hero() {
             variants={fadeUp} initial="hidden" animate="visible" custom={0.1}
           >
             Find Your<br />
-            <em className="not-italic italic text-navy-mid">Balance.</em><br />
+            <em className="italic text-navy-mid">Balance.</em><br />
             Instantly.
           </motion.h1>
           <motion.p className="text-[0.95rem] md:text-[1rem] text-navy-mid leading-[1.7] font-light mb-7 max-w-[440px]" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
