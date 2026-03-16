@@ -9,7 +9,7 @@ const grain = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http
 
 const trust = [
   { icon: '🚚', label: 'Free Shipping Over $50' },
-  { icon: '🧪', label: '5 Clinically-Studied Ingredients' },
+  { icon: '🧪', label: '4 Clinically-Studied Ingredients' },
   { icon: '✦', label: 'Zero Nicotine. Zero Caffeine.' },
   { icon: '🛡', label: '30-Day Satisfaction Guarantee' },
 ]
