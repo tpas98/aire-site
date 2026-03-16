@@ -24,7 +24,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What is Aire?</h2>
-            <p>Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 5 science-backed ingredients — L-Theanine, Rhodiola Rosea, Vitamin B9, Vitamin B6, and Affron® Saffron — working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.</p>
+            <p>Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients — L-Theanine, Rhodiola Rosea, Vitamin B9, and Affron® Saffron — working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.</p>
           </section>
 
           <section>
@@ -44,14 +44,6 @@ export default function FAQPage() {
                 <div className="grid grid-cols-[1fr_auto] px-4 py-2 border-b-2 border-navy/30 text-[0.72rem] font-bold text-navy uppercase tracking-wide">
                   <span>Amount Per Serving</span>
                   <span>% DV</span>
-                </div>
-                <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
-                  <div>
-                    <span className="font-medium text-navy">Vitamin B6</span>
-                    <span className="text-navy-mid"> (as pyridoxal-5-phosphate)</span>
-                    <span className="ml-2">2.5mg</span>
-                  </div>
-                  <span className="text-navy-mid">147%*</span>
                 </div>
                 <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
                   <div>
@@ -97,7 +89,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What are the active ingredients?</h2>
-            <p>Each Aire pouch contains five active ingredients: L-Theanine for calm alertness,† Rhodiola Rosea for stress resilience,† Folate (active B9) for neurotransmitter support,† Vitamin B6 in its active P-5-P form for serotonin and dopamine synthesis,† and Affron® — a patented saffron extract to support mood balance.†</p>
+            <p>Each Aire pouch contains four active ingredients: L-Theanine for calm alertness,† Rhodiola Rosea for stress resilience,† Folate (active B9) for neurotransmitter support,† and Affron® — a patented saffron extract to support mood balance.†</p>
           </section>
 
           <section>

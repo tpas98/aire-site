@@ -5,7 +5,7 @@ import FadeUp from './FadeUp'
 const faqs = [
   {
     q: 'What is Aire?',
-    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 5 science-backed ingredients — L-Theanine, Rhodiola Rosea, Vitamin B9, Vitamin B6, and Affron® Saffron — working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
+    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients — L-Theanine, Rhodiola Rosea, Vitamin B9, and Affron® Saffron — working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
   },
   {
     q: 'What does it taste like?',
@@ -50,14 +50,6 @@ function SupplementFacts() {
           <div className="grid grid-cols-[1fr_auto] px-4 py-2 border-b-2 border-navy/30 text-[0.72rem] font-bold text-navy uppercase tracking-wide">
             <span>Amount Per Serving</span>
             <span>% DV</span>
-          </div>
-          <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
-            <div>
-              <span className="font-medium text-navy">Vitamin B6</span>
-              <span className="text-navy-mid"> (as pyridoxal-5-phosphate)</span>
-              <span className="ml-2">2.5mg</span>
-            </div>
-            <span className="text-navy-mid">147%*</span>
           </div>
           <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
             <div>
