@@ -82,7 +82,7 @@ export default function EmailPopup() {
                     <em className="italic text-sky-deep">Save 10%.</em>
                   </h2>
                   <p className="text-[0.85rem] text-white/50 font-light leading-[1.7] mb-6">
-                    Join the Aire community and get 10% off your first order — plus early access to new drops.
+                    Join the Aire community and get 10% off your first order, plus early access to new drops.
                   </p>
                   <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
                     <input

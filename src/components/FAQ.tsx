@@ -5,11 +5,11 @@ import FadeUp from './FadeUp'
 const faqs = [
   {
     q: 'What is Aire?',
-    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients — L-Theanine, Rhodiola Rosea, Vitamin B9, and Affron® Saffron — working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
+    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, Vitamin B9, and Affron® Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
   },
   {
     q: 'What does it taste like?',
-    a: 'Aire comes in Calm Mint — a smooth, refreshing mint flavor that\'s not overpowering. It\'s designed to be pleasant and subtle so you can use it comfortably throughout the day.',
+    a: 'Aire comes in Calm Mint, a smooth, refreshing mint flavor that\'s not overpowering. It\'s designed to be pleasant and subtle so you can use it comfortably throughout the day.',
   },
   {
     q: 'How quickly does it work?',
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: 'Is Aire a nicotine replacement?',
-    a: 'Aire is not marketed as a nicotine replacement therapy. It\'s a wellness pouch for anyone who wants support in finding their balance — whether you\'re replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former Zyn and nicotine pouch users who wanted a clean alternative.',
+    a: 'Aire is not marketed as a nicotine replacement therapy. It\'s a wellness pouch for anyone who wants support in finding their balance, whether you\'re replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former Zyn and nicotine pouch users who wanted a clean alternative.',
   },
   {
     q: 'How many pouches can I use per day?',

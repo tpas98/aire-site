@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export const metadata = {
-  title: 'Terms of Service — Aire Wellness Pouches',
+  title: 'Terms of Service | Aire Wellness Pouches',
   description: 'Terms of Service for Aire wellness pouches by Drifts LLC.',
   alternates: { canonical: 'https://www.airepouches.com/terms' },
 }
@@ -98,7 +98,7 @@ export default function TermsOfService() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">11. Limitation of Liability</h2>
-            <p>TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, AIRE, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, SUPPLIERS, AND LICENSORS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, REVENUE, DATA, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF (OR INABILITY TO USE) OUR WEBSITE, PRODUCTS, OR SERVICES — EVEN IF AIRE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+            <p>TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, AIRE, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, SUPPLIERS, AND LICENSORS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, REVENUE, DATA, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF (OR INABILITY TO USE) OUR WEBSITE, PRODUCTS, OR SERVICES, EVEN IF AIRE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
             <p className="mt-3">IN NO EVENT SHALL AIRE&apos;S TOTAL CUMULATIVE LIABILITY TO YOU FOR ALL CLAIMS ARISING OUT OF OR RELATED TO THESE TERMS OR YOUR USE OF OUR PRODUCTS AND SERVICES EXCEED THE GREATER OF: (A) THE TOTAL AMOUNT YOU PAID TO AIRE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR (B) ONE HUNDRED U.S. DOLLARS ($100).</p>
             <p className="mt-3">Some jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation may not apply to you.</p>
           </section>
@@ -153,7 +153,7 @@ export default function TermsOfService() {
             <p>For questions about these Terms of Service, please contact us:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
               <li>Email: <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a></li>
-              {/* TODO: Add physical mailing address before launch — required for CAN-SPAM compliance */}
+              {/* TODO: Add physical mailing address before launch, required for CAN-SPAM compliance */}
               <li>Mailing Address: [Address coming soon]</li>
             </ul>
           </section>
@@ -161,7 +161,7 @@ export default function TermsOfService() {
         </div>
       </div>
       <footer className="border-t border-navy/10 px-6 md:px-16 py-8 text-center">
-        <p className="text-[0.72rem] text-muted">© 2026 Aire. All rights reserved. — <Link href="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link></p>
+        <p className="text-[0.72rem] text-muted">© 2026 Aire. All rights reserved. · <Link href="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link></p>
       </footer>
     </div>
   )

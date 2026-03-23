@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 
 export const metadata = {
-  title: "Shipping & Returns — Aire | Free Shipping Over $50",
+  title: "Shipping & Returns | Aire | Free Shipping Over $50",
   description: "Free shipping on orders over $50. Aire wellness pouches ship within 1–2 business days. 30-day satisfaction guarantee.",
   alternates: { canonical: 'https://www.airepouches.com/shipping' },
 }
@@ -19,7 +19,7 @@ export default function ShippingPage() {
 
       <div className="max-w-3xl mx-auto px-6 md:px-16 py-16">
         <h1 className="font-serif text-[2.4rem] text-navy mb-2">Shipping &amp; Returns</h1>
-        <p className="text-muted mb-12">Simple, transparent policies — no fine print surprises.</p>
+        <p className="text-muted mb-12">Simple, transparent policies. No fine print surprises.</p>
 
         <div className="space-y-10">
 
@@ -51,7 +51,7 @@ export default function ShippingPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Damaged or Defective Products</h2>
-            <p>If your order arrives damaged or you receive a defective product, please contact us within 7 days of delivery at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a>. Include your order number and a photo of the issue, and we&apos;ll send a free replacement or issue a full refund — your choice.</p>
+            <p>If your order arrives damaged or you receive a defective product, please contact us within 7 days of delivery at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a>. Include your order number and a photo of the issue, and we&apos;ll send a free replacement or issue a full refund. Your choice.</p>
           </section>
 
           <section>
@@ -68,7 +68,7 @@ export default function ShippingPage() {
       </div>
 
       <footer className="border-t border-navy/10 px-6 md:px-16 py-8 text-center">
-        <p className="text-[0.72rem] text-muted">© 2026 Aire. All rights reserved. — <Link href="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link> · <Link href="/terms" className="hover:text-accent transition-colors">Terms of Service</Link></p>
+        <p className="text-[0.72rem] text-muted">© 2026 Aire. All rights reserved. · <Link href="/privacy" className="hover:text-accent transition-colors">Privacy Policy</Link> · <Link href="/terms" className="hover:text-accent transition-colors">Terms of Service</Link></p>
       </footer>
     </div>
   )

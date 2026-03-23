@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export const metadata = {
-  title: 'Privacy Policy — Aire Wellness Pouches',
+  title: 'Privacy Policy | Aire Wellness Pouches',
   description: 'Privacy Policy for Aire wellness pouches by Drifts LLC. Learn how we protect your data.',
   alternates: { canonical: 'https://www.airepouches.com/privacy' },
 }
@@ -49,7 +49,7 @@ export default function PrivacyPolicy() {
             <ul className="list-disc pl-6 mt-3 space-y-2">
               <li>Process and fulfill your orders and send order confirmations, shipping updates, and receipts</li>
               <li>Respond to customer service inquiries and provide support</li>
-              <li>Send marketing communications and promotional offers (with your consent — see Section 9 for opt-out)</li>
+              <li>Send marketing communications and promotional offers (with your consent; see Section 9 for opt-out)</li>
               <li>Improve our website, products, and customer experience</li>
               <li>Analyze website traffic and usage patterns</li>
               <li>Prevent fraud and enforce our Terms of Service</li>
@@ -81,7 +81,7 @@ export default function PrivacyPolicy() {
               <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website (e.g., Google Analytics). These are used in aggregate, anonymized form.</li>
               <li><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements and track the effectiveness of marketing campaigns.</li>
             </ul>
-            <p className="mt-3">You can control or disable cookies through your browser settings. Note that disabling certain cookies may affect the functionality of our website. Most browsers also offer a &ldquo;Do Not Track&rdquo; option — please see Section 12 below.</p>
+            <p className="mt-3">You can control or disable cookies through your browser settings. Note that disabling certain cookies may affect the functionality of our website. Most browsers also offer a &ldquo;Do Not Track&rdquo; option. Please see Section 12 below.</p>
           </section>
 
           <section>
@@ -129,7 +129,7 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="font-serif text-[1.4rem] text-navy mb-3">10. California Residents — CCPA/CPRA Rights</h2>
+            <h2 className="font-serif text-[1.4rem] text-navy mb-3">10. California Residents: CCPA/CPRA Rights</h2>
             <p>If you are a California resident, you have additional rights under the California Consumer Privacy Act (CCPA) and the California Privacy Rights Act (CPRA):</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
               <li><strong>Right to Know:</strong> You may request disclosure of the categories and specific pieces of personal information we have collected about you in the past 12 months, and the purposes for which it was used.</li>
@@ -167,7 +167,7 @@ export default function PrivacyPolicy() {
             <p>For questions, concerns, or to exercise your privacy rights, please contact us:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
               <li>Email: <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a></li>
-              {/* TODO: Add physical mailing address before launch — required for CAN-SPAM compliance */}
+              {/* TODO: Add physical mailing address before launch, required for CAN-SPAM compliance */}
               <li>Mailing Address: [Address coming soon]</li>
             </ul>
           </section>
@@ -175,7 +175,7 @@ export default function PrivacyPolicy() {
         </div>
       </div>
       <footer className="border-t border-navy/10 px-6 md:px-16 py-8 text-center">
-        <p className="text-[0.72rem] text-muted">© 2026 Aire. All rights reserved. — <Link href="/terms" className="hover:text-accent transition-colors">Terms of Service</Link></p>
+        <p className="text-[0.72rem] text-muted">© 2026 Aire. All rights reserved. · <Link href="/terms" className="hover:text-accent transition-colors">Terms of Service</Link></p>
       </footer>
     </div>
   )
