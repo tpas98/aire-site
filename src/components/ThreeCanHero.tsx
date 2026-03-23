@@ -20,7 +20,7 @@ interface CanConfig {
   oscillateAmplitude?: number // max angle in radians (~0.45 = ±26°)
 }
 
-export default function ThreeCanHero({ className = '' }: { className?: string }) {
+export default function ThreeCanHero({ className = '', ...rest }: { className?: string } & React.HTMLAttributes<HTMLDivElement>) {
   const mountRef = useRef<HTMLDivElement>(null)
   const [loaded, setLoaded] = useState(false)
 
@@ -433,12 +433,15 @@ export default function ThreeCanHero({ className = '' }: { className?: string })
   return (
     <div
       ref={mountRef}
+      role="img"
+      aria-label="Aire nicotine-free wellness pouch tins rendered in 3D"
       className={`w-full h-full ${className}`}
       style={{
         opacity: loaded ? 1 : 0,
         transition: 'opacity 0.8s ease',
         cursor: 'grab',
       }}
+      {...rest}
     />
   )
 }

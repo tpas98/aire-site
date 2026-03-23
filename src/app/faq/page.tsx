@@ -1,14 +1,54 @@
 import Link from "next/link"
 import Image from "next/image"
 
+const faqData = [
+  { question: "What is Aire?", answer: "Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence. Each pouch contains 4 science-backed ingredients — L-Theanine, Rhodiola Rosea, Vitamin B9, and Affron® Saffron — working together to support mood, mental clarity, and stress resilience. 100% nicotine-free and caffeine-free." },
+  { question: "How do I use Aire pouches?", answer: "Most people feel the effects within 5–15 minutes. Place the pouch between your upper lip and gum. The botanicals and adaptogens absorb through your gum tissue. A gentle tingle lets you know it's working. Enjoy for up to 60 minutes." },
+  { question: "What's in a can? And what's in a pouch?", answer: "Each can of Aire contains 15 pouches. Active ingredients per pouch: Folate (255mcg DFE from 150mcg L-Methylfolate), and the AireComplex Blend (115mg) containing L-Theanine, Rhodiola Rosea Extract, and Saffron (Affron®). Other Ingredients: Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Malitol, Cooling Agent." },
+  { question: "How many pouches are in each can?", answer: "Each can of Aire contains 15 pouches. A 4-pack ($45.99) gives you 60 pouches total." },
+  { question: "What does Aire taste like?", answer: "Aire comes in Calm Mint — a smooth, refreshing mint flavor that's not overpowering. It's designed to be pleasant and subtle so you can use it comfortably throughout the day." },
+  { question: "Is Aire a nicotine replacement or cessation product?", answer: "Aire is not marketed as a nicotine replacement therapy. It's a wellness pouch for anyone who wants support in finding their balance — whether you're replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former Zyn and nicotine pouch users who wanted a clean alternative." },
+  { question: "What are the active ingredients?", answer: "Each Aire pouch contains four active ingredients: L-Theanine for calm alertness, Rhodiola Rosea for stress resilience, Folate (active B9) for neurotransmitter support, and Affron® — a patented saffron extract to support mood balance." },
+  { question: "Are there any side effects?", answer: "Aire is made with well-studied, naturally derived ingredients and is generally well-tolerated. Some people may experience mild gum sensitivity when first using oral pouches. If you have any medical conditions, are pregnant or nursing, or take prescription medication, we recommend consulting your healthcare provider before use." },
+  { question: "Is Aire FDA approved?", answer: "Aire is classified as a dietary supplement and is manufactured in an FDA-registered, GMP-certified facility. Like all dietary supplements, Aire has not been evaluated by the FDA to diagnose, treat, cure, or prevent any disease." },
+  { question: "Can I use Aire with other supplements or medications?", answer: "While Aire's ingredients are generally considered safe, we recommend consulting your healthcare provider before combining with other supplements or medications — especially if you take SSRIs, anti-anxiety medication, or blood thinners." },
+  { question: "How many pouches can I use per day?", answer: "We recommend 4–6 pouches throughout the day. No nicotine or caffeine means no crash, dependency risk, or sleep consequences." },
+  { question: "Where do you ship?", answer: "We currently ship within the United States. Most orders ship within 1–2 business days and arrive within 3–5 business days. Free shipping on orders over $50." },
+]
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqData.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: answer,
+    },
+  })),
+}
+
 export const metadata = {
-  title: "FAQ — Aire",
-  description: "Frequently asked questions about Aire wellness pouches.",
+  title: "FAQ: Aire Wellness Pouches | Ingredients, Usage, Shipping & More",
+  description: "Everything you need to know about Aire nicotine-free wellness pouches — ingredients, how to use, pricing ($45.99/4-pack), side effects, shipping, and more.",
+  alternates: {
+    canonical: 'https://www.airepouches.com/faq',
+  },
+  openGraph: {
+    title: "FAQ: Aire Wellness Pouches | Ingredients, Usage, Shipping & More",
+    description: "Everything you need to know about Aire nicotine-free wellness pouches — ingredients, usage, pricing, and shipping.",
+    images: ['/images/three-cans-new.png'],
+  },
 }
 
 export default function FAQPage() {
   return (
     <div className="min-h-screen bg-white text-navy-mid font-sans text-[0.97rem] leading-relaxed">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <header className="flex items-center justify-between px-6 md:px-16 py-6 border-b border-navy/10">
         <Link href="/">
           <Image src="/images/logo.png" alt="Aire" width={90} height={36} style={{ mixBlendMode: 'multiply' }} />

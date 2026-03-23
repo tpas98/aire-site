@@ -2,8 +2,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export const metadata = {
-  title: 'Terms of Service — Aire',
-  description: 'Terms of Service for Aire wellness pouches.',
+  title: 'Terms of Service — Aire Wellness Pouches',
+  description: 'Terms of Service for Aire wellness pouches by Drifts LLC.',
+  alternates: { canonical: 'https://www.airepouches.com/terms' },
 }
 
 export default function TermsOfService() {

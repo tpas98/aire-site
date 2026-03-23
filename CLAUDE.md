@@ -137,3 +137,38 @@ Both `SpinningCan.tsx` and `ThreeCanHero.tsx` share these settings. Keep them in
 - LinearToneMapping makes the teal look too blue/washed — always use ACESFilmic
 - macOS screen recordings have Unicode narrow no-break space (U+202F) before AM/PM in filenames — use glob patterns, not quoted strings
 - SpinningCan.tsx and ThreeCanHero.tsx materials/lighting must stay in sync
+
+## Design & Creative Work — Iterative Self-Critique Process
+
+When producing any visual or creative deliverable (email templates, landing pages, UI components, marketing assets), follow this mandatory build-review-iterate loop. Do not ship V1. Treat every first draft as a starting point, not a finished product.
+
+### The Process
+
+1. **Build V1** — Get the structure and content in place. Don't worry about perfection.
+2. **Self-Review with Extreme Scrutiny** — Before showing the user, critically evaluate every detail:
+   - **Spacing & Rhythm:** Is there dead space? Are sections too cramped or too loose? Does vertical rhythm feel intentional?
+   - **Visual Hierarchy:** Does the eye flow naturally? Are headings, body text, and CTAs clearly differentiated?
+   - **Brand Fidelity:** Go back to the actual source components (Hero.tsx, Ingredients.tsx, CTAFooter.tsx, etc.) and compare. Don't guess at colors, card styles, or typography — read the real code.
+   - **Structural Integrity:** Are equal-height elements actually equal? Are cards balanced? Do spacers and gutters feel consistent?
+   - **Technical Correctness:** For emails — do MSO conditionals cover Outlook? Are VML buttons present? Will `rgba()` values break in older clients? For web — is it responsive at all breakpoints?
+   - **Copy Quality:** Is the tone premium and concise? Does it match the brand voice? Remove anything that feels generic or filler.
+   - **Detail Sweep:** Check eyebrow lines, dividers, border-radius values, font sizes, letter-spacing, opacity values. These micro-details separate good from exceptional.
+3. **Identify Specific Flaws** — Write out exactly what's wrong and why. Not "spacing is off" but "ingredient cards have 40% dead space below text because min-height:148px forces unused vertical room."
+4. **Rebuild with Fixes** — Address every identified flaw. This is V2.
+5. **Repeat** — Do at least one more review cycle (V2 → V3 minimum). Premium work typically requires 3-4 iterations.
+
+### Key Principles
+
+- **Reference the source of truth.** Always read the actual website components before designing anything brand-adjacent. Don't rely on memory or assumptions about colors, card styles, or layouts.
+- **Ask "would Jony Ive ship this?"** If the answer is no, keep iterating. Look for the details that separate a $50/hr deliverable from a $500/hr one.
+- **Structural problems need structural solutions.** If a card has dead space, the fix isn't padding adjustment — it's rethinking how height is determined (e.g., switching from `min-height` on inner divs to `<td>` cells that naturally match height in the same `<tr>`).
+- **Name the compromise.** If something can't be perfect due to technical constraints (e.g., email client limitations), document why and what the tradeoff is.
+
+### Email-Specific Lessons Learned
+
+- **Cards:** Style directly on `<td>` elements in the same `<tr>` for natural height matching. Never use `min-height` on inner `<div>` wrappers — they create dead space.
+- **Eyebrow hairlines:** Use `border-bottom:1px solid` with `font-size:0;line-height:0;height:0;overflow:hidden`. Background-color + height approach breaks when `&nbsp;` expands the cell.
+- **Ingredient cards:** Must match the website's dark glass-morphism aesthetic (`bg-white/[0.07]`, `border border-white/[0.12]` on navy). White cards on pale backgrounds look wrong.
+- **Trust items:** Clean text with small geometric markers (◆), not emoji. Emoji looks amateur in a premium brand context.
+- **Images:** Always verify image paths resolve. Use hosted URLs for production email; relative paths only work locally.
+- **Outlook:** `rgba()` doesn't work — use `.card-mso` class overrides with solid hex fallbacks.

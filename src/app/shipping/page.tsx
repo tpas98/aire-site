@@ -2,8 +2,9 @@ import Link from "next/link"
 import Image from "next/image"
 
 export const metadata = {
-  title: "Shipping & Returns — Aire",
-  description: "Shipping information and return policy for Aire wellness pouches.",
+  title: "Shipping & Returns — Aire | Free Shipping Over $50",
+  description: "Free shipping on orders over $50. Aire wellness pouches ship within 1–2 business days. 30-day satisfaction guarantee.",
+  alternates: { canonical: 'https://www.airepouches.com/shipping' },
 }
 
 export default function ShippingPage() {

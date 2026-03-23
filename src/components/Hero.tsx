@@ -35,7 +35,7 @@ export default function Hero() {
             Instantly.
           </motion.h1>
           <motion.p className="text-[0.95rem] md:text-[1rem] text-navy-mid leading-[1.7] font-light mb-7 max-w-[440px]" variants={fadeUp} initial="hidden" animate="visible" custom={0.2}>
-            The future of pouches is here – calmness, clarity, and mental presence, anytime of the day.<sup className="text-[0.6em]">†</sup> Four science-backed active ingredients. One pocket-sized moment of clarity.
+            The first nicotine-free wellness pouch built for calmness, clarity, and mental presence — anytime of the day.<sup className="text-[0.6em]">†</sup> Four science-backed adaptogens. One pocket-sized moment of calm.
           </motion.p>
           <motion.div className="flex items-center gap-3 mb-5" variants={fadeUp} initial="hidden" animate="visible" custom={0.25}>
             <div className="flex items-center gap-0.5 text-[#e8a820]">
@@ -61,7 +61,7 @@ export default function Hero() {
           className="flex justify-center items-center w-full h-[380px] md:h-[480px]"
           variants={fadeUp} initial="hidden" animate="visible" custom={0.2}
         >
-          <ThreeCanHero />
+          <ThreeCanHero aria-label="Aire nicotine-free wellness pouch tins rendered in 3D" />
         </motion.div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white/30 to-transparent z-10" />
