@@ -7,7 +7,6 @@ const compRows = [
   { label: 'Non-addictive', aire: true, nicotine: false, nootropic: true, caffeine: false },
   { label: 'Anytime use', aire: true, nicotine: true, nootropic: true, caffeine: false },
   { label: 'Sleep friendly', aire: true, nicotine: false, nootropic: true, caffeine: false },
-  { label: 'Me-time protocol', aire: true, nicotine: false, nootropic: false, caffeine: false },
 ]
 
 export default function ProductFeature() {

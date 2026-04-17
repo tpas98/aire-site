@@ -4,7 +4,7 @@ const ingredients = [
   { num: '01', name: 'Rhodiola Rosea', desc: 'Supports resilience to mental fatigue and stress, promoting sustained clarity and balanced energy.† Adaptogenic herb used to help the body adapt to stress.' },
   { num: '02', name: 'L-Theanine', desc: 'Promotes a relaxed but alert mental state, helping smooth stress and support focused clarity without drowsiness.† Amino acid naturally found in green tea.' },
   { num: '03', name: 'Affron® Saffron', desc: 'Supports mood and emotional balance, contributing to a calm, clear headspace.† Botanical extract derived from the Crocus sativus flower.' },
-  { num: '04', name: 'Vitamin B9', desc: 'Supports healthy neurotransmitter production involved in mood balance and cognitive function.† Bioactive form compound used directly by the body.' },
+  { num: '04', name: 'L-Tyrosine', desc: 'Amino acid precursor to dopamine and norepinephrine, supporting focus, motivation, and cognitive performance under stress.† Naturally produced by the body from phenylalanine.' },
 ]
 
 export default function Ingredients() {

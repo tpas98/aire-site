@@ -5,7 +5,7 @@ import EmailPopup from '@/components/EmailPopup'
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.airepouches.com'),
   title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
-  description: 'Aire is the nicotine-free, caffeine-free wellness pouch with Rhodiola Rosea, L-Theanine, Saffron, and Vitamin B9. Science-backed calm, clarity, and balance in every pouch.',
+  description: 'Aire is the nicotine-free, caffeine-free wellness pouch with Rhodiola Rosea, L-Theanine, Saffron, and L-Tyrosine. Science-backed calm, clarity, and balance in every pouch.',
   keywords: ['wellness pouches', 'nicotine free pouches', 'nicotine alternative', 'pouches for calm', 'pouches for focus', 'adaptogens', 'rhodiola rosea', 'l-theanine', 'saffron pouch', 'non addictive pouches'],
   alternates: {
     canonical: 'https://www.airepouches.com',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
-    description: 'Science-backed calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & B9. Zero nicotine. Zero caffeine.',
+    description: 'Science-backed calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & L-Tyrosine. Zero nicotine. Zero caffeine.',
     images: ['/images/three-cans-new.png'],
     siteName: 'Aire',
     type: 'website',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
-    description: 'Science-backed calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & B9. Zero nicotine. Zero caffeine.',
+    description: 'Science-backed calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & L-Tyrosine. Zero nicotine. Zero caffeine.',
     images: ['/images/three-cans-new.png'],
   },
 }
@@ -65,7 +65,7 @@ const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Aire Calm Mint Pouches - 4 Pack',
-  description: 'Nicotine-free wellness pouches with Rhodiola Rosea, L-Theanine, Affron® Saffron, and Vitamin B9. 60 pouches (15 per can × 4 cans). Calm Mint flavor.',
+  description: 'Nicotine-free wellness pouches with Rhodiola Rosea, L-Theanine, Affron® Saffron, and L-Tyrosine. 60 pouches (15 per can × 4 cans). Calm Mint flavor.',
   brand: { '@type': 'Brand', name: 'Aire' },
   image: 'https://www.airepouches.com/images/three-cans-new.png',
   offers: {

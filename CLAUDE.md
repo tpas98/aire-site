@@ -1,7 +1,7 @@
 # Aire Site — Project Context
 
 ## About
-Aire (airepouches.com) is a breath wellness oral pouch brand. The product is a dietary supplement pouch containing Rhodiola Rosea, L-Theanine, Vitamin B9, and Saffron. Tagline: "Find Your Balance." Positioning: no nicotine, no caffeine, pure balance. The flagship SKU is "Calm Mint Pouches" (15 per can, 4-pack for $45.99).
+Aire (airepouches.com) is a breath wellness oral pouch brand. The product is a dietary supplement pouch containing Rhodiola Rosea, L-Theanine, L-Tyrosine, and Saffron. Tagline: "Find Your Balance." Positioning: no nicotine, no caffeine, pure balance. The flagship SKU is "Calm Mint Pouches" (15 per can, 4-pack for $45.99).
 
 **Company:** Drifts LLC, New York, NY
 **Owner:** Thomas Pasyanos (Aire)

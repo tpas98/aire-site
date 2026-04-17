@@ -5,7 +5,7 @@ import FadeUp from './FadeUp'
 const faqs = [
   {
     q: 'What is Aire?',
-    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, Vitamin B9, and Affron® Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
+    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Affron® Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
   },
   {
     q: 'What does it taste like?',
@@ -53,25 +53,15 @@ function SupplementFacts() {
           </div>
           <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
             <div>
-              <span className="font-medium text-navy">Folate</span>
-              <span className="text-navy-mid"> (150 mcg L-Methylfolate)</span>
-              <span className="ml-2">255mcg DFE</span>
-            </div>
-            <span className="text-navy-mid">64%*</span>
-          </div>
-          <div className="grid grid-cols-[1fr_auto] px-4 py-2.5 border-b border-navy/10 text-[0.82rem]">
-            <div>
               <span className="font-bold text-navy">AireComplex Blend</span>
-              <span className="ml-2">115mg</span>
             </div>
-            <span className="text-navy-mid">**</span>
+            <span className="text-navy-mid">*</span>
           </div>
           <div className="px-4 py-2 text-[0.75rem] text-navy-mid border-b border-navy/10 pl-8">
-            L-Theanine, Rhodiola Rosea Extract, Saffron (Affron®)
+            L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, Saffron (Affron®)
           </div>
           <div className="px-4 py-2.5 text-[0.7rem] text-navy-mid leading-relaxed">
-            <p>*Percent Daily Values (%DV) based on a 2,000-calorie diet</p>
-            <p>**Daily Value (DV) not established</p>
+            <p>*Daily Value (DV) not established</p>
           </div>
         </div>
       </div>
