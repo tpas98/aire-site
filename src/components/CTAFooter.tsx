@@ -74,7 +74,7 @@ export function CTA() {
             animate={{ y: [0, -18, 0], rotate: [0, 1.2, -1.2, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <Image src="/images/open-can.png" alt="Aire tin open showing pouches" width={560} height={560}
+            <Image src="/images/open-can-ai.png" alt="Aire tin open showing pouches" width={560} height={560}
               className="w-full max-w-[240px] md:max-w-[440px] object-contain" />
           </motion.div>
         </FadeUp>

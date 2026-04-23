@@ -38,7 +38,7 @@ export const metadata = {
   openGraph: {
     title: "FAQ: Aire Wellness Pouches | Ingredients, Usage, Shipping & More",
     description: "Everything you need to know about Aire nicotine-free wellness pouches: ingredients, usage, pricing, and shipping.",
-    images: ['/images/three-cans-new.png'],
+    images: ['/images/three-cans-ai.png'],
   },
 }
 

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
     description: 'Science-backed calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & L-Tyrosine. Zero nicotine. Zero caffeine.',
-    images: ['/images/three-cans-new.png'],
+    images: ['/images/three-cans-ai.png'],
     siteName: 'Aire',
     type: 'website',
   },
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
     description: 'Science-backed calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & L-Tyrosine. Zero nicotine. Zero caffeine.',
-    images: ['/images/three-cans-new.png'],
+    images: ['/images/three-cans-ai.png'],
   },
 }
 
@@ -67,7 +67,7 @@ const productSchema = {
   name: 'Aire Calm Mint Pouches - 4 Pack',
   description: 'Nicotine-free wellness pouches with Rhodiola Rosea, L-Theanine, Affron® Saffron, and L-Tyrosine. 60 pouches (15 per can × 4 cans). Calm Mint flavor.',
   brand: { '@type': 'Brand', name: 'Aire' },
-  image: 'https://www.airepouches.com/images/three-cans-new.png',
+  image: 'https://www.airepouches.com/images/three-cans-ai.png',
   offers: {
     '@type': 'Offer',
     price: '45.99',

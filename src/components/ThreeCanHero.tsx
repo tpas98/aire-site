@@ -113,19 +113,19 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     }
 
     // === SHARED TEXTURES (loaded once, used by all 3 cans) ===
-    const frontTexture = textureLoader.load('/images/can-front-texture.png', onTextureLoad)
+    const frontTexture = textureLoader.load('/images/can-front-texture-ai.png', onTextureLoad)
     frontTexture.colorSpace = THREE.SRGBColorSpace
     frontTexture.minFilter = THREE.LinearMipmapLinearFilter
     frontTexture.magFilter = THREE.LinearFilter
     frontTexture.anisotropy = Math.min(16, maxAniso)
 
-    const backTexture = textureLoader.load('/images/can-back-texture.png', onTextureLoad)
+    const backTexture = textureLoader.load('/images/can-back-texture-ai.png', onTextureLoad)
     backTexture.colorSpace = THREE.SRGBColorSpace
     backTexture.minFilter = THREE.LinearMipmapLinearFilter
     backTexture.magFilter = THREE.LinearFilter
     backTexture.anisotropy = Math.min(16, maxAniso)
 
-    const bandTexture = textureLoader.load('/images/can-band-texture.png', onTextureLoad)
+    const bandTexture = textureLoader.load('/images/can-band-texture-ai.png', onTextureLoad)
     bandTexture.colorSpace = THREE.SRGBColorSpace
     bandTexture.wrapS = THREE.RepeatWrapping
     bandTexture.wrapT = THREE.ClampToEdgeWrapping
