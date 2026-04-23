@@ -8,7 +8,6 @@ interface CanConfig {
   tiltX: number
   tiltZ: number
   floatPhase: number  // offset so they don't bob in sync
-  baseYRotation?: number
   // Motion type: 'showcase' = gentle oscillating rock (brand always visible)
   //              'turntable' = full eased rotation
   motionType: 'showcase' | 'turntable'
@@ -274,30 +273,29 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
         tiltX: -0.5,
         tiltZ: 0.05,
         floatPhase: 0,
-        baseYRotation: 0.08,
         motionType: 'showcase',
         oscillateSpeed: 0.35,            // Very slow, luxurious rock
-        oscillateAmplitude: 0.22,
+        oscillateAmplitude: 0.45,        // ±26° — shows depth without losing the brand
       },
       {
-        position: [-2.0, -1.1, -0.3],
-        tiltX: -0.62,
+        position: [-2.0, -1.1, -0.3],   // Bottom left — full spin, counter-clockwise
+        tiltX: -0.6,
         tiltZ: 0.1,
         floatPhase: 2.1,
-        baseYRotation: -0.82,
-        motionType: 'showcase',
-        oscillateSpeed: 0.3,
-        oscillateAmplitude: 0.14,
+        motionType: 'turntable',
+        cycleTime: 6.0,
+        easingStrength: 1.6,
+        spinDirection: -1,
       },
       {
-        position: [2.0, -1.1, -0.3],
-        tiltX: -0.52,
-        tiltZ: -0.1,
+        position: [2.0, -1.1, -0.3],    // Bottom right — full spin, clockwise
+        tiltX: -0.45,
+        tiltZ: -0.08,
         floatPhase: 4.2,
-        baseYRotation: 0.9,
-        motionType: 'showcase',
-        oscillateSpeed: 0.32,
-        oscillateAmplitude: 0.12,
+        motionType: 'turntable',
+        cycleTime: 5.0,
+        easingStrength: 1.4,
+        spinDirection: 1,
       },
     ]
 
@@ -397,8 +395,7 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
           // Primary Y oscillation — slow sine wave, brand stays mostly front-facing
           const speed = cfg.oscillateSpeed ?? 0.35
           const amp = cfg.oscillateAmplitude ?? 0.45
-          const baseY = cfg.baseYRotation ?? 0
-          spinGroup.rotation.y = baseY + Math.sin(t * speed) * amp
+          spinGroup.rotation.y = Math.sin(t * speed) * amp
 
           // Secondary subtle X-axis breathing — gives a "being examined" feel
           spinGroup.rotation.x = Math.sin(t * speed * 0.7) * 0.04
