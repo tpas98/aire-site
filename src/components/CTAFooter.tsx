@@ -71,11 +71,20 @@ export function CTA() {
         </FadeUp>
         <FadeUp delay={0.2} className="flex justify-center items-center">
           <motion.div
+            className="relative"
             animate={{ y: [0, -18, 0], rotate: [0, 1.2, -1.2, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <Image src="/images/open-can-updated.png" alt="Aire tin open showing pouches" width={1224} height={789}
-              className="w-full max-w-[240px] md:max-w-[440px] object-contain" />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-[-10%] bg-[radial-gradient(circle_at_52%_44%,rgba(255,255,255,0.12)_0%,rgba(126,194,223,0.12)_22%,rgba(126,194,223,0.04)_34%,rgba(126,194,223,0)_62%)] blur-3xl"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-[14%] bottom-[4%] h-[18%] rounded-full bg-[radial-gradient(circle,rgba(5,12,22,0.30)_0%,rgba(5,12,22,0.14)_44%,rgba(5,12,22,0)_76%)] blur-2xl"
+            />
+            <Image src="/images/open-can-updated-cutout.png" alt="Aire tin open showing pouches" width={1212} height={776}
+              className="relative z-10 w-full max-w-[240px] md:max-w-[440px] object-contain [filter:drop-shadow(0_20px_26px_rgba(5,12,22,0.18))_drop-shadow(0_40px_80px_rgba(5,12,22,0.16))]" />
           </motion.div>
         </FadeUp>
       </div>

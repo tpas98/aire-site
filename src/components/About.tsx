@@ -31,13 +31,16 @@ export default function About() {
           <div className="relative flex justify-center items-center w-full h-[320px] md:h-[420px]">
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-[16%] top-[6%] bottom-[8%] rounded-[44%] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.94)_0%,rgba(233,243,250,0.92)_30%,rgba(126,194,223,0.14)_54%,rgba(26,46,74,0.09)_70%,rgba(26,46,74,0)_84%)] blur-3xl"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: `
+                  radial-gradient(ellipse 32% 30% at 62% 46%, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.22) 26%, rgba(255,255,255,0) 68%),
+                  radial-gradient(ellipse 34% 24% at 62% 74%, rgba(26,46,74,0.12) 0%, rgba(26,46,74,0.05) 24%, rgba(26,46,74,0) 66%),
+                  radial-gradient(ellipse 40% 30% at 62% 56%, rgba(126,194,223,0.12) 0%, rgba(126,194,223,0.04) 30%, rgba(126,194,223,0) 66%)
+                `,
+              }}
             />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-[24%] bottom-[12%] h-[22%] rounded-full bg-[radial-gradient(circle,rgba(26,46,74,0.18)_0%,rgba(26,46,74,0.08)_42%,rgba(26,46,74,0)_76%)] blur-3xl"
-            />
-            <SpinningCan className="[filter:drop-shadow(0_18px_26px_rgba(26,46,74,0.12))_drop-shadow(0_34px_70px_rgba(26,46,74,0.12))]" />
+            <SpinningCan className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]" />
           </div>
         </FadeUp>
       </div>

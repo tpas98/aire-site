@@ -63,15 +63,19 @@ export default function Hero() {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-[8%] top-[8%] bottom-[6%] rounded-[44%] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.78)_0%,rgba(213,233,245,0.74)_26%,rgba(126,194,223,0.16)_52%,rgba(26,46,74,0.12)_68%,rgba(26,46,74,0)_82%)] blur-3xl"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-[16%] bottom-[9%] h-[24%] rounded-full bg-[radial-gradient(circle,rgba(26,46,74,0.24)_0%,rgba(26,46,74,0.14)_38%,rgba(26,46,74,0)_74%)] blur-3xl"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background: `
+                radial-gradient(ellipse 27% 24% at 76% 22%, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.18) 24%, rgba(255,255,255,0) 68%),
+                radial-gradient(ellipse 34% 28% at 60% 72%, rgba(26,46,74,0.18) 0%, rgba(26,46,74,0.08) 24%, rgba(26,46,74,0) 64%),
+                radial-gradient(ellipse 34% 28% at 86% 72%, rgba(26,46,74,0.16) 0%, rgba(26,46,74,0.07) 24%, rgba(26,46,74,0) 64%),
+                radial-gradient(ellipse 42% 36% at 74% 56%, rgba(126,194,223,0.18) 0%, rgba(126,194,223,0.08) 28%, rgba(126,194,223,0) 62%)
+              `,
+            }}
           />
           <ThreeCanHero
             aria-label="Aire nicotine-free wellness pouch tins rendered in 3D"
-            className="[filter:drop-shadow(0_24px_32px_rgba(26,46,74,0.14))_drop-shadow(0_42px_84px_rgba(26,46,74,0.16))]"
+            className="[filter:drop-shadow(0_24px_34px_rgba(26,46,74,0.16))_drop-shadow(0_52px_110px_rgba(26,46,74,0.20))]"
           />
         </motion.div>
       </div>
