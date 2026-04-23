@@ -58,10 +58,21 @@ export default function Hero() {
           </motion.div>
         </div>
         <motion.div
-          className="flex justify-center items-center w-full h-[380px] md:h-[480px]"
+          className="relative flex justify-center items-center w-full h-[380px] md:h-[480px]"
           variants={fadeUp} initial="hidden" animate="visible" custom={0.2}
         >
-          <ThreeCanHero aria-label="Aire nicotine-free wellness pouch tins rendered in 3D" />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-[8%] top-[8%] bottom-[6%] rounded-[44%] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.78)_0%,rgba(213,233,245,0.74)_26%,rgba(126,194,223,0.16)_52%,rgba(26,46,74,0.12)_68%,rgba(26,46,74,0)_82%)] blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-[16%] bottom-[9%] h-[24%] rounded-full bg-[radial-gradient(circle,rgba(26,46,74,0.24)_0%,rgba(26,46,74,0.14)_38%,rgba(26,46,74,0)_74%)] blur-3xl"
+          />
+          <ThreeCanHero
+            aria-label="Aire nicotine-free wellness pouch tins rendered in 3D"
+            className="[filter:drop-shadow(0_24px_32px_rgba(26,46,74,0.14))_drop-shadow(0_42px_84px_rgba(26,46,74,0.16))]"
+          />
         </motion.div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white/30 to-transparent z-10" />

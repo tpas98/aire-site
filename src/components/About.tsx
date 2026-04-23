@@ -28,8 +28,16 @@ export default function About() {
           </a>
         </FadeUp>
         <FadeUp delay={0.15}>
-          <div className="flex justify-center items-center w-full h-[320px] md:h-[420px]">
-            <SpinningCan />
+          <div className="relative flex justify-center items-center w-full h-[320px] md:h-[420px]">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-[16%] top-[6%] bottom-[8%] rounded-[44%] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.94)_0%,rgba(233,243,250,0.92)_30%,rgba(126,194,223,0.14)_54%,rgba(26,46,74,0.09)_70%,rgba(26,46,74,0)_84%)] blur-3xl"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-[24%] bottom-[12%] h-[22%] rounded-full bg-[radial-gradient(circle,rgba(26,46,74,0.18)_0%,rgba(26,46,74,0.08)_42%,rgba(26,46,74,0)_76%)] blur-3xl"
+            />
+            <SpinningCan className="[filter:drop-shadow(0_18px_26px_rgba(26,46,74,0.12))_drop-shadow(0_34px_70px_rgba(26,46,74,0.12))]" />
           </div>
         </FadeUp>
       </div>
