@@ -8,6 +8,7 @@ interface CanConfig {
   tiltX: number
   tiltZ: number
   floatPhase: number  // offset so they don't bob in sync
+  baseYRotation?: number
   // Motion type: 'showcase' = gentle oscillating rock (brand always visible)
   //              'turntable' = full eased rotation
   motionType: 'showcase' | 'turntable'
@@ -102,8 +103,10 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     const tinDepth = 0.602
     const lidThickness = 0.02
     const bevelRadius = 0.03
-    const labelRadius = tinRadius - 0.07
-    const labelSeatOuterRadius = tinRadius - 0.018
+    const labelRadius = tinRadius - 0.14
+    const labelGrooveOuterRadius = labelRadius + 0.032
+    const labelSeatOuterRadius = tinRadius - 0.06
+    const labelTextureZoom = 0.84
 
     const maxAniso = renderer.capabilities.getMaxAnisotropy()
     const textureLoader = new THREE.TextureLoader()
@@ -120,12 +123,16 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     frontTexture.minFilter = THREE.LinearMipmapLinearFilter
     frontTexture.magFilter = THREE.LinearFilter
     frontTexture.anisotropy = Math.min(16, maxAniso)
+    frontTexture.repeat.set(labelTextureZoom, labelTextureZoom)
+    frontTexture.offset.set((1 - labelTextureZoom) / 2, (1 - labelTextureZoom) / 2)
 
     const backTexture = textureLoader.load('/images/can-back-texture-ai.png', onTextureLoad)
     backTexture.colorSpace = THREE.SRGBColorSpace
     backTexture.minFilter = THREE.LinearMipmapLinearFilter
     backTexture.magFilter = THREE.LinearFilter
     backTexture.anisotropy = Math.min(16, maxAniso)
+    backTexture.repeat.set(labelTextureZoom, labelTextureZoom)
+    backTexture.offset.set((1 - labelTextureZoom) / 2, (1 - labelTextureZoom) / 2)
 
     const bandTexture = textureLoader.load('/images/can-band-texture-ai.png', onTextureLoad)
     bandTexture.colorSpace = THREE.SRGBColorSpace
@@ -138,7 +145,8 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     // === SHARED GEOMETRIES ===
     const frontGeo = new THREE.CircleGeometry(labelRadius, 96)
     const backGeo = new THREE.CircleGeometry(labelRadius, 96)
-    const labelSeatGeo = new THREE.RingGeometry(labelRadius, labelSeatOuterRadius, 96)
+    const labelGrooveGeo = new THREE.RingGeometry(labelRadius, labelGrooveOuterRadius, 96)
+    const labelSeatGeo = new THREE.RingGeometry(labelGrooveOuterRadius, labelSeatOuterRadius, 96)
     const edgeGeo = new THREE.CylinderGeometry(tinRadius, tinRadius, tinDepth - bevelRadius * 2, 96, 1, true)
     const frontBevelGeo = new THREE.TorusGeometry(tinRadius - bevelRadius, bevelRadius, 10, 96, Math.PI * 2)
     const backBevelGeo = new THREE.TorusGeometry(tinRadius - bevelRadius, bevelRadius, 10, 96, Math.PI * 2)
@@ -163,51 +171,65 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
       clearcoat: 0.5, clearcoatRoughness: 0.2, envMapIntensity: 0.45,
       side: THREE.DoubleSide,
     })
+    const labelGrooveMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0.75, 0.77, 0.8), roughness: 0.84, metalness: 0.02,
+      clearcoat: 0.04, clearcoatRoughness: 0.62, envMapIntensity: 0.08,
+      side: THREE.DoubleSide,
+    })
     const labelSeatMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.86, 0.85, 0.83), roughness: 0.62, metalness: 0.02,
-      clearcoat: 0.08, clearcoatRoughness: 0.5, envMapIntensity: 0.12,
+      color: new THREE.Color(0.88, 0.86, 0.83), roughness: 0.62, metalness: 0.02,
+      clearcoat: 0.08, clearcoatRoughness: 0.48, envMapIntensity: 0.12,
       side: THREE.DoubleSide,
     })
     const bevelMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.86, 0.85, 0.84), roughness: 0.28, metalness: 0.08,
-      clearcoat: 0.34, clearcoatRoughness: 0.2, envMapIntensity: 0.58,
+      color: new THREE.Color(0.9, 0.88, 0.85), roughness: 0.3, metalness: 0.05,
+      clearcoat: 0.28, clearcoatRoughness: 0.22, envMapIntensity: 0.48,
     })
     const lidRimMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.95, 0.94, 0.92), roughness: 0.34, metalness: 0.04,
-      clearcoat: 0.38, clearcoatRoughness: 0.24, envMapIntensity: 0.42,
+      color: new THREE.Color(0.96, 0.94, 0.92), roughness: 0.36, metalness: 0.03,
+      clearcoat: 0.28, clearcoatRoughness: 0.22, envMapIntensity: 0.38,
     })
     const seamMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.47, 0.5, 0.58), roughness: 0.26, metalness: 0.1,
-      envMapIntensity: 0.7,
+      color: new THREE.Color(0.22, 0.26, 0.36), roughness: 0.28, metalness: 0.08,
+      envMapIntensity: 0.58,
     })
     const bottomCapMat = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(0.88, 0.91, 0.93), roughness: 0.3, metalness: 0.06,
       envMapIntensity: 0.5,
     })
 
-    const allMaterials = [frontMat, backMat, edgeMat, labelSeatMat, bevelMat, lidRimMat, seamMat, bottomCapMat]
-    const allGeometries = [frontGeo, backGeo, labelSeatGeo, edgeGeo, frontBevelGeo, backBevelGeo, lidRimGeo, seamGeo, bottomRimGeo, bottomCapGeo]
+    const allMaterials = [frontMat, backMat, edgeMat, labelGrooveMat, labelSeatMat, bevelMat, lidRimMat, seamMat, bottomCapMat]
+    const allGeometries = [frontGeo, backGeo, labelGrooveGeo, labelSeatGeo, edgeGeo, frontBevelGeo, backBevelGeo, lidRimGeo, seamGeo, bottomRimGeo, bottomCapGeo]
 
     // === BUILD A SINGLE CAN ===
     function buildCan(): THREE.Group {
       const group = new THREE.Group()
 
+      const frontGroove = new THREE.Mesh(labelGrooveGeo, labelGrooveMat)
+      frontGroove.position.z = tinDepth / 2 + lidThickness + 0.001
+      group.add(frontGroove)
+
       const frontSeat = new THREE.Mesh(labelSeatGeo, labelSeatMat)
-      frontSeat.position.z = tinDepth / 2 + lidThickness + 0.0006
+      frontSeat.position.z = tinDepth / 2 + lidThickness + 0.001
       group.add(frontSeat)
 
       const front = new THREE.Mesh(frontGeo, frontMat)
-      front.position.z = tinDepth / 2 + lidThickness + 0.0012
+      front.position.z = tinDepth / 2 + lidThickness + 0.0002
       group.add(front)
+
+      const backGroove = new THREE.Mesh(labelGrooveGeo, labelGrooveMat)
+      backGroove.rotation.y = Math.PI
+      backGroove.position.z = -(tinDepth / 2 + 0.001)
+      group.add(backGroove)
 
       const backSeat = new THREE.Mesh(labelSeatGeo, labelSeatMat)
       backSeat.rotation.y = Math.PI
-      backSeat.position.z = -(tinDepth / 2 + 0.0006)
+      backSeat.position.z = -(tinDepth / 2 + 0.001)
       group.add(backSeat)
 
       const back = new THREE.Mesh(backGeo, backMat)
       back.rotation.y = Math.PI
-      back.position.z = -(tinDepth / 2 + 0.0012)
+      back.position.z = -(tinDepth / 2 + 0.0002)
       group.add(back)
 
       const edge = new THREE.Mesh(edgeGeo, edgeMat)
@@ -252,29 +274,30 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
         tiltX: -0.5,
         tiltZ: 0.05,
         floatPhase: 0,
+        baseYRotation: 0.08,
         motionType: 'showcase',
         oscillateSpeed: 0.35,            // Very slow, luxurious rock
-        oscillateAmplitude: 0.45,        // ±26° — shows depth without losing the brand
+        oscillateAmplitude: 0.22,
       },
       {
-        position: [-2.0, -1.1, -0.3],   // Bottom left — full spin, counter-clockwise
-        tiltX: -0.6,
+        position: [-2.0, -1.1, -0.3],
+        tiltX: -0.62,
         tiltZ: 0.1,
         floatPhase: 2.1,
-        motionType: 'turntable',
-        cycleTime: 6.0,
-        easingStrength: 1.6,
-        spinDirection: -1,
+        baseYRotation: -0.82,
+        motionType: 'showcase',
+        oscillateSpeed: 0.3,
+        oscillateAmplitude: 0.14,
       },
       {
-        position: [2.0, -1.1, -0.3],    // Bottom right — full spin, clockwise
-        tiltX: -0.45,
-        tiltZ: -0.08,
+        position: [2.0, -1.1, -0.3],
+        tiltX: -0.52,
+        tiltZ: -0.1,
         floatPhase: 4.2,
-        motionType: 'turntable',
-        cycleTime: 5.0,
-        easingStrength: 1.4,
-        spinDirection: 1,
+        baseYRotation: 0.9,
+        motionType: 'showcase',
+        oscillateSpeed: 0.32,
+        oscillateAmplitude: 0.12,
       },
     ]
 
@@ -374,7 +397,8 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
           // Primary Y oscillation — slow sine wave, brand stays mostly front-facing
           const speed = cfg.oscillateSpeed ?? 0.35
           const amp = cfg.oscillateAmplitude ?? 0.45
-          spinGroup.rotation.y = Math.sin(t * speed) * amp
+          const baseY = cfg.baseYRotation ?? 0
+          spinGroup.rotation.y = baseY + Math.sin(t * speed) * amp
 
           // Secondary subtle X-axis breathing — gives a "being examined" feel
           spinGroup.rotation.x = Math.sin(t * speed * 0.7) * 0.04

@@ -87,8 +87,10 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const tinDepth = 0.602
     const lidThickness = 0.02
     const bevelRadius = 0.03  // Chamfer/bevel on edges
-    const labelRadius = tinRadius - 0.07
-    const labelSeatOuterRadius = tinRadius - 0.018
+    const labelRadius = tinRadius - 0.14
+    const labelGrooveOuterRadius = labelRadius + 0.032
+    const labelSeatOuterRadius = tinRadius - 0.06
+    const labelTextureZoom = 0.84
 
     const canGroup = new THREE.Group()
 
@@ -108,9 +110,12 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     frontTexture.minFilter = THREE.LinearMipmapLinearFilter
     frontTexture.magFilter = THREE.LinearFilter
     frontTexture.anisotropy = Math.min(16, maxAniso)
+    frontTexture.repeat.set(labelTextureZoom, labelTextureZoom)
+    frontTexture.offset.set((1 - labelTextureZoom) / 2, (1 - labelTextureZoom) / 2)
 
     const frontGeo = new THREE.CircleGeometry(labelRadius, 128)
-    const labelSeatGeo = new THREE.RingGeometry(labelRadius, labelSeatOuterRadius, 128)
+    const labelGrooveGeo = new THREE.RingGeometry(labelRadius, labelGrooveOuterRadius, 128)
+    const labelSeatGeo = new THREE.RingGeometry(labelGrooveOuterRadius, labelSeatOuterRadius, 128)
     const frontMat = new THREE.MeshPhysicalMaterial({
       map: frontTexture,
       roughness: 0.32,
@@ -121,20 +126,32 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       transparent: true,
       side: THREE.FrontSide,
     })
+    const labelGrooveMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0.75, 0.77, 0.8),
+      roughness: 0.84,
+      metalness: 0.02,
+      clearcoat: 0.04,
+      clearcoatRoughness: 0.62,
+      envMapIntensity: 0.08,
+      side: THREE.DoubleSide,
+    })
     const labelSeatMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.86, 0.85, 0.83),
+      color: new THREE.Color(0.88, 0.86, 0.83),
       roughness: 0.62,
       metalness: 0.02,
       clearcoat: 0.08,
-      clearcoatRoughness: 0.5,
+      clearcoatRoughness: 0.48,
       envMapIntensity: 0.12,
       side: THREE.DoubleSide,
     })
+    const frontGrooveMesh = new THREE.Mesh(labelGrooveGeo, labelGrooveMat)
+    frontGrooveMesh.position.z = tinDepth / 2 + lidThickness + 0.001
+    canGroup.add(frontGrooveMesh)
     const frontSeatMesh = new THREE.Mesh(labelSeatGeo, labelSeatMat)
-    frontSeatMesh.position.z = tinDepth / 2 + lidThickness + 0.0006
+    frontSeatMesh.position.z = tinDepth / 2 + lidThickness + 0.001
     canGroup.add(frontSeatMesh)
     const frontMesh = new THREE.Mesh(frontGeo, frontMat)
-    frontMesh.position.z = tinDepth / 2 + lidThickness + 0.0012
+    frontMesh.position.z = tinDepth / 2 + lidThickness + 0.0002
     canGroup.add(frontMesh)
 
     // === BACK FACE (Supplement Facts) ===
@@ -143,6 +160,8 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     backTexture.minFilter = THREE.LinearMipmapLinearFilter
     backTexture.magFilter = THREE.LinearFilter
     backTexture.anisotropy = Math.min(16, maxAniso)
+    backTexture.repeat.set(labelTextureZoom, labelTextureZoom)
+    backTexture.offset.set((1 - labelTextureZoom) / 2, (1 - labelTextureZoom) / 2)
 
     const backGeo = new THREE.CircleGeometry(labelRadius, 128)
     const backMat = new THREE.MeshPhysicalMaterial({
@@ -155,13 +174,17 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       transparent: true,
       side: THREE.FrontSide,
     })
+    const backGrooveMesh = new THREE.Mesh(labelGrooveGeo, labelGrooveMat)
+    backGrooveMesh.rotation.y = Math.PI
+    backGrooveMesh.position.z = -(tinDepth / 2 + 0.001)
+    canGroup.add(backGrooveMesh)
     const backSeatMesh = new THREE.Mesh(labelSeatGeo, labelSeatMat)
     backSeatMesh.rotation.y = Math.PI
-    backSeatMesh.position.z = -(tinDepth / 2 + 0.0006)
+    backSeatMesh.position.z = -(tinDepth / 2 + 0.001)
     canGroup.add(backSeatMesh)
     const backMesh = new THREE.Mesh(backGeo, backMat)
     backMesh.rotation.y = Math.PI
-    backMesh.position.z = -(tinDepth / 2 + 0.0012)
+    backMesh.position.z = -(tinDepth / 2 + 0.0002)
     canGroup.add(backMesh)
 
     // === EDGE / BODY (band texture) ===
@@ -190,12 +213,12 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     // === BEVELED EDGES (smooth chamfer using lathe geometry) ===
     const bevelSegs = 12
     const bevelMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.86, 0.85, 0.84),
-      roughness: 0.28,
-      metalness: 0.08,
-      clearcoat: 0.34,
-      clearcoatRoughness: 0.2,
-      envMapIntensity: 0.58,
+      color: new THREE.Color(0.9, 0.88, 0.85),
+      roughness: 0.3,
+      metalness: 0.05,
+      clearcoat: 0.28,
+      clearcoatRoughness: 0.22,
+      envMapIntensity: 0.48,
     })
 
     // Front bevel (top edge torus)
@@ -213,12 +236,12 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     // === LID RIM ===
     const lidRimGeo = new THREE.CylinderGeometry(tinRadius, tinRadius, lidThickness, 128)
     const lidRimMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.95, 0.94, 0.92),
-      roughness: 0.34,
-      metalness: 0.04,
-      clearcoat: 0.38,
-      clearcoatRoughness: 0.24,
-      envMapIntensity: 0.42,
+      color: new THREE.Color(0.96, 0.94, 0.92),
+      roughness: 0.36,
+      metalness: 0.03,
+      clearcoat: 0.28,
+      clearcoatRoughness: 0.22,
+      envMapIntensity: 0.38,
     })
     const lidRimMesh = new THREE.Mesh(lidRimGeo, lidRimMat)
     lidRimMesh.rotation.x = Math.PI / 2
@@ -228,10 +251,10 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     // === SEAM RING (where lid meets body) ===
     const seamGeo = new THREE.TorusGeometry(tinRadius - 0.005, 0.01, 16, 128)
     const seamMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.47, 0.5, 0.58),
-      roughness: 0.26,
-      metalness: 0.1,
-      envMapIntensity: 0.7,
+      color: new THREE.Color(0.22, 0.26, 0.36),
+      roughness: 0.28,
+      metalness: 0.08,
+      envMapIntensity: 0.58,
     })
     const seamMesh = new THREE.Mesh(seamGeo, seamMat)
     seamMesh.position.z = tinDepth / 2

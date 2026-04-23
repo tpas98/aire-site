@@ -68,21 +68,12 @@ export default function Hero() {
           className="relative flex justify-center items-center w-full h-[380px] md:h-[480px]"
           variants={fadeUp} initial="hidden" animate="visible" custom={0.2}
         >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background: `
-                radial-gradient(ellipse 24% 22% at 76% 20%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.10) 22%, rgba(255,255,255,0) 62%),
-                radial-gradient(ellipse 38% 30% at 60% 72%, rgba(26,46,74,0.24) 0%, rgba(26,46,74,0.11) 26%, rgba(26,46,74,0) 66%),
-                radial-gradient(ellipse 38% 30% at 86% 72%, rgba(26,46,74,0.22) 0%, rgba(26,46,74,0.10) 26%, rgba(26,46,74,0) 66%),
-                radial-gradient(ellipse 44% 36% at 74% 54%, rgba(98,151,187,0.18) 0%, rgba(98,151,187,0.08) 28%, rgba(98,151,187,0) 64%)
-              `,
-            }}
-          />
+          <div aria-hidden="true" className="pointer-events-none absolute top-[7%] right-[18%] w-[220px] h-[220px] md:w-[280px] md:h-[280px] rounded-full bg-white/20 blur-[70px]" />
+          <div aria-hidden="true" className="pointer-events-none absolute bottom-[8%] right-[26%] w-[320px] h-[220px] md:w-[420px] md:h-[260px] rounded-full bg-[#6ea0ca]/24 blur-[90px]" />
+          <div aria-hidden="true" className="pointer-events-none absolute bottom-[6%] right-[-2%] w-[260px] h-[200px] md:w-[340px] md:h-[240px] rounded-full bg-[#496d98]/18 blur-[95px]" />
           <ThreeCanHero
             aria-label="Aire nicotine-free wellness pouch tins rendered in 3D"
-            className="[filter:drop-shadow(0_26px_36px_rgba(26,46,74,0.18))_drop-shadow(0_56px_120px_rgba(26,46,74,0.24))]"
+            className=""
           />
         </motion.div>
       </div>
