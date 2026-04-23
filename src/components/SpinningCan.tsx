@@ -107,8 +107,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     frontTexture.magFilter = THREE.LinearFilter
     frontTexture.anisotropy = Math.min(16, maxAniso)
 
-    const faceSize = tinRadius * 2
-    const frontGeo = new THREE.PlaneGeometry(faceSize, faceSize)
+    const frontGeo = new THREE.CircleGeometry(tinRadius, 128)
     const frontMat = new THREE.MeshPhysicalMaterial({
       map: frontTexture,
       roughness: 0.32,
@@ -130,7 +129,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     backTexture.magFilter = THREE.LinearFilter
     backTexture.anisotropy = Math.min(16, maxAniso)
 
-    const backGeo = new THREE.PlaneGeometry(faceSize, faceSize)
+    const backGeo = new THREE.CircleGeometry(tinRadius, 128)
     const backMat = new THREE.MeshPhysicalMaterial({
       map: backTexture,
       roughness: 0.32,

@@ -134,9 +134,8 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     bandTexture.anisotropy = Math.min(16, maxAniso)
 
     // === SHARED GEOMETRIES ===
-    const faceSize = tinRadius * 2
-    const frontGeo = new THREE.PlaneGeometry(faceSize, faceSize)
-    const backGeo = new THREE.PlaneGeometry(faceSize, faceSize)
+    const frontGeo = new THREE.CircleGeometry(tinRadius, 96)
+    const backGeo = new THREE.CircleGeometry(tinRadius, 96)
     const edgeGeo = new THREE.CylinderGeometry(tinRadius, tinRadius, tinDepth - bevelRadius * 2, 96, 1, true)
     const frontBevelGeo = new THREE.TorusGeometry(tinRadius - bevelRadius, bevelRadius, 10, 96, Math.PI * 2)
     const backBevelGeo = new THREE.TorusGeometry(tinRadius - bevelRadius, bevelRadius, 10, 96, Math.PI * 2)
