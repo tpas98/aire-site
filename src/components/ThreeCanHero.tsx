@@ -102,6 +102,8 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     const tinDepth = 0.602
     const lidThickness = 0.02
     const bevelRadius = 0.03
+    const labelRadius = tinRadius - 0.07
+    const labelSeatOuterRadius = tinRadius - 0.018
 
     const maxAniso = renderer.capabilities.getMaxAnisotropy()
     const textureLoader = new THREE.TextureLoader()
@@ -134,8 +136,9 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     bandTexture.anisotropy = Math.min(16, maxAniso)
 
     // === SHARED GEOMETRIES ===
-    const frontGeo = new THREE.CircleGeometry(tinRadius, 96)
-    const backGeo = new THREE.CircleGeometry(tinRadius, 96)
+    const frontGeo = new THREE.CircleGeometry(labelRadius, 96)
+    const backGeo = new THREE.CircleGeometry(labelRadius, 96)
+    const labelSeatGeo = new THREE.RingGeometry(labelRadius, labelSeatOuterRadius, 96)
     const edgeGeo = new THREE.CylinderGeometry(tinRadius, tinRadius, tinDepth - bevelRadius * 2, 96, 1, true)
     const frontBevelGeo = new THREE.TorusGeometry(tinRadius - bevelRadius, bevelRadius, 10, 96, Math.PI * 2)
     const backBevelGeo = new THREE.TorusGeometry(tinRadius - bevelRadius, bevelRadius, 10, 96, Math.PI * 2)
@@ -160,37 +163,51 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
       clearcoat: 0.5, clearcoatRoughness: 0.2, envMapIntensity: 0.45,
       side: THREE.DoubleSide,
     })
+    const labelSeatMat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(0.86, 0.85, 0.83), roughness: 0.62, metalness: 0.02,
+      clearcoat: 0.08, clearcoatRoughness: 0.5, envMapIntensity: 0.12,
+      side: THREE.DoubleSide,
+    })
     const bevelMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.88, 0.91, 0.93), roughness: 0.18, metalness: 0.12,
-      clearcoat: 0.7, clearcoatRoughness: 0.1, envMapIntensity: 1.0,
+      color: new THREE.Color(0.86, 0.85, 0.84), roughness: 0.28, metalness: 0.08,
+      clearcoat: 0.34, clearcoatRoughness: 0.2, envMapIntensity: 0.58,
     })
     const lidRimMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.91, 0.93, 0.95), roughness: 0.18, metalness: 0.1,
-      clearcoat: 0.8, clearcoatRoughness: 0.1, envMapIntensity: 0.9,
+      color: new THREE.Color(0.95, 0.94, 0.92), roughness: 0.34, metalness: 0.04,
+      clearcoat: 0.38, clearcoatRoughness: 0.24, envMapIntensity: 0.42,
     })
     const seamMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.83, 0.86, 0.89), roughness: 0.15, metalness: 0.2,
-      envMapIntensity: 1.2,
+      color: new THREE.Color(0.47, 0.5, 0.58), roughness: 0.26, metalness: 0.1,
+      envMapIntensity: 0.7,
     })
     const bottomCapMat = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(0.88, 0.91, 0.93), roughness: 0.3, metalness: 0.06,
       envMapIntensity: 0.5,
     })
 
-    const allMaterials = [frontMat, backMat, edgeMat, bevelMat, lidRimMat, seamMat, bottomCapMat]
-    const allGeometries = [frontGeo, backGeo, edgeGeo, frontBevelGeo, backBevelGeo, lidRimGeo, seamGeo, bottomRimGeo, bottomCapGeo]
+    const allMaterials = [frontMat, backMat, edgeMat, labelSeatMat, bevelMat, lidRimMat, seamMat, bottomCapMat]
+    const allGeometries = [frontGeo, backGeo, labelSeatGeo, edgeGeo, frontBevelGeo, backBevelGeo, lidRimGeo, seamGeo, bottomRimGeo, bottomCapGeo]
 
     // === BUILD A SINGLE CAN ===
     function buildCan(): THREE.Group {
       const group = new THREE.Group()
 
+      const frontSeat = new THREE.Mesh(labelSeatGeo, labelSeatMat)
+      frontSeat.position.z = tinDepth / 2 + lidThickness + 0.0006
+      group.add(frontSeat)
+
       const front = new THREE.Mesh(frontGeo, frontMat)
-      front.position.z = tinDepth / 2 + lidThickness + 0.001
+      front.position.z = tinDepth / 2 + lidThickness + 0.0012
       group.add(front)
+
+      const backSeat = new THREE.Mesh(labelSeatGeo, labelSeatMat)
+      backSeat.rotation.y = Math.PI
+      backSeat.position.z = -(tinDepth / 2 + 0.0006)
+      group.add(backSeat)
 
       const back = new THREE.Mesh(backGeo, backMat)
       back.rotation.y = Math.PI
-      back.position.z = -(tinDepth / 2 + 0.001)
+      back.position.z = -(tinDepth / 2 + 0.0012)
       group.add(back)
 
       const edge = new THREE.Mesh(edgeGeo, edgeMat)
