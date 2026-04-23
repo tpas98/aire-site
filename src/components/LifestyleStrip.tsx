@@ -2,12 +2,16 @@
 import Image from 'next/image'
 
 const images = [
-  { src: '/images/lifestyle-lake.png', alt: 'Aire by the lake at dawn' },
-  { src: '/images/lifestyle-coast.png', alt: 'Aire on the coast at sunset' },
-  { src: '/images/lifestyle-studio.png', alt: 'Aire in a creative studio' },
-  { src: '/images/lifestyle-lake.png', alt: 'Aire by the lake at dawn' },
-  { src: '/images/lifestyle-coast.png', alt: 'Aire on the coast at sunset' },
-  { src: '/images/lifestyle-studio.png', alt: 'Aire in a creative studio' },
+  { src: '/images/lifestyle-wild-01.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
+  { src: '/images/lifestyle-wild-02.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
+  { src: '/images/lifestyle-wild-03.png', alt: 'Aire Calm Mint tin on a creative studio desk' },
+  { src: '/images/lifestyle-wild-04.png', alt: 'Aire Calm Mint tin on a hiking overlook with a daypack' },
+  { src: '/images/lifestyle-wild-05.png', alt: 'Aire Calm Mint tin on a rooftop garden work table' },
+  { src: '/images/lifestyle-wild-06.png', alt: 'Open Aire Calm Mint tin on a beach towel near the water' },
+  { src: '/images/lifestyle-wild-07.png', alt: 'Aire Calm Mint tin on a bright morning kitchen counter' },
+  { src: '/images/lifestyle-wild-08.png', alt: 'Aire Calm Mint tin on a cafe table with a relaxed customer nearby' },
+  { src: '/images/lifestyle-wild-09.png', alt: 'Aire Calm Mint tin on a park bench after a run' },
+  { src: '/images/lifestyle-wild-10.png', alt: 'Aire Calm Mint tin in a scenic road trip moment' },
 ]
 
 export default function LifestyleStrip() {

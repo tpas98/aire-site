@@ -66,7 +66,7 @@
   100% { transform: translateX(-50%); }
 }
 .lifestyle-track {
-  animation: scroll-lifestyle 40s linear infinite;
+  animation: scroll-lifestyle 64s linear infinite;
 }
 .lifestyle-track:hover {
   animation-play-state: paused;
