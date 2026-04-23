@@ -21,7 +21,7 @@ module.exports = {
         sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
-        'hero-gradient': 'linear-gradient(135deg, #ddf0f9 0%, #b8d8ee 55%, #a8d1eb 100%)',
+        'hero-gradient': 'linear-gradient(135deg, #d8ecf8 0%, #b0d1e8 52%, #90bada 100%)',
         'section-gradient': 'linear-gradient(150deg, #eaf5fb 0%, #c5dff0 100%)',
         'dark-gradient': 'linear-gradient(135deg, #1a2e4a 0%, #0f1e32 100%)',
       },
