@@ -105,7 +105,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const maxAniso = renderer.capabilities.getMaxAnisotropy()
 
     // === FRONT FACE (Aire branding) ===
-    const frontTexture = textureLoader.load('/images/can-front-texture-ai.png', onTextureLoad)
+    const frontTexture = textureLoader.load('/images/can-front-texture-calibrated.png', onTextureLoad)
     frontTexture.colorSpace = THREE.SRGBColorSpace
     frontTexture.minFilter = THREE.LinearMipmapLinearFilter
     frontTexture.magFilter = THREE.LinearFilter
@@ -118,11 +118,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const labelSeatGeo = new THREE.RingGeometry(labelGrooveOuterRadius, labelSeatOuterRadius, 128)
     const frontMat = new THREE.MeshPhysicalMaterial({
       map: frontTexture,
-      roughness: 0.32,
+      roughness: 0.42,
       metalness: 0.01,
-      clearcoat: 0.45,
-      clearcoatRoughness: 0.18,
-      envMapIntensity: 0.2,
+      clearcoat: 0.18,
+      clearcoatRoughness: 0.3,
+      envMapIntensity: 0.08,
       transparent: true,
       side: THREE.FrontSide,
     })
@@ -155,7 +155,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     canGroup.add(frontMesh)
 
     // === BACK FACE (Supplement Facts) ===
-    const backTexture = textureLoader.load('/images/can-back-texture-ai.png', onTextureLoad)
+    const backTexture = textureLoader.load('/images/can-back-texture-calibrated.png', onTextureLoad)
     backTexture.colorSpace = THREE.SRGBColorSpace
     backTexture.minFilter = THREE.LinearMipmapLinearFilter
     backTexture.magFilter = THREE.LinearFilter
@@ -166,11 +166,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
     const backGeo = new THREE.CircleGeometry(labelRadius, 128)
     const backMat = new THREE.MeshPhysicalMaterial({
       map: backTexture,
-      roughness: 0.32,
+      roughness: 0.42,
       metalness: 0.01,
-      clearcoat: 0.45,
-      clearcoatRoughness: 0.18,
-      envMapIntensity: 0.2,
+      clearcoat: 0.18,
+      clearcoatRoughness: 0.3,
+      envMapIntensity: 0.08,
       transparent: true,
       side: THREE.FrontSide,
     })
@@ -189,7 +189,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
 
     // === EDGE / BODY (band texture) ===
     const edgeGeo = new THREE.CylinderGeometry(tinRadius, tinRadius, tinDepth - bevelRadius * 2, 128, 1, true)
-    const bandTexture = textureLoader.load('/images/can-band-texture-ai.png', onTextureLoad)
+    const bandTexture = textureLoader.load('/images/can-band-texture-calibrated.png', onTextureLoad)
     bandTexture.colorSpace = THREE.SRGBColorSpace
     bandTexture.wrapS = THREE.RepeatWrapping
     bandTexture.wrapT = THREE.ClampToEdgeWrapping
@@ -199,11 +199,11 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
 
     const edgeMat = new THREE.MeshPhysicalMaterial({
       map: bandTexture,
-      roughness: 0.25,
-      metalness: 0.08,
-      clearcoat: 0.5,
-      clearcoatRoughness: 0.2,
-      envMapIntensity: 0.45,
+      roughness: 0.32,
+      metalness: 0.05,
+      clearcoat: 0.24,
+      clearcoatRoughness: 0.28,
+      envMapIntensity: 0.24,
       side: THREE.DoubleSide,
     })
     const edgeMesh = new THREE.Mesh(edgeGeo, edgeMat)

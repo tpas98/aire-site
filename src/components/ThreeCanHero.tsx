@@ -117,7 +117,7 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     }
 
     // === SHARED TEXTURES (loaded once, used by all 3 cans) ===
-    const frontTexture = textureLoader.load('/images/can-front-texture-ai.png', onTextureLoad)
+    const frontTexture = textureLoader.load('/images/can-front-texture-calibrated.png', onTextureLoad)
     frontTexture.colorSpace = THREE.SRGBColorSpace
     frontTexture.minFilter = THREE.LinearMipmapLinearFilter
     frontTexture.magFilter = THREE.LinearFilter
@@ -125,7 +125,7 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     frontTexture.repeat.set(labelTextureZoom, labelTextureZoom)
     frontTexture.offset.set((1 - labelTextureZoom) / 2, (1 - labelTextureZoom) / 2)
 
-    const backTexture = textureLoader.load('/images/can-back-texture-ai.png', onTextureLoad)
+    const backTexture = textureLoader.load('/images/can-back-texture-calibrated.png', onTextureLoad)
     backTexture.colorSpace = THREE.SRGBColorSpace
     backTexture.minFilter = THREE.LinearMipmapLinearFilter
     backTexture.magFilter = THREE.LinearFilter
@@ -133,7 +133,7 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     backTexture.repeat.set(labelTextureZoom, labelTextureZoom)
     backTexture.offset.set((1 - labelTextureZoom) / 2, (1 - labelTextureZoom) / 2)
 
-    const bandTexture = textureLoader.load('/images/can-band-texture-ai.png', onTextureLoad)
+    const bandTexture = textureLoader.load('/images/can-band-texture-calibrated.png', onTextureLoad)
     bandTexture.colorSpace = THREE.SRGBColorSpace
     bandTexture.wrapS = THREE.RepeatWrapping
     bandTexture.wrapT = THREE.ClampToEdgeWrapping
@@ -156,18 +156,18 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
 
     // === SHARED MATERIALS ===
     const frontMat = new THREE.MeshPhysicalMaterial({
-      map: frontTexture, roughness: 0.32, metalness: 0.01,
-      clearcoat: 0.45, clearcoatRoughness: 0.18, envMapIntensity: 0.2,
+      map: frontTexture, roughness: 0.42, metalness: 0.01,
+      clearcoat: 0.18, clearcoatRoughness: 0.3, envMapIntensity: 0.08,
       transparent: true, side: THREE.FrontSide,
     })
     const backMat = new THREE.MeshPhysicalMaterial({
-      map: backTexture, roughness: 0.32, metalness: 0.01,
-      clearcoat: 0.45, clearcoatRoughness: 0.18, envMapIntensity: 0.2,
+      map: backTexture, roughness: 0.42, metalness: 0.01,
+      clearcoat: 0.18, clearcoatRoughness: 0.3, envMapIntensity: 0.08,
       transparent: true, side: THREE.FrontSide,
     })
     const edgeMat = new THREE.MeshPhysicalMaterial({
-      map: bandTexture, roughness: 0.25, metalness: 0.08,
-      clearcoat: 0.5, clearcoatRoughness: 0.2, envMapIntensity: 0.45,
+      map: bandTexture, roughness: 0.32, metalness: 0.05,
+      clearcoat: 0.24, clearcoatRoughness: 0.28, envMapIntensity: 0.24,
       side: THREE.DoubleSide,
     })
     const labelGrooveMat = new THREE.MeshPhysicalMaterial({
