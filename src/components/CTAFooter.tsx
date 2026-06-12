@@ -18,11 +18,11 @@ const footerLinks = {
   Explore: [
     { label: 'Home', href: '/' },
     { label: 'Shop Aire', href: CHECKOUT_URL },
-    { label: 'The Science', href: '#ingredients' },
-    { label: 'About Us', href: '#science' },
+    { label: 'The Science', href: '/#ingredients' },
+    { label: 'About Us', href: '/#science' },
   ],
   Support: [
-    { label: 'FAQ', href: '#faq' },
+    { label: 'FAQ', href: '/#faq' },
     { label: 'Shipping & Returns', href: '/shipping' },
     { label: 'Contact Us', href: 'mailto:hello@airepouches.com' },
   ],
@@ -58,7 +58,7 @@ export function CTA() {
             ))}
           </div>
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <a href={CHECKOUT_URL} className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
               Order Now - $45.99 / 4-Pack
             </a>
             <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 transition-all duration-200 text-center">
@@ -101,9 +101,19 @@ export function Footer() {
             style={{ filter: 'brightness(0) invert(1)' }} />
           <p className="text-[0.82rem] text-white/50 leading-[1.75] mb-5">The lifestyle pouch promoting peak enjoyment from every pursuit.<br />No nicotine. No caffeine. Pure balance.</p>
           <div className="flex gap-3">
-            {['IG', '𝕏'].map((s) => (
-              <a key={s} href="#" className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-[0.7rem] text-white/40 hover:border-sky-deep hover:text-sky-deep transition-all duration-200">{s}</a>
-            ))}
+            <a
+              href="https://www.instagram.com/airepouches"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Aire on Instagram"
+              className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white/40 hover:border-sky-deep hover:text-sky-deep transition-all duration-200"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
           </div>
         </div>
         {Object.entries(footerLinks).map(([heading, links]) => (

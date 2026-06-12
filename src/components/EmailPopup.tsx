@@ -56,6 +56,9 @@ export default function EmailPopup() {
             onClick={handleDismiss}
           />
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Get 10% off your first order"
             className="fixed z-[100] bottom-0 left-0 right-0 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-[480px] w-full"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -88,6 +91,8 @@ export default function EmailPopup() {
                     <input
                       type="email"
                       required
+                      aria-label="Email address"
+                      autoComplete="email"
                       placeholder="your@email.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}

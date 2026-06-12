@@ -77,6 +77,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
     <div className="border-b border-sky-deep/15">
       <button
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
         className="w-full flex items-center justify-between py-5 text-left group"
       >
         <span className="text-[0.95rem] font-medium text-navy pr-4">{q}</span>

@@ -5,7 +5,11 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor scrolling so section tops aren't hidden under the fixed 64px navbar */
+    scroll-padding-top: 84px;
+  }
   body { @apply font-sans text-navy overflow-x-hidden; }
 }
 
@@ -70,4 +74,14 @@
 }
 .lifestyle-track:hover {
   animation-play-state: paused;
+}
+
+/* Respect users who prefer reduced motion: stop infinite marquees */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .carousel-track,
+  .lifestyle-track,
+  .animate-ticker {
+    animation: none;
+  }
 }

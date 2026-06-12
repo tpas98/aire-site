@@ -26,7 +26,7 @@ export default function StickyMobileCTA() {
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="fixed bottom-0 left-0 right-0 z-[80] md:hidden"
         >
-          <div className="bg-navy/95 backdrop-blur-lg border-t border-white/10 px-4 py-3 flex items-center justify-between gap-3">
+          <div className="bg-navy/95 backdrop-blur-lg border-t border-white/10 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
             <div className="flex flex-col">
               <span className="text-[0.72rem] text-white/50 font-light">4-Pack · 60 Pouches</span>
               <span className="text-[1rem] text-white font-semibold">$45.99</span>

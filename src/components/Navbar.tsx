@@ -22,10 +22,10 @@ export default function Navbar() {
           </li>
         ))}
         <li>
-          <a href={CHECKOUT_URL} className="text-[0.78rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-5 py-2.5 rounded-full hover:bg-accent transition-colors duration-200">Shop Now</a>
+          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="text-[0.78rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-5 py-2.5 rounded-full hover:bg-accent transition-colors duration-200">Shop Now</a>
         </li>
       </ul>
-      <a href={CHECKOUT_URL} className="md:hidden text-[0.72rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-4 py-2 rounded-full">
+      <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="md:hidden text-[0.72rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-4 py-2 rounded-full">
         Shop Now
       </a>
     </motion.nav>

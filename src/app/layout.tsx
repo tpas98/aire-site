@@ -101,13 +101,17 @@ const productSchema = {
   category: 'Health & Wellness > Dietary Supplements',
 }
 
+export const viewport = {
+  themeColor: '#1a2e4a',
+}
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" scroll-behavior="auto">
+    <html lang="en">
       <head>
         <link rel="shortcut icon" type="image/png" href="/aire-icon-32.png" />
         <script
