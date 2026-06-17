@@ -5,7 +5,7 @@ import FadeUp from './FadeUp'
 const faqs = [
   {
     q: 'What is Aire?',
-    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Affron® Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
+    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
   },
   {
     q: 'What does it taste like?',
@@ -58,7 +58,7 @@ function SupplementFacts() {
             <span className="text-navy-mid">*</span>
           </div>
           <div className="px-4 py-2 text-[0.75rem] text-navy-mid border-b border-navy/10 pl-8">
-            L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, Saffron (Affron®)
+            L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, Saffron
           </div>
           <div className="px-4 py-2.5 text-[0.7rem] text-navy-mid leading-relaxed">
             <p>*Daily Value (DV) not established</p>

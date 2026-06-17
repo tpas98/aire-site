@@ -2,13 +2,13 @@ import Link from "next/link"
 import Image from "next/image"
 
 const faqData = [
-  { question: "What is Aire?", answer: "Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence. Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Affron® Saffron, working together to support mood, mental clarity, and stress resilience. 100% nicotine-free and caffeine-free." },
+  { question: "What is Aire?", answer: "Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence. Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience. 100% nicotine-free and caffeine-free." },
   { question: "How do I use Aire pouches?", answer: "Most people feel the effects within 5–15 minutes. Place the pouch between your upper lip and gum. The botanicals and adaptogens absorb through your gum tissue. A gentle tingle lets you know it's working. Enjoy for up to 60 minutes." },
-  { question: "What's in a can? And what's in a pouch?", answer: "Each can of Aire contains 15 pouches. Active ingredients per pouch: the AireComplex Blend containing L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, and Saffron (Affron®). Other Ingredients: Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Malitol, Cooling Agent." },
+  { question: "What's in a can? And what's in a pouch?", answer: "Each can of Aire contains 15 pouches. Active ingredients per pouch: the AireComplex Blend containing L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, and Saffron. Other Ingredients: Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Malitol, Cooling Agent." },
   { question: "How many pouches are in each can?", answer: "Each can of Aire contains 15 pouches. A 4-pack ($45.99) gives you 60 pouches total." },
   { question: "What does Aire taste like?", answer: "Aire comes in Calm Mint, a smooth, refreshing mint flavor that's not overpowering. It's designed to be pleasant and subtle so you can use it comfortably throughout the day." },
   { question: "Is Aire a nicotine replacement or cessation product?", answer: "Aire is not marketed as a nicotine replacement therapy. It's a wellness pouch for anyone who wants support in finding their balance, whether you're replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former Zyn and nicotine pouch users who wanted a clean alternative." },
-  { question: "What are the active ingredients?", answer: "Each Aire pouch contains four active ingredients: L-Theanine for calm alertness, Rhodiola Rosea for stress resilience, L-Tyrosine for focus and cognitive performance under stress, and Affron®, a patented saffron extract to support mood balance." },
+  { question: "What are the active ingredients?", answer: "Each Aire pouch contains four active ingredients: L-Theanine for calm alertness, Rhodiola Rosea for stress resilience, L-Tyrosine for focus and cognitive performance under stress, and Saffron, a botanical extract to support mood balance." },
   { question: "Are there any side effects?", answer: "Aire is made with well-studied, naturally derived ingredients and is generally well-tolerated. Some people may experience mild gum sensitivity when first using oral pouches. If you have any medical conditions, are pregnant or nursing, or take prescription medication, we recommend consulting your healthcare provider before use." },
   { question: "Is Aire FDA approved?", answer: "Aire is classified as a dietary supplement and is manufactured in an FDA-registered, GMP-certified facility. Like all dietary supplements, Aire has not been evaluated by the FDA to diagnose, treat, cure, or prevent any disease." },
   { question: "Can I use Aire with other supplements or medications?", answer: "While Aire's ingredients are generally considered safe, we recommend consulting your healthcare provider before combining with other supplements or medications, especially if you take SSRIs, anti-anxiety medication, or blood thinners." },
@@ -64,7 +64,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What is Aire?</h2>
-            <p>Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Affron® Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.</p>
+            <p>Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.</p>
           </section>
 
           <section>
@@ -92,7 +92,7 @@ export default function FAQPage() {
                   <span className="text-navy-mid">*</span>
                 </div>
                 <div className="px-4 py-2 text-[0.75rem] text-navy-mid border-b border-navy/10 pl-8">
-                  L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, Saffron (Affron®)
+                  L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, Saffron
                 </div>
                 <div className="px-4 py-2.5 text-[0.7rem] text-navy-mid leading-relaxed">
                   <p>*Daily Value (DV) not established</p>
@@ -119,7 +119,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What are the active ingredients?</h2>
-            <p>Each Aire pouch contains four active ingredients: L-Theanine for calm alertness,† Rhodiola Rosea for stress resilience,† L-Tyrosine for focus and cognitive performance under stress,† and Affron®, a patented saffron extract to support mood balance.†</p>
+            <p>Each Aire pouch contains four active ingredients: L-Theanine for calm alertness,† Rhodiola Rosea for stress resilience,† L-Tyrosine for focus and cognitive performance under stress,† and Saffron, a botanical extract to support mood balance.†</p>
           </section>
 
           <section>

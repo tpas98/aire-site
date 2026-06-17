@@ -85,7 +85,7 @@ Before committing to 4-email sequence, run quick tests (1-2 weeks) on Email 1:
 - Current copy is generic: "Balance," "science-backed," "four ingredients" is what every wellness brand says. Zero emotional resonance or differentiation.
 - Problem-Agitation-Solution (PAS) framework outperforms: Research shows 2-3x higher engagement when copy starts with *felt pain* ("That 2pm crash when clarity goes") before solution.
 - Founder stories drive 4x lift: Brands with compelling origin stories see conversion jumps from 2% to 8%+. Aire's founder story ("We noticed a gap in pouches, spent 4 years finding balance without nicotine") is genuinely differentiating.
-- Bare science claims trigger skepticism: Saying "science-backed" without specifics backfires. Aire needs: "Nordic clinic research on Rhodiola," "L-Theanine (same compound in green tea)," "Affron® Saffron from peer-reviewed mood studies."
+- Bare science claims trigger skepticism: Saying "science-backed" without specifics backfires. Aire needs: "Nordic clinic research on Rhodiola," "L-Theanine (same compound in green tea)," "Saffron from peer-reviewed mood studies."
 - Before-During-After narratives are 37.5% more effective: Generic star ratings don't sell; customer stories showing transformation do.
 - Emotional + rational balance wins: Emotional entry point (felt problem) + rational support (science) = 40-50% conversion lift vs. 16% (rational only) or 31% (emotional only).
 

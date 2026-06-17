@@ -65,7 +65,7 @@ const productSchema = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Aire Calm Mint Pouches - 4 Pack',
-  description: 'Nicotine-free wellness pouches with Rhodiola Rosea, L-Theanine, Affron® Saffron, and L-Tyrosine. 60 pouches (15 per can × 4 cans). Calm Mint flavor.',
+  description: 'Nicotine-free wellness pouches with Rhodiola Rosea, L-Theanine, Saffron, and L-Tyrosine. 60 pouches (15 per can × 4 cans). Calm Mint flavor.',
   brand: { '@type': 'Brand', name: 'Aire' },
   image: 'https://www.airepouches.com/images/three-cans-new.png',
   offers: {
