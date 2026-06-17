@@ -11,7 +11,6 @@ const trust = [
   { icon: '🚚', label: 'Free Shipping Over $50' },
   { icon: '🧪', label: '4 Clinically-Studied Ingredients' },
   { icon: '✦', label: 'Zero Nicotine. Zero Caffeine.' },
-  { icon: '🛡', label: '30-Day Satisfaction Guarantee' },
 ]
 
 const footerLinks = {

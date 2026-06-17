@@ -55,8 +55,8 @@ export default function TermsOfService() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">6. Returns and Refunds</h2>
-            <p>If you are not fully satisfied with your purchase, contact us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> within 30 days of the delivery date. To be eligible for a return, products must be unopened, unused, and in their original, undamaged packaging. Aire reserves the right to deny returns that do not meet these criteria.</p>
-            <p className="mt-3">Approved returns will receive a refund to the original payment method within 5–10 business days of our receipt of the returned product. Return shipping costs are the customer&apos;s responsibility unless the return is due to our error (e.g., incorrect or defective product). Original shipping charges are non-refundable.</p>
+            <p>Except where required by law, we do not accept returns or exchanges. If your order arrives damaged, defective, or incorrect, contact us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> within 7 days of the delivery date with your order number and a photo of the issue, and we will provide a replacement or a refund.</p>
+            <p className="mt-3">Approved refunds for damaged, defective, or incorrect items are issued to the original payment method within 5–10 business days of our confirming the issue. Original shipping charges are non-refundable except where the refund is due to our error.</p>
           </section>
 
           <section>

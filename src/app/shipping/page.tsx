@@ -3,7 +3,7 @@ import Image from "next/image"
 
 export const metadata = {
   title: "Shipping & Returns | Aire | Free Shipping Over $50",
-  description: "Free shipping on orders over $50. Aire wellness pouches ship within 1–2 business days. 30-day satisfaction guarantee.",
+  description: "Free shipping on orders over $50. Aire wellness pouches ship within 1–2 business days. Free replacements for damaged or defective items.",
   alternates: { canonical: 'https://www.airepouches.com/shipping' },
 }
 
@@ -38,15 +38,14 @@ export default function ShippingPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Returns</h2>
-            <p className="mb-4">We want you to love Aire. If you&apos;re not completely satisfied, we accept returns within 30 days of delivery for a full refund.</p>
-            <p className="mb-4"><strong className="text-navy">Eligibility:</strong> To be eligible for a return, items must be unopened and in their original packaging. Opened or used products cannot be returned for hygiene reasons, unless the product is defective.</p>
-            <p><strong className="text-navy">How to initiate a return:</strong> Email us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> with your order number and reason for return. We&apos;ll provide you with a return shipping label and instructions within 1–2 business days.</p>
+            <p className="mb-4">Because our pouches are a consumable wellness product, we&apos;re unable to accept returns or exchanges, and opened products cannot be returned for hygiene reasons.</p>
+            <p>If your order arrives damaged, defective, or incorrect, we&apos;ll make it right — see <strong className="text-navy">Damaged or Defective Products</strong> below.</p>
           </section>
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Refunds</h2>
-            <p className="mb-4">Once we receive your returned item, we&apos;ll inspect it and process your refund within 5–7 business days. Refunds are issued to the original payment method. Please allow an additional 3–5 business days for the refund to appear on your statement, depending on your bank or card issuer.</p>
-            <p>Shipping costs are non-refundable unless the return is due to a defective or incorrect product.</p>
+            <p className="mb-4">Refunds are issued only for damaged, defective, or incorrect items (see below). Once we confirm the issue, your refund is processed within 5–7 business days to the original payment method. Please allow an additional 3–5 business days for the refund to appear on your statement, depending on your bank or card issuer.</p>
+            <p>Shipping costs are non-refundable unless the refund is due to a defective or incorrect product.</p>
           </section>
 
           <section>

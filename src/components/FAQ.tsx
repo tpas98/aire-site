@@ -25,7 +25,7 @@ const faqs = [
   },
   {
     q: 'What\'s your return policy?',
-    a: 'We offer a 30-day satisfaction guarantee. If you\'re not happy with Aire, contact us at hello@airepouches.com within 30 days of delivery and we\'ll make it right.',
+    a: 'Because our pouches are a consumable wellness product, we don\'t accept returns or exchanges. If your order arrives damaged, defective, or incorrect, email us at hello@airepouches.com within 7 days of delivery and we\'ll send a free replacement or full refund.',
   },
   {
     q: 'Where do you ship?',
