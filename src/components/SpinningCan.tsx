@@ -127,7 +127,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       side: THREE.FrontSide,
     })
     const labelGrooveMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.75, 0.77, 0.8),
+      color: new THREE.Color(0.93, 0.93, 0.94),
       roughness: 0.84,
       metalness: 0.02,
       clearcoat: 0.04,
@@ -136,7 +136,7 @@ export default function SpinningCan({ className = '' }: { className?: string }) 
       side: THREE.DoubleSide,
     })
     const labelSeatMat = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(0.88, 0.86, 0.83),
+      color: new THREE.Color(0.96, 0.96, 0.96),
       roughness: 0.62,
       metalness: 0.02,
       clearcoat: 0.08,
