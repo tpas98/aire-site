@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <title>Aire Minimal Instagram Ad</title>
+  <style>
+    :root {
+      --navy: #1a2e4a;
+      --sky: #84afb5;
+      --mist: #edf4f9;
+      --ink-soft: #5b7188;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 1080px;
+      height: 1350px;
+      margin: 0;
+      overflow: hidden;
+      background: var(--mist);
+    }
+
+    body {
+      font-family: "DM Sans", Arial, sans-serif;
+      color: var(--navy);
+    }
+
+    .ad {
+      position: relative;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        radial-gradient(circle at 70% 62%, rgba(132,175,181,0.34) 0%, rgba(132,175,181,0.16) 24%, rgba(132,175,181,0) 52%),
+        linear-gradient(180deg, #fbfdff 0%, #edf4f9 54%, #dcecf3 100%);
+    }
+
+    .ad::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 160px 160px;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+
+    .logo {
+      position: absolute;
+      z-index: 4;
+      top: 56px;
+      left: 66px;
+      width: 112px;
+      height: auto;
+      display: block;
+    }
+
+    .copy {
+      position: relative;
+      z-index: 3;
+      padding: 172px 66px 0;
+    }
+
+    .eyebrow {
+      margin-bottom: 26px;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #5f9aa7;
+      font-weight: 700;
+    }
+
+    h1 {
+      width: 860px;
+      margin: 0;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-weight: 400;
+      font-size: 106px;
+      line-height: 0.94;
+      letter-spacing: 0;
+      color: var(--navy);
+    }
+
+    h1 em {
+      color: #587f92;
+      font-style: italic;
+    }
+
+    .support {
+      width: 550px;
+      margin: 30px 0 0;
+      font-size: 25px;
+      line-height: 1.38;
+      letter-spacing: 0;
+      color: rgba(26,46,74,0.72);
+      font-weight: 500;
+    }
+
+    .product-wrap {
+      position: absolute;
+      z-index: 2;
+      left: -118px;
+      right: -95px;
+      top: 528px;
+      height: 628px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .product-wrap::before {
+      content: "";
+      position: absolute;
+      left: 150px;
+      right: 130px;
+      bottom: 18px;
+      height: 128px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(4,12,23,0.26) 0%, rgba(4,12,23,0.13) 44%, rgba(4,12,23,0) 76%);
+      filter: blur(19px);
+      transform: rotate(-5deg);
+    }
+
+    .product {
+      position: relative;
+      z-index: 1;
+      width: 1038px;
+      height: auto;
+      display: block;
+      transform: rotate(-2deg);
+      filter:
+        drop-shadow(0 24px 28px rgba(5,12,22,0.16))
+        drop-shadow(0 58px 86px rgba(5,12,22,0.14));
+    }
+
+    .bottom {
+      position: absolute;
+      z-index: 4;
+      left: 66px;
+      right: 66px;
+      bottom: 62px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 282px;
+      height: 72px;
+      padding: 0 44px;
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--white);
+      box-shadow: 0 16px 34px rgba(26,46,74,0.22);
+      font-size: 16px;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .fine-print {
+      position: absolute;
+      z-index: 4;
+      left: 50%;
+      bottom: 24px;
+      width: 700px;
+      transform: translateX(-50%);
+      font-size: 10px;
+      line-height: 1.35;
+      letter-spacing: 0.03em;
+      color: rgba(26,46,74,0.34);
+      font-weight: 500;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main class="ad" aria-label="Aire minimal Instagram ad">
+    <img class="logo" src="../../public/images/logo.png" alt="Aire" />
+
+    <section class="copy">
+      <div class="eyebrow">Calm Mint Pouches</div>
+      <h1>A pouch <em>without</em> the nicotine.</h1>
+      <p class="support">Zero nicotine. Zero caffeine. Pure balance.</p>
+    </section>
+
+    <section class="product-wrap" aria-hidden="true">
+      <img class="product" src="../../public/images/open-can-updated-cutout.png" alt="" />
+    </section>
+
+    <section class="bottom">
+      <div class="button">Order Aire</div>
+    </section>
+
+    <footer class="fine-print">Dietary supplement. Not intended to diagnose, treat, cure, or prevent any disease.</footer>
+  </main>
+</body>
+</html>
