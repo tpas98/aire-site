@@ -98,13 +98,43 @@
     }
 
     .support {
-      width: 550px;
+      width: 760px;
       margin: 30px 0 0;
-      font-size: 25px;
+      font-size: 24px;
       line-height: 1.38;
       letter-spacing: 0;
       color: rgba(26,46,74,0.72);
       font-weight: 500;
+    }
+
+    .reason-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 24px;
+      font-size: 15px;
+      line-height: 1;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(26,46,74,0.68);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .reason-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .reason-row span + span::before {
+      content: "";
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--sky);
+      opacity: 0.9;
     }
 
     .product-wrap {
@@ -112,7 +142,7 @@
       z-index: 2;
       left: -118px;
       right: -95px;
-      top: 528px;
+      top: 592px;
       height: 628px;
       display: flex;
       align-items: center;
@@ -136,7 +166,7 @@
     .product {
       position: relative;
       z-index: 1;
-      width: 1038px;
+      width: 984px;
       height: auto;
       display: block;
       transform: rotate(-2deg);
@@ -198,7 +228,12 @@
     <section class="copy">
       <div class="eyebrow">Calm Mint Pouches</div>
       <h1>A pouch <em>without</em> the nicotine.</h1>
-      <p class="support">Zero nicotine. Zero caffeine. Pure balance.</p>
+      <p class="support">The ritual of a pouch. The calm of botanicals. None of the nicotine or caffeine.</p>
+      <div class="reason-row" aria-label="Why choose Aire">
+        <span>Familiar pouch feel</span>
+        <span>Calm Mint flavor</span>
+        <span>Botanical formula</span>
+      </div>
     </section>
 
     <section class="product-wrap" aria-hidden="true">
