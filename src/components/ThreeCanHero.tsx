@@ -117,7 +117,7 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     }
 
     // === SHARED TEXTURES (loaded once, used by all 3 cans) ===
-    const frontTexture = textureLoader.load('/images/can-front-texture-calibrated.png', onTextureLoad)
+    const frontTexture = textureLoader.load('/images/can-front-texture-2026.png', onTextureLoad)
     frontTexture.colorSpace = THREE.SRGBColorSpace
     frontTexture.minFilter = THREE.LinearMipmapLinearFilter
     frontTexture.magFilter = THREE.LinearFilter
@@ -125,7 +125,7 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     frontTexture.repeat.set(labelTextureZoom, labelTextureZoom)
     frontTexture.offset.set((1 - labelTextureZoom) / 2, (1 - labelTextureZoom) / 2)
 
-    const backTexture = textureLoader.load('/images/can-back-texture-calibrated.png', onTextureLoad)
+    const backTexture = textureLoader.load('/images/can-back-texture-2026.png', onTextureLoad)
     backTexture.colorSpace = THREE.SRGBColorSpace
     backTexture.minFilter = THREE.LinearMipmapLinearFilter
     backTexture.magFilter = THREE.LinearFilter
@@ -133,7 +133,7 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     backTexture.repeat.set(labelTextureZoom, labelTextureZoom)
     backTexture.offset.set((1 - labelTextureZoom) / 2, (1 - labelTextureZoom) / 2)
 
-    const bandTexture = textureLoader.load('/images/can-band-texture-calibrated.png', onTextureLoad)
+    const bandTexture = textureLoader.load('/images/can-band-texture-2026.png', onTextureLoad)
     bandTexture.colorSpace = THREE.SRGBColorSpace
     bandTexture.wrapS = THREE.RepeatWrapping
     bandTexture.wrapT = THREE.ClampToEdgeWrapping
