@@ -82,7 +82,7 @@ export function CTA() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-[14%] bottom-[4%] h-[18%] rounded-full bg-[radial-gradient(circle,rgba(5,12,22,0.30)_0%,rgba(5,12,22,0.14)_44%,rgba(5,12,22,0)_76%)] blur-2xl"
             />
-            <Image src="/images/open-can-updated-cutout.png" alt="Aire tin open showing pouches" width={1212} height={776}
+            <Image src="/images/open-can-updated-cutout-2026-site-safe.png" alt="Aire tin open showing pouches" width={1212} height={776}
               className="relative z-10 w-full max-w-[240px] md:max-w-[440px] object-contain [filter:drop-shadow(0_20px_26px_rgba(5,12,22,0.18))_drop-shadow(0_40px_80px_rgba(5,12,22,0.16))]" />
           </motion.div>
         </FadeUp>
