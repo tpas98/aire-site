@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1080, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <title>Aire Instagram Ad - Nicotine-Free Ritual</title>
+  <style>
+    :root {
+      --navy: #1a2e4a;
+      --navy-deep: #102238;
+      --navy-ink: #081522;
+      --sky: #84afb5;
+      --sky-bright: #8bc7db;
+      --mist: #edf4f9;
+      --paper: #f7fbfe;
+      --muted: #61758d;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 1080px;
+      height: 1350px;
+      margin: 0;
+      overflow: hidden;
+      background: var(--mist);
+    }
+
+    body {
+      font-family: "DM Sans", Arial, sans-serif;
+      color: var(--navy);
+    }
+
+    .ad {
+      position: relative;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        linear-gradient(168deg, rgba(255,255,255,0.76) 0%, rgba(237,244,249,0.97) 45%, rgba(213,231,239,0.9) 65%, rgba(26,46,74,0.98) 65.2%, #102238 100%);
+    }
+
+    .ad::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.055;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.85'/%3E%3C/svg%3E");
+      background-size: 150px 150px;
+      mix-blend-mode: multiply;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 54px 66px 0;
+    }
+
+    .logo {
+      width: 112px;
+      height: auto;
+      display: block;
+    }
+
+    .micro {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 14px;
+      line-height: 1;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26,46,74,0.54);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .micro span:first-child {
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--sky);
+    }
+
+    .copy {
+      position: relative;
+      z-index: 3;
+      width: 805px;
+      padding-left: 66px;
+      padding-top: 76px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      line-height: 1;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #5f9aa7;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: "";
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 800px;
+      font-family: "DM Serif Display", Georgia, serif;
+      font-weight: 400;
+      font-size: 88px;
+      line-height: 0.94;
+      letter-spacing: 0;
+      color: var(--navy);
+    }
+
+    h1 em {
+      display: inline-block;
+      color: #587f92;
+      font-style: italic;
+    }
+
+    .support {
+      width: 612px;
+      margin: 27px 0 0;
+      font-size: 24px;
+      line-height: 1.48;
+      letter-spacing: 0;
+      color: rgba(26,46,74,0.73);
+      font-weight: 400;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    .product-zone {
+      position: absolute;
+      z-index: 2;
+      left: -94px;
+      right: -106px;
+      top: 542px;
+      height: 564px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .product-zone::before {
+      content: "";
+      position: absolute;
+      left: 168px;
+      right: 168px;
+      bottom: 22px;
+      height: 132px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(4,12,23,0.30) 0%, rgba(4,12,23,0.16) 42%, rgba(4,12,23,0) 76%);
+      filter: blur(18px);
+      transform: rotate(-4deg);
+    }
+
+    .product {
+      position: relative;
+      z-index: 1;
+      width: 1014px;
+      height: auto;
+      display: block;
+      transform: rotate(-2.2deg) translateY(-4px);
+      filter:
+        drop-shadow(0 22px 28px rgba(5, 12, 22, 0.18))
+        drop-shadow(0 54px 86px rgba(5, 12, 22, 0.18));
+    }
+
+    .proof-strip {
+      position: absolute;
+      z-index: 4;
+      left: 62px;
+      right: 62px;
+      top: 946px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .proof {
+      min-height: 88px;
+      border: 1px solid rgba(139,199,219,0.18);
+      background: rgba(13,31,51,0.70);
+      backdrop-filter: blur(18px);
+      border-radius: 8px;
+      padding: 18px 18px 15px;
+      color: rgba(255,255,255,0.94);
+    }
+
+    .proof strong {
+      display: block;
+      font-size: 19px;
+      line-height: 1.1;
+      letter-spacing: 0.03em;
+      font-weight: 700;
+    }
+
+    .proof span {
+      display: block;
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.2;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(139,199,219,0.92);
+      font-weight: 700;
+    }
+
+    .bottom {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 306px;
+      padding: 146px 62px 42px;
+      color: white;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 28px;
+    }
+
+    .cta-copy {
+      min-width: 0;
+    }
+
+    .cta-kicker {
+      margin-bottom: 8px;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(139,199,219,0.82);
+      font-weight: 700;
+    }
+
+    .cta-title {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: 42px;
+      line-height: 1;
+      color: rgba(255,255,255,0.96);
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .button {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 66px;
+      min-width: 214px;
+      padding: 0 34px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--navy);
+      font-size: 15px;
+      line-height: 1;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      font-weight: 800;
+      box-shadow: 0 18px 38px rgba(0,0,0,0.23);
+    }
+
+    .fine-print {
+      position: absolute;
+      z-index: 4;
+      left: 62px;
+      right: 62px;
+      bottom: 19px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      font-size: 11px;
+      line-height: 1.35;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.32);
+      font-weight: 400;
+    }
+
+    .fine-print .url {
+      flex: 0 0 auto;
+      color: rgba(255,255,255,0.46);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main class="ad" aria-label="Aire Instagram ad">
+    <header class="topbar">
+      <img class="logo" src="../../public/images/logo.png" alt="Aire" />
+      <div class="micro"><span></span> Calm Mint Pouches</div>
+    </header>
+
+    <section class="copy">
+      <div class="eyebrow">Nicotine-free ritual</div>
+      <h1>Keep the pouch ritual. <em>Lose the nicotine.</em></h1>
+      <p class="support">Aire Calm Mint pouches with Rhodiola, <span class="nowrap">L-Theanine</span>, <span class="nowrap">L-Tyrosine</span>, and Saffron. No nicotine. No caffeine.</p>
+    </section>
+
+    <section class="product-zone" aria-hidden="true">
+      <img class="product" src="../../public/images/open-can-updated-cutout.png" alt="" />
+    </section>
+
+    <section class="proof-strip" aria-label="Product benefits">
+      <div class="proof"><strong>0 mg Nicotine</strong><span>familiar pouch feel</span></div>
+      <div class="proof"><strong>0 mg Caffeine</strong><span>no stimulant buzz</span></div>
+      <div class="proof"><strong>Calm Mint</strong><span>15 pouches per can</span></div>
+    </section>
+
+    <section class="bottom">
+      <div class="cta-row">
+        <div class="cta-copy">
+          <div class="cta-kicker">Find Your Balance</div>
+          <div class="cta-title">A cleaner pouch starts here.</div>
+        </div>
+        <div class="button">Order Aire</div>
+      </div>
+    </section>
+
+    <footer class="fine-print">
+      <span>Dietary supplement. Not intended to diagnose, treat, cure, or prevent any disease.</span>
+      <span class="url">airepouches.com</span>
+    </footer>
+  </main>
+</body>
+</html>
