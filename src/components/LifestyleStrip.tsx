@@ -2,8 +2,8 @@
 import Image from 'next/image'
 
 const images = [
-  { src: '/images/lifestyle-wild-01-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
-  { src: '/images/lifestyle-wild-02-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
+  { src: '/images/lifestyle-wild-01-sidefix-2026.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
+  { src: '/images/lifestyle-wild-02-sidefix-2026.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
   { src: '/images/lifestyle-wild-03-sidefix-2026.png', alt: 'Aire Calm Mint tin on a creative studio desk' },
   { src: '/images/lifestyle-wild-04-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a hiking overlook with a daypack' },
   { src: '/images/lifestyle-wild-05-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a rooftop garden work table' },
