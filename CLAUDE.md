@@ -56,12 +56,15 @@ public/
 
 ## 3D Can Rendering (Critical Technical Details)
 
-Both `SpinningCan.tsx` and `ThreeCanHero.tsx` share these settings. Keep them in sync.
+`src/components/three/canFactory.ts` is the shared module: renderer setup, the procedural studio environment map, lighting rig, texture loading, can geometry/materials, and the motion helper functions (`easedTurntable`, `showcaseRock`) all live there. Both `SpinningCan.tsx` (single "Our Story" can) and `ThreeCanHero.tsx` (3-can hero) call into it, passing their own segment counts and per-can motion config. This is the actual source of truth for materials/lighting — read it directly rather than trusting a hand-copied table, since values drift over time as the can art direction evolves.
 
-### Materials
-- **Face (front/back):** MeshPhysicalMaterial — roughness: 0.32, metalness: 0.01, clearcoat: 0.45, clearcoatRoughness: 0.18, envMapIntensity: 0.2
-- **Edge/body:** roughness: 0.25, metalness: 0.08, clearcoat: 0.5, clearcoatRoughness: 0.2, envMapIntensity: 0.45
-- **Bevel:** roughness: 0.18, metalness: 0.12, clearcoat: 0.7, envMapIntensity: 1.0
+### Materials (verbatim from canFactory.ts `createCanResources`)
+- **Face (front/back):** MeshPhysicalMaterial — roughness: 0.42, metalness: 0.01, clearcoat: 0.18, clearcoatRoughness: 0.3, envMapIntensity: 0.08
+- **Edge/body:** roughness: 0.32, metalness: 0.05, clearcoat: 0.24, clearcoatRoughness: 0.28, envMapIntensity: 0.24
+- **Bevel:** roughness: 0.3, metalness: 0.05, clearcoat: 0.28, clearcoatRoughness: 0.22, envMapIntensity: 0.48
+- **Label groove:** roughness: 0.84, metalness: 0.02, clearcoat: 0.04, clearcoatRoughness: 0.62, envMapIntensity: 0.08 (light grey, color 0.93/0.93/0.94)
+- **Label seat:** roughness: 0.62, metalness: 0.02, clearcoat: 0.08, clearcoatRoughness: 0.48, envMapIntensity: 0.12 (near-white, color 0.96/0.96/0.96)
+- **Lid rim:** roughness: 0.36, metalness: 0.03, clearcoat: 0.28, clearcoatRoughness: 0.22, envMapIntensity: 0.38
 
 ### Tone Mapping & Lighting
 - ACESFilmicToneMapping at exposure 0.92 (NOT LinearToneMapping — that washes out the teal)
@@ -78,18 +81,21 @@ Both `SpinningCan.tsx` and `ThreeCanHero.tsx` share these settings. Keep them in
 
 ### Can Geometry
 - tinRadius: 1.4, tinDepth: 0.602, lidThickness: 0.02, bevelRadius: 0.03
-- Tilt: rotation.x = -0.55, rotation.z = -0.03 (product-shot angle)
+- Segments: ThreeCanHero uses 96 (bevel radial segments 10); SpinningCan uses 128 (bevel radial segments 12) — passed as `CanResourcesOptions` into the shared `createCanResources()`, everything else identical
+- SpinningCan tilt: rotation.x = -0.55, rotation.z = -0.03 (product-shot angle)
+- ThreeCanHero tilt is per-can, not a single global value (see Motion Design below)
 - NO notch/tab geometry (was removed — it protruded beyond circular profile during spin)
 
 ### Animation
-- **Eased spin formula:** `progress - Math.sin(progress * Math.PI * 2) / (Math.PI * easingStrength)`
-- easingStrength: 1.4, creates a smooth pause-at-front effect
+- **Eased spin formula (canFactory.ts `easedTurntable`):** `progress - Math.sin(progress * Math.PI * 2) / (Math.PI * easingStrength)`
+- SpinningCan: cycleTime 4.5, easingStrength 1.4
 - Float bob: `Math.sin(t * 0.5) * 0.06` on tiltGroup.position.y
 
 ### ThreeCanHero Motion Design
-- **Top can (showcase):** Gentle oscillating rock, brand always visible. oscillateSpeed: 0.35, oscillateAmplitude: 0.45 (±26°). Uses `Math.sin(t * speed) * amp` for Y rotation.
-- **Bottom-left can (turntable):** Full eased rotation, spinDirection: -1, cycleTime: 6.0
-- **Bottom-right can (turntable):** Full eased rotation, spinDirection: 1, cycleTime: 5.0
+Each of the 3 cans has its own tilt + motion config (not a shared global tilt):
+- **Top can (showcase):** tiltX -0.5, tiltZ 0.05. Gentle oscillating rock, brand always visible — oscillateSpeed 0.35, oscillateAmplitude 0.45 (±26°), via canFactory's `showcaseRock()` (`sin(t*speed)*amp` on Y, plus a subtle breathing/sway on X/Z).
+- **Bottom-left can (turntable):** tiltX -0.6, tiltZ 0.1. Full eased rotation, spinDirection -1, cycleTime 6.0, easingStrength 1.6.
+- **Bottom-right can (turntable):** tiltX -0.45, tiltZ -0.08. Full eased rotation, spinDirection 1, cycleTime 5.0, easingStrength 1.4.
 
 ### Responsive Scaling (ThreeCanHero)
 - Narrow mobile (aspect < 0.75): 62% scale, camera z=12.5
@@ -136,7 +142,7 @@ Both `SpinningCan.tsx` and `ThreeCanHero.tsx` share these settings. Keep them in
 - Texture colorSpace must be set to `THREE.SRGBColorSpace` or colors look wrong
 - LinearToneMapping makes the teal look too blue/washed — always use ACESFilmic
 - macOS screen recordings have Unicode narrow no-break space (U+202F) before AM/PM in filenames — use glob patterns, not quoted strings
-- SpinningCan.tsx and ThreeCanHero.tsx materials/lighting must stay in sync
+- SpinningCan.tsx and ThreeCanHero.tsx share materials/lighting/geometry via `src/components/three/canFactory.ts` — edit shared values there, not in each component, so they can't drift out of sync again
 
 ## Design & Creative Work — Iterative Self-Critique Process
 

@@ -1,7 +1,7 @@
 'use client'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { fadeUpWithDelay } from '@/lib/motion'
+import { fadeUpWithDelay, useMotionOK } from '@/lib/motion'
 
 interface FadeUpProps {
   children: React.ReactNode
@@ -12,6 +12,17 @@ interface FadeUpProps {
 export default function FadeUp({ children, delay = 0, className = '' }: FadeUpProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const motionOK = useMotionOK()
+
+  // When the user prefers reduced motion, skip the fade/translate entrance
+  // entirely and render content already in its resting state.
+  if (!motionOK) {
+    return (
+      <div ref={ref} className={className}>
+        {children}
+      </div>
+    )
+  }
 
   return (
     <motion.div

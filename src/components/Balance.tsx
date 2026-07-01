@@ -64,7 +64,7 @@ export default function Balance() {
             variants={fadeUpWithDelay(0.1)}
             style={parallaxOn ? { y: lightCardY } : undefined}
           >
-            <div className="card-hover bg-white rounded-3xl p-10 md:p-12 h-full border border-sky-deep/10">
+            <div className="card-hover bg-white rounded-aire-xl p-10 md:p-12 h-full border border-sky-deep/10">
               <p className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-accent mb-3">Mental Balance</p>
               <h3 className="font-serif text-[1.7rem] text-navy leading-[1.15] tracking-[-0.01em] mb-8">
                 Calm your mind.
@@ -92,7 +92,7 @@ export default function Balance() {
             variants={fadeUpWithDelay(0.2)}
             style={parallaxOn ? { y: darkCardY } : undefined}
           >
-            <div className="card-hover bg-navy rounded-3xl p-10 md:p-12 h-full relative overflow-hidden">
+            <div className="card-hover bg-navy rounded-aire-xl p-10 md:p-12 h-full relative overflow-hidden">
               <div className="absolute top-[-60px] right-[-60px] w-[220px] h-[220px] rounded-full bg-accent/8 blur-3xl pointer-events-none" />
               <p className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-sky-deep mb-3">Consumption Balance</p>
               <h3 className="font-serif text-[1.7rem] text-white leading-[1.15] tracking-[-0.01em] mb-8">
