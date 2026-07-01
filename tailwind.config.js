@@ -49,7 +49,7 @@ module.exports = {
         'aire-xl': '24px',
       },
       animation: {
-        ticker: 'ticker 30s linear infinite',
+        ticker: 'ticker 36s linear infinite',
       },
       keyframes: {
         ticker: {

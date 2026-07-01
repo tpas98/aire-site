@@ -8,12 +8,12 @@ export default function Ticker() {
   const doubled = [...items, ...items]
 
   return (
-    <div className="mt-[64px] bg-navy text-white/70 py-2.5 overflow-hidden whitespace-nowrap" aria-hidden="true">
-      <div className="inline-flex animate-ticker">
+    <div className="mt-[64px] bg-navy text-white/70 py-2.5 overflow-hidden whitespace-nowrap group" aria-hidden="true">
+      <div className="inline-flex animate-ticker group-hover:[animation-play-state:paused]">
         {doubled.map((item, i) => (
           <span key={i} className="flex items-center">
-            <span className="px-7 text-[0.67rem] tracking-[0.17em] uppercase">{item}</span>
-            <span className="text-sky-deep text-xs">◆</span>
+            <span className="px-7 text-[0.67rem] tracking-[0.15em] uppercase">{item}</span>
+            <span className="text-sky-deep/40 text-xs">◆</span>
           </span>
         ))}
       </div>
