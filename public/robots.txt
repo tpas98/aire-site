@@ -1,4 +1,29 @@
 User-agent: *
 Allow: /
 
+# OpenAI / ChatGPT search crawler
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Perplexity AI crawler
+User-agent: PerplexityBot
+Allow: /
+
+# Google AI (Gemini)
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+
+# Common AI training crawlers - block if you don't want content used for training
+# User-agent: CCBot
+# Disallow: /
+# User-agent: GPTBot
+# Disallow: /
+
 Sitemap: https://www.airepouches.com/sitemap.xml
