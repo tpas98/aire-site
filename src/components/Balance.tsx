@@ -1,5 +1,9 @@
 'use client'
-import FadeUp from './FadeUp'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import Eyebrow from './ui/Eyebrow'
+import SectionHeading from './ui/SectionHeading'
+import { fadeUpWithDelay, useMotionOK } from '@/lib/motion'
 
 const mentalBalance = [
   { title: 'Stress Relief', body: 'Quiets the noise when life gets loud†' },
@@ -16,21 +20,50 @@ const consumptionBalance = [
 ]
 
 export default function Balance() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const motionOK = useMotionOK()
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    setIsDesktop(mq.matches)
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+  const lightCardY = useTransform(scrollYProgress, [0, 1], [28, -12])
+  const darkCardY = useTransform(scrollYProgress, [0, 1], [-12, 28])
+  const parallaxOn = motionOK && isDesktop
+
   return (
-    <section className="bg-section-gradient pt-24 pb-16 px-6 md:px-16 overflow-hidden">
+    <section ref={sectionRef} className="bg-section-gradient pt-24 pb-16 px-6 md:px-16 overflow-hidden">
       <div className="max-w-[1100px] mx-auto">
-        <FadeUp>
-          <div className="flex items-center gap-3 mb-4">
-            <span className="block w-5 h-px bg-accent" />
-            <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">What Aire Delivers</span>
-          </div>
-          <h2 className="font-serif text-[clamp(2rem,4vw,3.2rem)] text-navy tracking-[-0.02em] leading-[1.1] mb-14 max-w-[600px]">
-            Helping you find the <em className="italic text-navy-mid">balance you need.</em>
-          </h2>
-        </FadeUp>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          <Eyebrow className="mb-4">What Aire Delivers</Eyebrow>
+          <motion.div variants={fadeUpWithDelay(0)}>
+            <SectionHeading className="text-[clamp(2rem,4vw,3.2rem)] tracking-[-0.02em] leading-[1.1] mb-14 max-w-[600px]">
+              Helping you find the <em>balance you need.</em>
+            </SectionHeading>
+          </motion.div>
+        </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Light Card */}
-          <FadeUp delay={0.1}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={fadeUpWithDelay(0.1)}
+            style={parallaxOn ? { y: lightCardY } : undefined}
+          >
             <div className="card-hover bg-white rounded-3xl p-10 md:p-12 h-full border border-sky-deep/10">
               <p className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-accent mb-3">Mental Balance</p>
               <h3 className="font-serif text-[1.7rem] text-navy leading-[1.15] tracking-[-0.01em] mb-8">
@@ -50,9 +83,15 @@ export default function Balance() {
                 ))}
               </ul>
             </div>
-          </FadeUp>
+          </motion.div>
           {/* Dark Card */}
-          <FadeUp delay={0.2}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            variants={fadeUpWithDelay(0.2)}
+            style={parallaxOn ? { y: darkCardY } : undefined}
+          >
             <div className="card-hover bg-navy rounded-3xl p-10 md:p-12 h-full relative overflow-hidden">
               <div className="absolute top-[-60px] right-[-60px] w-[220px] h-[220px] rounded-full bg-accent/8 blur-3xl pointer-events-none" />
               <p className="text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-sky-deep mb-3">Consumption Balance</p>
@@ -73,7 +112,7 @@ export default function Balance() {
                 ))}
               </ul>
             </div>
-          </FadeUp>
+          </motion.div>
         </div>
         <p className="text-[0.62rem] text-muted/50 leading-relaxed mt-8 text-center max-w-[540px] mx-auto">
           † These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.

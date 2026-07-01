@@ -1,6 +1,9 @@
 'use client'
 import { useState } from 'react'
-import FadeUp from './FadeUp'
+import { motion, AnimatePresence } from 'framer-motion'
+import Eyebrow from './ui/Eyebrow'
+import SectionHeading from './ui/SectionHeading'
+import { fadeUpWithDelay, EASE } from '@/lib/motion'
 
 const faqs = [
   {
@@ -70,55 +73,90 @@ function SupplementFacts() {
   )
 }
 
-function FAQItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false)
+function FAQItem({ q, a, open, onToggle }: { q: string; a: string; open: boolean; onToggle: () => void }) {
   const isSupplementFacts = a === 'supplement-facts'
   return (
     <div className="border-b border-sky-deep/15">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={onToggle}
         aria-expanded={open}
-        className="w-full flex items-center justify-between py-5 text-left group"
+        className="w-full flex items-center justify-between py-6 text-left group"
       >
-        <span className="text-[0.95rem] font-medium text-navy pr-4">{q}</span>
-        <span className={`text-accent text-xl flex-shrink-0 transition-transform duration-300 ${open ? 'rotate-45' : ''}`}>+</span>
+        <span className="font-serif text-[1.05rem] md:text-[1.15rem] text-navy pr-4">{q}</span>
+        <span
+          className="text-accent text-xl flex-shrink-0"
+          style={{
+            display: 'inline-block',
+            transform: open ? 'rotate(45deg)' : 'rotate(0deg)',
+            transition: `transform 0.3s cubic-bezier(${EASE.join(',')})`,
+          }}
+        >
+          +
+        </span>
       </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${open ? 'max-h-[800px] pb-5' : 'max-h-0'}`}
-      >
-        {isSupplementFacts ? (
-          <SupplementFacts />
-        ) : (
-          <p className="text-[0.88rem] text-navy-mid leading-[1.8] font-light">{a}</p>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="overflow-hidden"
+          >
+            <div className="pb-6">
+              {isSupplementFacts ? (
+                <SupplementFacts />
+              ) : (
+                <p className="text-[0.88rem] text-navy-mid leading-[1.8] font-light">{a}</p>
+              )}
+            </div>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   )
 }
 
 export default function FAQ() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+
   return (
     <section id="faq" className="bg-off-white pt-16 pb-24 px-6 md:px-16">
-      <div className="max-w-[720px] mx-auto">
-        <FadeUp>
-          <div className="flex items-center gap-3 mb-5">
-            <span className="block w-5 h-px bg-accent" />
-            <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">Common Questions</span>
-          </div>
-          <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em] mb-10">
-            Everything you need<br /><em className="italic text-accent">to know.</em>
-          </h2>
-        </FadeUp>
-        <FadeUp delay={0.1}>
+      <div className="max-w-[760px] mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          <Eyebrow className="mb-5">Common Questions</Eyebrow>
+          <motion.div variants={fadeUpWithDelay(0)}>
+            <SectionHeading className="text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] tracking-[-0.02em] mb-10">
+              Everything you need<br /><em>to know.</em>
+            </SectionHeading>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUpWithDelay(0.1)}
+        >
           <div>
-            {faqs.map(({ q, a }) => (
-              <FAQItem key={q} q={q} a={a} />
+            {faqs.map(({ q, a }, i) => (
+              <FAQItem
+                key={q}
+                q={q}
+                a={a}
+                open={openIndex === i}
+                onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+              />
             ))}
           </div>
           <p className="mt-8 text-[0.68rem] text-muted leading-relaxed">
             † These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.
           </p>
-        </FadeUp>
+        </motion.div>
       </div>
     </section>
   )

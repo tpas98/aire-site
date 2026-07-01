@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import Eyebrow from "@/components/ui/Eyebrow"
 
 const faqData = [
   { question: "What is Aire?", answer: "Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence. Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience. 100% nicotine-free and caffeine-free." },
@@ -44,20 +45,21 @@ export const metadata = {
 
 export default function FAQPage() {
   return (
-    <div className="min-h-screen bg-white text-navy-mid font-sans text-[0.97rem] leading-relaxed">
+    <div className="min-h-screen bg-white text-navy-mid font-sans text-[0.95rem] leading-[1.8]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <header className="flex items-center justify-between px-6 md:px-16 py-6 border-b border-navy/10">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-16 bg-white/80 backdrop-blur-xl border-b border-navy/10">
         <Link href="/">
-          <Image src="/images/logo.png" alt="Aire" width={90} height={36} style={{ mixBlendMode: 'multiply' }} />
+          <Image src="/images/logo.png" alt="Aire" width={90} height={36} style={{ mixBlendMode: 'multiply' }} className="h-7 w-auto" />
         </Link>
         <Link href="/" className="text-sm text-accent hover:underline">← Back to Home</Link>
       </header>
 
-      <div className="max-w-3xl mx-auto px-6 md:px-16 py-16">
-        <h1 className="font-serif text-[2.4rem] text-navy mb-2">Frequently Asked Questions</h1>
+      <div className="max-w-[720px] mx-auto px-6 md:px-16 pt-32 pb-16">
+        <Eyebrow className="mb-5">Common Questions</Eyebrow>
+        <h1 className="font-serif text-[clamp(2rem,4vw,3rem)] text-navy tracking-[-0.02em] mb-3">Frequently Asked Questions</h1>
         <p className="text-muted mb-12">Everything you need to know about Aire.</p>
 
         <div className="space-y-10">

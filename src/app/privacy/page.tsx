@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import Eyebrow from '@/components/ui/Eyebrow'
 
 export const metadata = {
   title: 'Privacy Policy | Aire Wellness Pouches',
@@ -10,7 +11,7 @@ export const metadata = {
 export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-off-white">
-      <nav className="bg-white/80 backdrop-blur-xl border-b border-sky-deep/20 px-6 md:px-16 h-[64px] flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-sky-deep/20 px-6 md:px-16 h-16 flex items-center justify-between">
         <Link href="/">
           <Image src="/images/logo.png" alt="Aire" width={120} height={40} className="h-7 w-auto" style={{ mixBlendMode: 'multiply' }} />
         </Link>
@@ -18,11 +19,12 @@ export default function PrivacyPolicy() {
           ← Back to Home
         </Link>
       </nav>
-      <div className="max-w-[780px] mx-auto px-6 py-20">
+      <div className="max-w-[720px] mx-auto px-6 pt-32 pb-20">
+        <Eyebrow className="mb-5">Legal</Eyebrow>
         <h1 className="font-serif text-[clamp(2rem,4vw,3rem)] text-navy tracking-[-0.02em] mb-3">Privacy Policy</h1>
         <p className="text-[0.85rem] text-muted mb-12">Last updated: February 2026</p>
 
-        <div className="prose prose-slate max-w-none space-y-10 text-[0.95rem] text-navy-mid leading-[1.85]">
+        <div className="prose prose-slate max-w-none space-y-10 text-[0.95rem] text-navy-mid leading-[1.8]">
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">1. Introduction</h2>

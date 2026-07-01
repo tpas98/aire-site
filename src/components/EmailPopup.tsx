@@ -65,7 +65,7 @@ export default function EmailPopup() {
             exit={{ opacity: 0, y: 40 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="bg-navy rounded-t-3xl md:rounded-3xl px-8 py-10 relative overflow-hidden">
+            <div className="bg-navy rounded-t-aire-xl md:rounded-aire-xl px-8 py-10 relative overflow-hidden shadow-card-dark">
               <div className="absolute top-[-60px] right-[-60px] w-[200px] h-[200px] rounded-full bg-accent/10 blur-3xl pointer-events-none" />
               <button
                 onClick={handleDismiss}
@@ -78,7 +78,7 @@ export default function EmailPopup() {
                 <>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="block w-5 h-px bg-accent" />
-                    <span className="text-[0.65rem] font-semibold tracking-[0.2em] uppercase text-accent">Welcome to Aire</span>
+                    <span className="text-eyebrow font-semibold uppercase text-accent">Welcome to Aire</span>
                   </div>
                   <h2 className="font-serif text-[1.9rem] leading-[1.1] text-white tracking-[-0.02em] mb-2">
                     Find Your Balance.<br />
@@ -101,7 +101,7 @@ export default function EmailPopup() {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="bg-white text-navy px-6 py-3 rounded-full text-[0.78rem] font-semibold tracking-[0.08em] uppercase hover:bg-accent hover:text-white transition-colors whitespace-nowrap disabled:opacity-50"
+                      className="btn-primary bg-white text-navy px-6 py-3 rounded-full text-[0.78rem] font-semibold tracking-[0.08em] uppercase hover:bg-accent hover:text-white transition-colors whitespace-nowrap disabled:opacity-50 shadow-btn"
                     >
                       {loading ? 'Saving...' : 'Claim 10% Off'}
                     </button>
