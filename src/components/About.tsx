@@ -29,7 +29,7 @@ export default function About() {
   const parallaxOn = motionOK && isDesktop
 
   return (
-    <section ref={sectionRef} id="science" className="bg-off-white pt-16 pb-24 px-6 md:px-20">
+    <section ref={sectionRef} id="science" className="bg-white pt-16 pb-24 px-6 md:px-20">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
         <motion.div
           variants={staggerContainer(0.12)}

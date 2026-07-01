@@ -8,11 +8,17 @@ export default function StickyMobileCTA() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
+    // Hide once the footer (which has its own CTA + legal links) scrolls into
+    // view, so this bar never permanently covers the FDA disclaimer / copyright line.
+    const footer = document.querySelector('footer')
+
     const handleScroll = () => {
-      // Show after scrolling past hero (~600px)
-      setVisible(window.scrollY > 600)
+      const pastHero = window.scrollY > 600
+      const footerVisible = footer ? footer.getBoundingClientRect().top < window.innerHeight : false
+      setVisible(pastHero && !footerVisible)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 

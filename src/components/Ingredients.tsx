@@ -41,9 +41,24 @@ function IngredientCardContent({ num, name, desc }: { num: string; name: string;
 function RailPanelContent({ num, name, desc }: { num: string; name: string; desc: string }) {
   const [lead, trail] = splitDesc(desc)
   return (
-    <div className="bg-white/[0.07] border border-white/[0.12] rounded-aire-xl p-10">
-      <p className="text-white/85 text-[1.05rem] leading-[1.8] mb-3">{lead}</p>
-      {trail && <p className="text-white/55 text-[0.85rem] leading-relaxed">{trail}</p>}
+    <div className="relative bg-white/[0.07] border border-white/[0.12] rounded-aire-xl p-10 md:p-12 overflow-hidden">
+      <div
+        className="absolute -top-6 -right-2 font-serif text-sky-deep/[0.08] leading-none select-none pointer-events-none"
+        style={{ fontSize: 'clamp(6rem, 9vw, 9rem)' }}
+        aria-hidden="true"
+      >
+        {num}
+      </div>
+      <p className="relative text-white text-[1.4rem] md:text-[1.6rem] leading-[1.4] font-serif tracking-[-0.01em] mb-6 max-w-[26ch]">
+        {lead.replace(/†\s*$/, '')}
+        <span className="text-sky-deep">†</span>
+      </p>
+      {trail && (
+        <>
+          <span className="block w-10 h-px bg-white/15 mb-4" />
+          <p className="relative text-white/55 text-[0.85rem] leading-relaxed max-w-[38ch]">{trail}</p>
+        </>
+      )}
     </div>
   )
 }
@@ -99,7 +114,7 @@ function RailPanel({ index, registerRef, num, name, desc }: {
   desc: string
 }) {
   return (
-    <div ref={(el) => registerRef(index, el)} className="min-h-[62vh] flex items-center">
+    <div ref={(el) => registerRef(index, el)} className="min-h-[54vh] flex items-center">
       <RailPanelContent num={num} name={name} desc={desc} />
     </div>
   )

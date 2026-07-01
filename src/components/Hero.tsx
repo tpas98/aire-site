@@ -163,7 +163,7 @@ function StaticHero({ reducedMotion }: { reducedMotion: boolean }) {
   )
 }
 
-/** Desktop, motion-enabled variant: pinned 170vh section, scroll-choreographed scene + copy. */
+/** Desktop, motion-enabled variant: pinned 145vh section, scroll-choreographed scene + copy. */
 function PinnedHero() {
   const sectionRef = useRef<HTMLElement>(null)
   const scrollProgressRef = useRef(0)
@@ -177,14 +177,23 @@ function PinnedHero() {
     scrollProgressRef.current = v
   })
 
-  const copyY = useTransform(scrollYProgress, [0.55, 0.85], [0, -60])
-  const copyOpacity = useTransform(scrollYProgress, [0.55, 0.85], [1, 0])
-  const canvasOpacity = useTransform(scrollYProgress, [0.75, 0.98], [1, 0])
-  const canvasScale = useTransform(scrollYProgress, [0.75, 0.98], [1, 1.06])
-  const affordanceOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0])
+  // Section is h-[145vh] with a h-[100svh] sticky child, so the pin only holds for
+  // the first (145-100)/145 ≈ 0.310 of scrollYProgress (0..1 spans the FULL section,
+  // not just the pinned window). Choreograph the handoff to fully resolve inside that
+  // window — otherwise the fade never gets to play while pinned and the section
+  // unpins mid-animation, jumping straight to full opacity/no-transform. Keeping the
+  // section closer to the pin's actual needs (vs. an oversized 170vh) also avoids a
+  // long stretch of blank scroll after the content has faded but before the section
+  // has fully scrolled past.
+  const PIN_END = 0.31
+  const copyY = useTransform(scrollYProgress, [0.19 * PIN_END, 0.85 * PIN_END], [0, -60])
+  const copyOpacity = useTransform(scrollYProgress, [0.19 * PIN_END, 0.85 * PIN_END], [1, 0])
+  const canvasOpacity = useTransform(scrollYProgress, [0.27 * PIN_END, 0.95 * PIN_END], [1, 0])
+  const canvasScale = useTransform(scrollYProgress, [0.27 * PIN_END, 0.95 * PIN_END], [1, 1.06])
+  const affordanceOpacity = useTransform(scrollYProgress, [0, 0.15 * PIN_END], [1, 0])
 
   return (
-    <section ref={sectionRef} className="relative h-[170vh]">
+    <section ref={sectionRef} className="relative h-[145vh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-hero-gradient">
         <HeroBackdrop />
         <div className="relative z-10 grid grid-cols-2 items-center gap-8 px-20 h-full max-w-[1400px] mx-auto">
