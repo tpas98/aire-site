@@ -1,5 +1,7 @@
 'use client'
 import FadeUp from './FadeUp'
+import Eyebrow from './ui/Eyebrow'
+import SectionHeading from './ui/SectionHeading'
 
 const reviews = [
   { stars: 4.5, text: '"I used to go through a full can of nicotine pouches on a night out. Mixing these in has cut my nicotine use down a lot. The calm vibe actually pairs better with going out, and I feel noticeably better the next morning."', author: 'Colin', tag: 'MBA Student' },
@@ -54,14 +56,10 @@ export default function Testimonials() {
   return (
     <section id="reviews" className="bg-white pt-12 pb-16">
       <FadeUp className="text-center mb-12 px-6 md:px-16">
-        <div className="flex items-center justify-center gap-3 mb-5">
-          <span className="block w-5 h-px bg-accent" />
-          <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">What Customers Are Saying</span>
-          <span className="block w-5 h-px bg-accent" />
-        </div>
-        <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em] mb-4">
-          Real results.<br /><em className="italic text-accent">Real people.</em>
-        </h2>
+        <Eyebrow align="center" className="mb-5">What Customers Are Saying</Eyebrow>
+        <SectionHeading className="mb-4">
+          Real results.<br /><em>Real people.</em>
+        </SectionHeading>
         <div className="flex items-center justify-center gap-2">
           <div className="flex items-center gap-0.5 text-[#e8a820] text-sm">
             {'★★★★'}

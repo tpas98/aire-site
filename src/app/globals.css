@@ -1,8 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+@import './fonts.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* ---- Brand color ---- */
+  --aire-navy:        #1a2e4a; /* primary text, dark sections, primary buttons */
+  --aire-navy-mid:    #2c4a6b; /* secondary text, italic emphasis on light bg */
+  --aire-accent:      #5a9bbf; /* eyebrow rules, links, accents on light bg */
+  --aire-sky-deep:    #7ec2df; /* accents on navy/dark surfaces */
+  --aire-sky-light:   #c8e6f5;
+  --aire-off-white:   #f3f8fc; /* light section / soft card background */
+  --aire-muted:       #6a8099; /* fine print, legal */
+  --aire-teal:        #84afb5; /* signature brand teal (the can) */
+  --aire-gold:        #e8a820; /* star ratings */
+  --aire-white:       #ffffff;
+
+  /* ---- Surfaces ---- */
+  --aire-bg:          #edf4f9; /* default site background (light blue-gray) */
+
+  /* ---- Gradients ---- */
+  --aire-grad-hero:    linear-gradient(135deg, #d8ecf8 0%, #b0d1e8 52%, #90bada 100%);
+  --aire-grad-section: linear-gradient(150deg, #eaf5fb 0%, #c5dff0 100%);
+  --aire-grad-dark:    linear-gradient(135deg, #1a2e4a 0%, #0f1e32 100%);
+
+  /* ---- Typography ---- */
+  --aire-font-serif: "DM Serif Display", Georgia, serif; /* headings */
+  --aire-font-sans:  "DM Sans", system-ui, -apple-system, sans-serif; /* body + UI */
+
+  /* eyebrow / label rhythm */
+  --aire-eyebrow-size:   0.67rem;
+  --aire-eyebrow-track:  0.2em;
+
+  /* ---- Radius ---- */
+  --aire-radius-sm:   12px;
+  --aire-radius-md:   16px;
+  --aire-radius-lg:   18px;
+  --aire-radius-xl:   24px;
+  --aire-radius-pill: 9999px;
+
+  /* ---- Elevation (navy-tinted, never neutral gray) ---- */
+  --aire-shadow-btn:            0 8px 28px rgba(26, 46, 74, 0.22);
+  --aire-shadow-btn-hover:      0 16px 44px rgba(26, 46, 74, 0.30);
+  --aire-shadow-card-hover:     0 24px 56px rgba(26, 46, 74, 0.09);
+  --aire-shadow-card-dark:      0 20px 48px rgba(0, 0, 0, 0.25);
+  --aire-shadow-pill-hover:     0 8px 24px rgba(26, 46, 74, 0.10);
+}
 
 @layer base {
   html {
