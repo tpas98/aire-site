@@ -2,16 +2,16 @@
 import Image from 'next/image'
 
 const images = [
-  { src: '/images/lifestyle-wild-01.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
-  { src: '/images/lifestyle-wild-02.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
-  { src: '/images/lifestyle-wild-03.png', alt: 'Aire Calm Mint tin on a creative studio desk' },
-  { src: '/images/lifestyle-wild-04.png', alt: 'Aire Calm Mint tin on a hiking overlook with a daypack' },
-  { src: '/images/lifestyle-wild-05.png', alt: 'Aire Calm Mint tin on a rooftop garden work table' },
-  { src: '/images/lifestyle-wild-06.png', alt: 'Open Aire Calm Mint tin on a beach towel near the water' },
-  { src: '/images/lifestyle-wild-07.png', alt: 'Aire Calm Mint tin on a bright morning kitchen counter' },
-  { src: '/images/lifestyle-wild-08.png', alt: 'Aire Calm Mint tin on a cafe table with a relaxed customer nearby' },
-  { src: '/images/lifestyle-wild-09.png', alt: 'Aire Calm Mint tin on a park bench after a run' },
-  { src: '/images/lifestyle-wild-10.png', alt: 'Aire Calm Mint tin in a scenic road trip moment' },
+  { src: '/images/lifestyle-wild-01-new-design.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
+  { src: '/images/lifestyle-wild-02-new-design.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
+  { src: '/images/lifestyle-wild-03-new-design.png', alt: 'Aire Calm Mint tin on a creative studio desk' },
+  { src: '/images/lifestyle-wild-04-new-design.png', alt: 'Aire Calm Mint tin on a hiking overlook with a daypack' },
+  { src: '/images/lifestyle-wild-05-new-design.png', alt: 'Aire Calm Mint tin on a rooftop garden work table' },
+  { src: '/images/lifestyle-wild-06-new-design.png', alt: 'Open Aire Calm Mint tin on a beach towel near the water' },
+  { src: '/images/lifestyle-wild-07-new-design.png', alt: 'Aire Calm Mint tin on a bright morning kitchen counter' },
+  { src: '/images/lifestyle-wild-08-new-design.png', alt: 'Aire Calm Mint tin on a cafe table with a relaxed customer nearby' },
+  { src: '/images/lifestyle-wild-09-new-design.png', alt: 'Aire Calm Mint tin on a park bench after a run' },
+  { src: '/images/lifestyle-wild-10-new-design.png', alt: 'Aire Calm Mint tin in a scenic road trip moment' },
 ]
 
 export default function LifestyleStrip() {
