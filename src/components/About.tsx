@@ -1,34 +1,81 @@
 'use client'
-import { motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import FadeUp from './FadeUp'
+import Eyebrow from './ui/Eyebrow'
+import Reveal from './ui/Reveal'
+import { fadeUpWithDelay, staggerContainer, useMotionOK } from '@/lib/motion'
 
 const SpinningCan = dynamic(() => import('./SpinningCan'), { ssr: false })
 
 export default function About() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const motionOK = useMotionOK()
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)')
+    setIsDesktop(mq.matches)
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+  const canY = useTransform(scrollYProgress, [0, 1], [40, -40])
+  const parallaxOn = motionOK && isDesktop
+
   return (
-    <section id="science" className="bg-off-white pt-16 pb-24 px-6 md:px-20">
+    <section ref={sectionRef} id="science" className="bg-off-white pt-16 pb-24 px-6 md:px-20">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
-        <FadeUp>
-          <div className="flex items-center gap-3 mb-5">
-            <span className="block w-5 h-px bg-accent" />
-            <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">Our Story</span>
-          </div>
-          <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em] mb-6">
-            Built for the gap<br /><em className="italic text-accent">nobody filled.</em>
-          </h2>
-          <p className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-5">
+        <motion.div
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          <Eyebrow className="mb-5">Our Story</Eyebrow>
+          <Reveal
+            as="h2"
+            className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em] mb-6"
+            lines={[
+              'Built for the gap',
+              <em className="italic text-accent" key="em">nobody filled.</em>,
+            ]}
+          />
+          <motion.p
+            variants={fadeUpWithDelay(0)}
+            className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-5"
+          >
             Every pouch on the market was either nicotine-loaded and addictive, caffeine-heavy and anxiety inducing, or nootropic-based and isolated on focus. None were able to support our ideal lifestyle all day long, without undesirable side effects.
-          </p>
-          <p className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-8">
+          </motion.p>
+          <motion.p
+            variants={fadeUpWithDelay(0.08)}
+            className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-8"
+          >
             So we built Aire from scratch. A lifestyle pouch for people who want to stay grounded for peak enjoyment from every pursuit. No dependency. No crash. Just balance, whenever you need it.
-          </p>
-          <a href="#shop" className="btn-primary inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase shadow-[0_8px_30px_rgba(26,46,74,0.2)]">
+          </motion.p>
+          <motion.a
+            variants={fadeUpWithDelay(0.16)}
+            href="#shop"
+            className="btn-primary inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase shadow-[0_8px_30px_rgba(26,46,74,0.2)]"
+          >
             Try Aire Today
-          </a>
-        </FadeUp>
-        <FadeUp delay={0.15}>
-          <div className="relative flex justify-center items-center w-full h-[320px] md:h-[420px]">
+          </motion.a>
+        </motion.div>
+        <motion.div
+          variants={fadeUpWithDelay(0.15)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          <motion.div
+            style={parallaxOn ? { y: canY } : undefined}
+            className="relative flex justify-center items-center w-full h-[320px] md:h-[420px]"
+          >
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0"
@@ -41,8 +88,8 @@ export default function About() {
               }}
             />
             <SpinningCan className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]" />
-          </div>
-        </FadeUp>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )
