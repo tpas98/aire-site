@@ -1,5 +1,10 @@
 'use client'
+import { useRef } from 'react'
 import Image from 'next/image'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import Eyebrow from './ui/Eyebrow'
+import SectionHeading from './ui/SectionHeading'
+import { useMotionOK } from '@/lib/motion'
 
 const images = [
   { src: '/images/lifestyle-wild-01-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
@@ -14,45 +19,145 @@ const images = [
   { src: '/images/lifestyle-wild-10-airecomplex-2026.png', alt: 'Aire Calm Mint tin in a scenic road trip moment' },
 ]
 
-export default function LifestyleStrip() {
+const rowA = images.slice(0, 5)
+const rowB = images.slice(5, 10)
+
+// Editorial width/height rhythm, cycled per image.
+const widths = [300, 420, 340, 460, 320]
+const heights = [300, 340]
+
+function ParallaxImage({
+  src,
+  alt,
+  width,
+  height,
+  direction,
+}: {
+  src: string
+  alt: string
+  width: number
+  height: number
+  direction: 1 | -1
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], [direction * -12, direction * 12])
+
   return (
-    <section className="bg-white pt-16 pb-8 overflow-hidden">
+    <div
+      ref={ref}
+      className="flex-shrink-0 overflow-hidden rounded-aire-lg"
+      style={{ width, height }}
+    >
+      <motion.div style={{ y, scale: 1.08 }} className="w-full h-full">
+        <Image
+          src={src}
+          alt={alt}
+          width={700}
+          height={400}
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
+    </div>
+  )
+}
+
+function DesktopRow({
+  row,
+  xFrom,
+  xTo,
+  sectionRef,
+  parallaxDirection,
+}: {
+  row: typeof images
+  xFrom: string
+  xTo: string
+  sectionRef: React.RefObject<HTMLElement>
+  parallaxDirection: 1 | -1
+}) {
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  })
+  const x = useTransform(scrollYProgress, [0, 1], [xFrom, xTo])
+
+  return (
+    <motion.div style={{ x }} className="flex gap-6">
+      {row.map(({ src, alt }, i) => (
+        <ParallaxImage
+          key={src}
+          src={src}
+          alt={alt}
+          width={widths[i % widths.length]}
+          height={heights[i % heights.length]}
+          direction={i % 2 === 0 ? parallaxDirection : (-parallaxDirection as 1 | -1)}
+        />
+      ))}
+    </motion.div>
+  )
+}
+
+function MobileRow() {
+  return (
+    <div
+      className="flex gap-4 overflow-x-auto px-6 pb-2"
+      style={{
+        scrollSnapType: 'x mandatory',
+        maskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
+        WebkitMaskImage: 'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
+      }}
+    >
+      {images.map(({ src, alt }) => (
+        <div
+          key={src}
+          className="flex-shrink-0 overflow-hidden rounded-aire-lg"
+          style={{ width: '78vw', height: '58vw', maxHeight: 300, scrollSnapAlign: 'center' }}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            width={700}
+            height={400}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export default function LifestyleStrip() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const motionOK = useMotionOK()
+
+  return (
+    <section ref={sectionRef} className="bg-white pt-16 pb-8 overflow-hidden">
       <div className="text-center mb-10 px-6">
-        <div className="flex items-center justify-center gap-3 mb-5">
-          <span className="block w-5 h-px bg-accent" />
-          <span className="text-[0.67rem] font-semibold tracking-[0.2em] uppercase text-accent">All-Day Balance</span>
-          <span className="block w-5 h-px bg-accent" />
-        </div>
-        <h2 className="font-serif text-[clamp(1.9rem,3vw,2.8rem)] leading-[1.15] text-navy tracking-[-0.02em] mb-3">
-          Bringing you back to the <em className="italic text-navy-mid">moment when it matters most.</em>
-        </h2>
+        <Eyebrow align="center" className="mb-5 justify-center">All-Day Balance</Eyebrow>
+        <SectionHeading className="mb-3">
+          Bringing you back to the <em>moment when it matters most.</em>
+        </SectionHeading>
       </div>
-      <div className="overflow-hidden">
-        <div className="lifestyle-track flex" style={{ width: 'max-content' }}>
-          {images.map(({ src, alt }, i) => (
-            <div key={`a-${i}`} className="flex-shrink-0 w-[400px] h-[300px] overflow-hidden mx-2.5 rounded-xl">
-              <Image
-                src={src}
-                alt={alt}
-                width={700}
-                height={400}
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-          ))}
-          {images.map(({ src, alt }, i) => (
-            <div key={`b-${i}`} className="flex-shrink-0 w-[400px] h-[300px] overflow-hidden mx-2.5 rounded-xl">
-              <Image
-                src={src}
-                alt={alt}
-                width={700}
-                height={400}
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+
+      {motionOK ? (
+        <>
+          {/* Desktop: counter-sliding parallax rows */}
+          <div className="hidden md:flex md:flex-col gap-6">
+            <DesktopRow row={rowA} xFrom="0%" xTo="-8%" sectionRef={sectionRef} parallaxDirection={1} />
+            <DesktopRow row={rowB} xFrom="-8%" xTo="0%" sectionRef={sectionRef} parallaxDirection={-1} />
+          </div>
+          {/* Mobile: single swipeable snap row */}
+          <div className="md:hidden">
+            <MobileRow />
+          </div>
+        </>
+      ) : (
+        // Reduced motion (any viewport): single swipeable snap row, no parallax/transforms
+        <MobileRow />
+      )}
     </section>
   )
 }

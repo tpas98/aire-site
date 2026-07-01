@@ -1,7 +1,9 @@
 'use client'
 import FadeUp from './FadeUp'
+import Reveal from './ui/Reveal'
 import Eyebrow from './ui/Eyebrow'
 import SectionHeading from './ui/SectionHeading'
+import { useMotionOK } from '@/lib/motion'
 
 const reviews = [
   { stars: 4.5, text: '"I used to go through a full can of nicotine pouches on a night out. Mixing these in has cut my nicotine use down a lot. The calm vibe actually pairs better with going out, and I feel noticeably better the next morning."', author: 'Colin', tag: 'MBA Student' },
@@ -16,15 +18,20 @@ const reviews = [
   { stars: 5, text: '"These completely replaced nicotine for me. Whether I\'m at school, gaming, or driving, I feel grounded and focused. It\'s the right level of calm. I never feel tired or sedated."', author: 'Jake', tag: 'Corporate Law' },
 ]
 
-function StarRating({ stars }: { stars: number }) {
+const featured = reviews.find((r) => r.author === 'Vivek')!
+const wallReviews = reviews.filter((r) => r.author !== 'Vivek')
+const wallRowA = wallReviews.slice(0, 5)
+const wallRowB = wallReviews.slice(5, 9)
+
+function StarRating({ stars, size = 'text-sm' }: { stars: number; size?: string }) {
   const fullStars = Math.floor(stars)
   const hasHalf = stars % 1 !== 0
   return (
-    <div className="flex items-center gap-0.5 text-[#e8a820] text-sm">
+    <div className={`flex items-center gap-0.5 text-gold ${size}`}>
       {'★'.repeat(fullStars)}
       {hasHalf && (
         <span className="relative inline-block w-[1em] overflow-hidden">
-          <span className="text-[#e8a820]/20">★</span>
+          <span className="text-gold/20">★</span>
           <span className="absolute top-0 left-0 overflow-hidden" style={{ width: '50%' }}>★</span>
         </span>
       )}
@@ -34,7 +41,7 @@ function StarRating({ stars }: { stars: number }) {
 
 function ReviewCard({ stars, text, author, tag }: { stars: number; text: string; author: string; tag: string }) {
   return (
-    <div className="card-hover bg-off-white rounded-2xl p-8 border border-sky-deep/15 flex flex-col flex-shrink-0 w-[340px] min-h-[260px] mr-5">
+    <div className="card-hover bg-off-white rounded-aire-lg p-7 border border-sky-deep/15 flex flex-col flex-shrink-0 w-[340px] min-h-[260px]">
       <StarRating stars={stars} />
       <div className="mt-4" />
       <p className="text-[0.9rem] text-navy-mid leading-[1.8] italic mb-5 flex-1">{text}</p>
@@ -52,19 +59,57 @@ function ReviewCard({ stars, text, author, tag }: { stars: number; text: string;
   )
 }
 
+function MarqueeRow({
+  row,
+  duration,
+  reverse,
+}: {
+  row: typeof reviews
+  duration: number
+  reverse: boolean
+}) {
+  return (
+    <div className="overflow-hidden">
+      <div
+        className={`flex gap-5 w-max ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'} hover:[animation-play-state:paused]`}
+        style={{ animationDuration: `${duration}s` }}
+      >
+        {row.map((review, i) => (
+          <ReviewCard key={`a-${i}`} {...review} />
+        ))}
+        {row.map((review, i) => (
+          <ReviewCard key={`b-${i}`} {...review} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function StaticGrid() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 px-6 md:px-16">
+      {wallReviews.map((review, i) => (
+        <ReviewCard key={i} {...review} />
+      ))}
+    </div>
+  )
+}
+
 export default function Testimonials() {
+  const motionOK = useMotionOK()
+
   return (
     <section id="reviews" className="bg-white pt-12 pb-16">
       <FadeUp className="text-center mb-12 px-6 md:px-16">
-        <Eyebrow align="center" className="mb-5">What Customers Are Saying</Eyebrow>
+        <Eyebrow align="center" className="mb-5 justify-center">What Customers Are Saying</Eyebrow>
         <SectionHeading className="mb-4">
           Real results.<br /><em>Real people.</em>
         </SectionHeading>
         <div className="flex items-center justify-center gap-2">
-          <div className="flex items-center gap-0.5 text-[#e8a820] text-sm">
+          <div className="flex items-center gap-0.5 text-gold text-sm">
             {'★★★★'}
             <span className="relative inline-block w-[1em] overflow-hidden">
-              <span className="text-[#e8a820]/20">★</span>
+              <span className="text-gold/20">★</span>
               <span className="absolute top-0 left-0 overflow-hidden" style={{ width: '75%' }}>★</span>
             </span>
           </div>
@@ -72,18 +117,49 @@ export default function Testimonials() {
         </div>
       </FadeUp>
 
-      <FadeUp delay={0.15}>
-        <div className="overflow-hidden">
-          <div className="carousel-track flex" style={{ width: 'max-content' }}>
-            {reviews.map((review, i) => (
-              <ReviewCard key={`a-${i}`} {...review} />
-            ))}
-            {reviews.map((review, i) => (
-              <ReviewCard key={`b-${i}`} {...review} />
-            ))}
+      {/* Featured pull-quote */}
+      <Reveal className="relative max-w-[780px] mx-auto px-6 mb-16 text-center">
+        <span
+          aria-hidden="true"
+          className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 font-serif text-[7rem] leading-none text-accent/20 select-none"
+        >
+          &ldquo;
+        </span>
+        <div className="relative">
+          <p className="font-serif italic text-[clamp(1.5rem,2.6vw,2.2rem)] leading-[1.4] text-navy mb-6">
+            {featured.text.replace(/^"|"$/g, '')}
+          </p>
+          <div className="flex justify-center mb-3">
+            <StarRating stars={featured.stars} size="text-base" />
           </div>
+          <div className="flex items-center justify-center gap-2 mb-0.5">
+            <span className="text-[0.8rem] font-semibold text-navy tracking-[0.05em] uppercase">{featured.author}</span>
+            <span className="inline-flex items-center gap-1 bg-accent/10 text-accent text-[0.55rem] font-semibold tracking-[0.08em] uppercase px-2 py-0.5 rounded-full">
+              <svg width="8" height="8" viewBox="0 0 16 16" fill="currentColor"><path d="M6.664 13.665a.5.5 0 0 1-.353-.146l-4-4a.5.5 0 0 1 .707-.707L6.664 12.46l6.329-6.329a.5.5 0 1 1 .707.707l-6.682 6.682a.5.5 0 0 1-.354.146z"/></svg>
+              Verified
+            </span>
+          </div>
+          <div className="text-[0.7rem] text-accent">{featured.tag}</div>
         </div>
-      </FadeUp>
+      </Reveal>
+
+      {/* Wall of remaining reviews */}
+      {motionOK ? (
+        <FadeUp delay={0.1}>
+          <div
+            className="flex flex-col gap-5"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 32px, black calc(100% - 32px), transparent)',
+            }}
+          >
+            <MarqueeRow row={wallRowA} duration={75} reverse={false} />
+            <MarqueeRow row={wallRowB} duration={60} reverse={true} />
+          </div>
+        </FadeUp>
+      ) : (
+        <StaticGrid />
+      )}
     </section>
   )
 }

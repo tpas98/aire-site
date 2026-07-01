@@ -96,35 +96,31 @@
   .text-balance { text-wrap: balance; }
 }
 
-/* Testimonial carousel */
-@keyframes scroll-carousel {
+/* Testimonials wall: two opposed marquee rows */
+@keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-.carousel-track {
-  animation: scroll-carousel 69s linear infinite;
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
-.carousel-track:hover {
-  animation-play-state: paused;
+.animate-marquee {
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
-
-/* Lifestyle strip horizontal scroll */
-@keyframes scroll-lifestyle {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.lifestyle-track {
-  animation: scroll-lifestyle 64s linear infinite;
-}
-.lifestyle-track:hover {
-  animation-play-state: paused;
+.animate-marquee-reverse {
+  animation-name: marquee-reverse;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 /* Respect users who prefer reduced motion: stop infinite marquees */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .carousel-track,
-  .lifestyle-track,
+  .animate-marquee,
+  .animate-marquee-reverse,
   .animate-ticker {
     animation: none;
   }
