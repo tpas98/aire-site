@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform, useMotionValueEvent, type MotionStyle } from 'framer-motion'
 import dynamic from 'next/dynamic'
-import Reveal from './ui/Reveal'
+import WordReveal from './ui/WordReveal'
+import Magnetic from './ui/Magnetic'
 import { fadeUpWithDelay } from '@/lib/motion'
 
 const ThreeCanHero = dynamic(() => import('./ThreeCanHero'), { ssr: false })
@@ -34,8 +35,22 @@ function HeroBackdrop() {
   )
 }
 
+/** Per-word breakdown of the three headline lines, shared by both hero variants. */
+const HEADLINE_WORDS = [
+  { words: [{ text: 'Find' }, { text: 'Your' }] },
+  { words: [{ text: 'Balance.', em: true }] },
+  { words: [{ text: 'Instantly.' }] },
+]
+
 /** Copy column: eyebrow, headline, body, stars, CTAs. Shared markup, motion differs per variant. */
-function HeroCopy({ animated }: { animated: boolean }) {
+function HeroCopy({
+  animated,
+  headlineLineStyles,
+}: {
+  animated: boolean
+  /** Optional scroll-linked per-line drift styles (x / letter-spacing), desktop pinned hero only. */
+  headlineLineStyles?: MotionStyle[]
+}) {
   const eyebrow = (
     <div className="flex items-center gap-3 mb-5">
       <span className="block w-8 h-px bg-accent" />
@@ -44,16 +59,14 @@ function HeroCopy({ animated }: { animated: boolean }) {
   )
 
   const headline = animated ? (
-    <Reveal
+    <WordReveal
       as="h1"
       className="font-serif leading-[1.04] text-navy tracking-[-0.03em] mb-5 text-display"
       delay={0.1}
-      stagger={0.1}
-      lines={[
-        'Find Your',
-        <em key="balance" className="italic text-navy-mid">Balance.</em>,
-        'Instantly.',
-      ]}
+      wordStagger={0.045}
+      emClassName="italic text-navy-mid"
+      lines={HEADLINE_WORDS}
+      lineStyles={headlineLineStyles}
     />
   ) : (
     <h1
@@ -87,9 +100,13 @@ function HeroCopy({ animated }: { animated: boolean }) {
 
   const ctas = (
     <div className="flex items-center gap-4 flex-wrap">
-      <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
-        Get Your 4-Pack
-      </a>
+      {/* padding kept below half the gap-4 (16px) neighbor spacing so the
+          expanded hit area never overlaps the adjacent "How it works" link */}
+      <Magnetic padding={12}>
+        <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
+          Get Your 4-Pack
+        </a>
+      </Magnetic>
       <a href="#how-to-use" className="text-[0.8rem] font-medium text-navy-mid hover:text-accent transition-colors duration-200 flex items-center gap-1.5 group whitespace-nowrap">
         How it works
         <span className="group-hover:translate-x-1.5 transition-transform duration-200">→</span>
@@ -192,13 +209,26 @@ function PinnedHero() {
   const canvasScale = useTransform(scrollYProgress, [0.27 * PIN_END, 0.95 * PIN_END], [1, 1.06])
   const affordanceOpacity = useTransform(scrollYProgress, [0, 0.15 * PIN_END], [1, 0])
 
+  // Kinetic type moment: the three headline lines drift apart microscopically
+  // while pinned — felt, not seen. Mapped over the same scrollYProgress driving
+  // the rest of the hero choreography (no second useScroll).
+  const line1X = useTransform(scrollYProgress, [0.1, 0.6], [0, -14])
+  const line2X = useTransform(scrollYProgress, [0.1, 0.6], [0, 10])
+  const line2LetterSpacing = useTransform(scrollYProgress, [0.1, 0.6], ['-0.03em', '-0.01em'])
+  const line3X = useTransform(scrollYProgress, [0.1, 0.6], [0, -6])
+  const headlineLineStyles: MotionStyle[] = [
+    { x: line1X },
+    { x: line2X, letterSpacing: line2LetterSpacing },
+    { x: line3X },
+  ]
+
   return (
     <section ref={sectionRef} className="relative h-[145vh]">
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-hero-gradient">
         <HeroBackdrop />
         <div className="relative z-10 grid grid-cols-2 items-center gap-8 px-20 h-full max-w-[1400px] mx-auto">
           <motion.div style={{ y: copyY, opacity: copyOpacity }}>
-            <HeroCopy animated />
+            <HeroCopy animated headlineLineStyles={headlineLineStyles} />
           </motion.div>
           <motion.div
             className="relative flex justify-center items-center w-full h-[480px]"

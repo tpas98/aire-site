@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
 import Image from 'next/image'
 import { EASE } from '@/lib/motion'
+import Magnetic from './ui/Magnetic'
 
 const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
 
@@ -43,7 +44,9 @@ export default function Navbar() {
           </li>
         ))}
         <li>
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="text-[0.78rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-5 py-2.5 rounded-full hover:bg-accent transition-colors duration-200">Shop Now</a>
+          <Magnetic strength={8} padding={16}>
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="text-[0.78rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-5 py-2.5 rounded-full hover:bg-accent transition-colors duration-200">Shop Now</a>
+          </Magnetic>
         </li>
       </ul>
       <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="md:hidden text-[0.72rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-4 py-2 rounded-full">

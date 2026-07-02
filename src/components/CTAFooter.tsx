@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Eyebrow from './ui/Eyebrow'
-import Reveal from './ui/Reveal'
+import WordReveal from './ui/WordReveal'
+import Magnetic from './ui/Magnetic'
 import { fadeUpWithDelay, useMotionOK } from '@/lib/motion'
 
 const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
@@ -72,14 +73,15 @@ export function CTA() {
         </motion.div>
 
         <div style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)' }}>
-          <Reveal
+          <WordReveal
             as="h2"
             className="font-serif leading-[1.1] text-white tracking-[-0.02em] mb-5"
             delay={0.1}
-            stagger={0.1}
+            wordStagger={0.045}
+            emClassName="italic text-sky-deep"
             lines={[
-              <span key="l1">Your <em className="italic text-sky-deep">balance</em> is</span>,
-              'one pouch away.',
+              { words: [{ text: 'Your' }, { text: 'balance', em: true }, { text: 'is' }] },
+              { words: [{ text: 'one' }, { text: 'pouch' }, { text: 'away.' }] },
             ]}
           />
         </div>
@@ -132,12 +134,18 @@ export function CTA() {
           variants={fadeUpWithDelay(0.4)}
           className="flex flex-col sm:flex-row gap-4 mb-8"
         >
-          <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
-            Order Now - $45.99 / 4-Pack
-          </a>
-          <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 transition-all duration-200 text-center">
-            Learn the Science
-          </a>
+          {/* padding kept under half the gap-4 (16px) row spacing so neither
+              button's expanded hit area reaches into its neighbor's */}
+          <Magnetic className="inline-block" padding={7}>
+            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
+              Order Now - $45.99 / 4-Pack
+            </a>
+          </Magnetic>
+          <Magnetic className="inline-block" padding={7}>
+            <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 transition-all duration-200 text-center">
+              Learn the Science
+            </a>
+          </Magnetic>
         </motion.div>
 
         <motion.div
