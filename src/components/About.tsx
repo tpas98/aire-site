@@ -27,6 +27,20 @@ export default function About() {
   })
   const canY = useTransform(scrollYProgress, [0, 1], [40, -40])
   const parallaxOn = motionOK && isDesktop
+  const scrollDriven = motionOK && isDesktop
+
+  // Feed scroll progress (0-1 across the section transit) into a ref the
+  // SpinningCan RAF loop reads each frame — no re-renders. On desktop + motion-OK
+  // this OWNS the can's rotation (scrollDriven), reading as a continuation of the
+  // hero can; otherwise the ref stays at its passive default.
+  const scrollProgressRef = useRef(0)
+  useEffect(() => {
+    const unsub = scrollYProgress.on('change', (v) => {
+      scrollProgressRef.current = v
+    })
+    scrollProgressRef.current = scrollYProgress.get()
+    return unsub
+  }, [scrollYProgress])
 
   return (
     <section ref={sectionRef} id="science" data-morph data-morph-key="about" className="bg-white pt-16 pb-24 px-6 md:px-20">
@@ -87,7 +101,11 @@ export default function About() {
                 `,
               }}
             />
-            <SpinningCan className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]" />
+            <SpinningCan
+              scrollDriven={scrollDriven}
+              scrollProgressRef={scrollDriven ? scrollProgressRef : undefined}
+              className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]"
+            />
           </motion.div>
         </motion.div>
       </div>
