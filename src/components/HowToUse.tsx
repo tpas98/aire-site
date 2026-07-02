@@ -10,34 +10,16 @@ const steps = [
     number: '01',
     title: 'Place the Pouch',
     description: 'Tuck one or more Aire pouches comfortably between your lip and gum. No chewing needed.',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-        <path d="M8 12s1.5 2 4 2 4-2 4-2" />
-        <path d="M9 8h.01M15 8h.01" />
-      </svg>
-    ),
   },
   {
     number: '02',
     title: 'Feel It Work',
     description: 'Within 5–10 minutes, ingredients absorb through your gum tissue. A gentle tingle lets you know it\'s working.',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-      </svg>
-    ),
   },
   {
     number: '03',
     title: 'Find Your Balance',
     description: 'Enjoy the pouch for up to 60 minutes. Discard after use. Do not consume. Enjoy 4-6 pouches throughout the day for best results.',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 3a9 9 0 1 0 9 9" />
-        <path d="M12 7v5l3 3" />
-      </svg>
-    ),
   },
 ]
 
@@ -58,7 +40,11 @@ export default function HowToUse() {
     target: sectionRef,
     offset: ['start end', 'end start'],
   })
-  const linePathLength = useTransform(scrollYProgress, [0.1, 0.6], [0, 1])
+  // Two connecting segments draw left -> right, staggered, over the section's
+  // 0.1 -> 0.6 scroll span. The first segment leads; the second trails slightly
+  // so the choreography reads as a single sweep across the three nodes.
+  const segmentA = useTransform(scrollYProgress, [0.1, 0.45], [0, 1])
+  const segmentB = useTransform(scrollYProgress, [0.25, 0.6], [0, 1])
   const drawOn = motionOK && isDesktop
 
   return (
@@ -78,46 +64,60 @@ export default function HowToUse() {
         </motion.div>
 
         <div className="relative">
-          {/* Desktop horizontal hairline drawn left -> right, scroll-linked, threaded behind step numbers */}
-          <svg
-            aria-hidden="true"
-            className="hidden md:block absolute top-[2.1rem] left-0 w-full h-px pointer-events-none"
-            viewBox="0 0 1000 1"
-            preserveAspectRatio="none"
-          >
-            <motion.line
-              x1="0"
-              y1="0.5"
-              x2="1000"
-              y2="0.5"
-              stroke="currentColor"
-              className="text-accent/25"
-              strokeWidth="1.5"
-              style={drawOn ? { pathLength: linePathLength } : { pathLength: 1 }}
-            />
-          </svg>
+          {/*
+            Editorial step row for the pale-blue morph backdrop. No white background
+            patches, no icons — just large serif numerals, a connective hairline, and
+            titles. The hairline is three subtle 8px nodes (one per step, aligned under
+            each numeral) joined by two segments routed through the breathing gaps
+            between them, so nothing ever needs a background patch to occlude it.
 
+            The nodes + segments live INSIDE the grid cells (steps 0 and 1 carry the
+            segment reaching toward the next node), so they inherit the grid's exact
+            column geometry — including the gap-12 gutter — with no manual thirds math.
+            Segments are transform-only scaleX draws (origin-left): cheap, never
+            distort, scroll-linked and staggered left -> right; static under reduced
+            motion. On mobile the row stacks and each step keeps a short accent rule.
+          */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
-            {steps.map(({ number, title, description, icon }, i) => (
-              <motion.div
-                key={number}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-80px' }}
-                variants={fadeUpWithDelay(i * 0.12)}
-                className="flex flex-col gap-4"
-              >
-                <div className="flex items-center gap-3 relative">
-                  <span className="font-serif text-[4.5rem] leading-none text-accent/25 tracking-[-0.04em] bg-white pr-2 relative z-10">{number}</span>
-                  <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent relative z-10">
-                    {icon}
+            {steps.map(({ number, title, description }, i) => {
+              const isLast = i === steps.length - 1
+              const segment = i === 0 ? segmentA : segmentB
+              return (
+                <motion.div
+                  key={number}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '-80px' }}
+                  variants={fadeUpWithDelay(i * 0.12)}
+                  className="flex flex-col"
+                >
+                  <span className="font-serif text-[4.5rem] leading-none text-accent/25 tracking-[-0.04em]">{number}</span>
+
+                  {/* Desktop connective node + segment row (below the numeral) */}
+                  <div aria-hidden="true" className="hidden md:block relative h-2 my-5">
+                    <span className="absolute top-1/2 -translate-y-1/2 left-0 w-2 h-2 rounded-full bg-accent/40" />
+                    {!isLast && (
+                      <motion.span
+                        className="absolute top-1/2 -translate-y-1/2 h-px bg-accent/25 origin-left"
+                        style={{
+                          // Start ~4px past this node; reach ~4px short of the next
+                          // node, which sits one gap (3rem) + one cell-width away.
+                          left: '12px',
+                          width: 'calc(100% + 3rem - 24px)',
+                          scaleX: drawOn ? segment : 1,
+                        }}
+                      />
+                    )}
                   </div>
-                </div>
-                <div className="w-10 h-px bg-accent/40" />
-                <h3 className="font-sans font-semibold text-[1.05rem] text-navy">{title}</h3>
-                <p className="text-[0.88rem] text-navy-mid leading-[1.75] font-light">{description}</p>
-              </motion.div>
-            ))}
+
+                  {/* Mobile accent rule (stacked layout) */}
+                  <div className="md:hidden w-10 h-px bg-accent/40 my-4" />
+
+                  <h3 className="font-sans font-semibold text-[1.05rem] text-navy mb-4">{title}</h3>
+                  <p className="text-[0.88rem] text-navy-mid leading-[1.75] font-light">{description}</p>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </div>
