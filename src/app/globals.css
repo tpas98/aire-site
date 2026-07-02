@@ -54,6 +54,11 @@
     /* Offset anchor scrolling so section tops aren't hidden under the fixed 64px navbar */
     scroll-padding-top: 84px;
   }
+  /* When Lenis smooth scroll is active it drives the real window scroll itself.
+     Disable the browser's native smooth-scroll so anchor jumps aren't double-eased. */
+  html.lenis-active {
+    scroll-behavior: auto;
+  }
   body { @apply font-sans text-navy overflow-x-hidden; }
 }
 
@@ -94,6 +99,16 @@
 @layer utilities {
   .mix-multiply { mix-blend-mode: multiply; }
   .text-balance { text-wrap: balance; }
+}
+
+/* Scroll-morphing backdrop: when active (motion OK), strip the light sections'
+   own backgrounds so the fixed BackgroundMorph layer shows through them. Navy
+   sections are not tagged with data-morph, so they keep painting over the morph.
+   When `morph-on` is absent (reduced motion / pre-mount), sections keep their
+   original `bg-*` classes as the static fallback. */
+html.morph-on [data-morph] {
+  background-color: transparent !important;
+  background-image: none !important;
 }
 
 /* Testimonials wall: two opposed marquee rows */

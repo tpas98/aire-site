@@ -122,7 +122,7 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section id="faq" className="bg-off-white pt-16 pb-24 px-6 md:px-16">
+    <section id="faq" data-morph data-morph-key="faq" className="bg-off-white pt-16 pb-24 px-6 md:px-16">
       <div className="max-w-[760px] mx-auto">
         <motion.div
           initial="hidden"

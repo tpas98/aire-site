@@ -62,7 +62,7 @@ export default function HowToUse() {
   const drawOn = motionOK && isDesktop
 
   return (
-    <section ref={sectionRef} id="how-to-use" className="bg-white py-20 px-6 md:px-16">
+    <section ref={sectionRef} id="how-to-use" data-morph data-morph-key="howtouse" className="bg-white py-20 px-6 md:px-16">
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           initial="hidden"

@@ -41,7 +41,7 @@ export default function Balance() {
   const parallaxOn = motionOK && isDesktop
 
   return (
-    <section ref={sectionRef} className="bg-section-gradient pt-24 pb-16 px-6 md:px-16 overflow-hidden">
+    <section ref={sectionRef} data-morph data-morph-key="balance" className="bg-section-gradient pt-24 pb-16 px-6 md:px-16 overflow-hidden">
       <div className="max-w-[1100px] mx-auto">
         <motion.div
           initial="hidden"

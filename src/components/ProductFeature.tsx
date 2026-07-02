@@ -42,7 +42,7 @@ export default function ProductFeature() {
   const motionOK = useMotionOK()
 
   return (
-    <section className="bg-off-white py-24 px-6 md:px-20">
+    <section data-morph data-morph-key="productfeature" className="bg-off-white py-24 px-6 md:px-20">
       <div className="max-w-[800px] mx-auto">
         <FadeUp>
           <Eyebrow className="mb-5">See the Difference</Eyebrow>

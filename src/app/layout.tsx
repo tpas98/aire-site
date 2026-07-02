@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import EmailPopup from '@/components/EmailPopup'
+import SmoothScroll from '@/components/SmoothScroll'
+import MorphGate from '@/components/MorphGate'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.airepouches.com'),
@@ -124,7 +126,8 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
+        <MorphGate />
+        <SmoothScroll>{children}</SmoothScroll>
         <EmailPopup />
       </body>
     </html>

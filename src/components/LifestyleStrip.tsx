@@ -134,7 +134,7 @@ export default function LifestyleStrip() {
   const motionOK = useMotionOK()
 
   return (
-    <section ref={sectionRef} className="bg-white pt-16 pb-8 overflow-hidden">
+    <section ref={sectionRef} data-morph data-morph-key="lifestyle" className="bg-white pt-16 pb-8 overflow-hidden">
       <div className="text-center mb-10 px-6">
         <Eyebrow align="center" className="mb-5 justify-center">All-Day Balance</Eyebrow>
         <SectionHeading className="mb-3">
