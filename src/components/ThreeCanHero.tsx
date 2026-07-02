@@ -168,6 +168,20 @@ export default function ThreeCanHero({ className = '', scrollProgressRef, scroll
       mount.addEventListener('mouseleave', handleMouseLeave)
     }
 
+    // === VISIBILITY GATING ===
+    // Both WebGL canvases otherwise render every frame forever, even scrolled far
+    // off-screen — two full Three.js renders competing with Lenis + Framer per
+    // frame. An IntersectionObserver with a generous rootMargin marks the mount
+    // in/out of view; when out, the RAF loop still runs but skips the expensive
+    // renderer.render (pose is recomputed from clock + refs at the top of every
+    // frame, so the first re-entered frame is already correct — no stale time).
+    let inView = true
+    const io = new IntersectionObserver(
+      (entries) => { inView = entries[0].isIntersecting },
+      { rootMargin: '25%' },
+    )
+    io.observe(mount)
+
     // === ANIMATION ===
     let animId: number
     const clock = new THREE.Clock()
@@ -246,7 +260,8 @@ export default function ThreeCanHero({ className = '', scrollProgressRef, scroll
 
       if (scrollProgressRef) applyScrollFx(scrollProgressRef.current)
 
-      renderer.render(scene, camera)
+      // Skip the GPU-heavy render when the canvas is scrolled out of view.
+      if (inView) renderer.render(scene, camera)
     }
 
     if (reducedMotion) {
@@ -271,6 +286,7 @@ export default function ThreeCanHero({ className = '', scrollProgressRef, scroll
     // Cleanup
     return () => {
       if (!reducedMotion) cancelAnimationFrame(animId)
+      io.disconnect()
       window.removeEventListener('resize', handleResize)
       mount.removeEventListener('mousemove', handleMouseMove)
       mount.removeEventListener('mouseleave', handleMouseLeave)

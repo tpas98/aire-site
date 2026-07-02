@@ -1,26 +1,45 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, useMotionValue } from 'framer-motion'
 
 /**
  * Continuous morphing backdrop that eliminates the hard seams between the light
  * homepage sections (white <-> off-white <-> pale-blue gradient).
  *
- * How it works:
- * - A single `fixed inset-0 -z-10` layer whose backgroundColor is a Framer motion
- *   value interpolated from the real document scroll position.
- * - The light sections carry `data-morph` and their own background is stripped
- *   (via the `[data-morph]` rule in globals-scoped inline logic; here we simply
- *   read their measured offsets) so this layer shows through them.
- * - Navy sections (Ingredients, CTA/Footer) keep solid backgrounds and paint over
- *   this layer; the stop map eases toward a deeper harmonizing hue at their edges
- *   so the transition isn't white-against-navy.
- * - The hero keeps its own designed gradient; the morph is pinned to white for the
- *   hero's scroll range and only starts easing once the hero has released.
+ * HISTORY / PERF (WP10):
+ * This used to be a `fixed inset-0` layer whose backgroundColor was a Framer
+ * motion value re-interpolated from window.scrollY on every scroll frame. A
+ * fixed, full-viewport layer changing backgroundColor forces a style recalc +
+ * full-viewport repaint EVERY scroll frame — pure main-thread/compositor cost
+ * for a purely cosmetic gradient.
  *
- * Gating: only renders (and only strips section backgrounds) when motion is OK.
- * The gate is applied by the parent — see MorphGate.
+ * It is now a zero-JS-per-frame equivalent: a single `absolute` div spanning the
+ * full document height, painted ONCE with a CSS `linear-gradient` whose stops are
+ * computed from the SAME measured section offsets and the SAME hue map + hold/lead
+ * structure as before. Because it scrolls natively with the page (it is a normal
+ * in-flow-height absolute element behind content, not a scroll listener), the GPU
+ * composites it for free — no per-frame JS, no per-frame style recalc, no repaint.
+ *
+ * The gradient is rebuilt only on resize/load (when section offsets can change),
+ * exactly as the old stop map was.
+ *
+ * How the color model maps to a gradient:
+ * - The old model painted the WHOLE viewport one flat color
+ *     C(scrollY) = colorAt(stops, scrollY / scrollable)
+ *   i.e. a temporally-varying, spatially-uniform fill.
+ * - A vertical linear-gradient is spatially-varying. To reproduce the same hue at
+ *   the same scroll position, each stop the old model showed at scroll-fraction
+ *   `at` (visible when scrollY = at * scrollable) is placed in the gradient at the
+ *   document-y that sits at the VIEWPORT CENTER at that scroll:
+ *     docY   = at * scrollable + innerHeight / 2
+ *     gradPos = docY / scrollHeight            (0..1 down the document)
+ *   The per-segment interpolation stays linear (same as colorAt), so the
+ *   hold-then-ease stop structure produces the same harmonizing seams.
+ *
+ * Section-background stripping (html.morph-on [data-morph]) is unchanged and is
+ * what lets this layer show through the light sections. Navy sections keep solid
+ * backgrounds and paint over it. Gating (motion-OK / reduced-motion) is unchanged
+ * and applied by the parent — see MorphGate.
  */
 
 // Brand light-palette hues used as morph stops. All within the existing tokens:
@@ -56,6 +75,11 @@ const SECTION_TINTS: { key: string; hold: string; lead?: string }[] = [
   // CTA + Footer (navy) cover the morph here.
 ]
 
+/**
+ * Build the same scroll-fraction stop map the old JS morph used (unchanged logic),
+ * so the color-at-scroll behavior is identical before conversion to a gradient.
+ * `at` is a fraction of the scrollable range (scrollHeight - innerHeight).
+ */
 function buildStops(): Stop[] {
   const doc = document.documentElement
   const scrollable = doc.scrollHeight - window.innerHeight
@@ -104,92 +128,83 @@ function buildStops(): Stop[] {
   return cleaned
 }
 
-function hexToRgb(hex: string): [number, number, number] {
-  const h = hex.replace('#', '')
-  return [
-    parseInt(h.slice(0, 2), 16),
-    parseInt(h.slice(2, 4), 16),
-    parseInt(h.slice(4, 6), 16),
-  ]
-}
+/**
+ * Convert the scroll-fraction stop map into a `linear-gradient(to bottom, ...)`
+ * string plus the total document height the gradient element should span.
+ *
+ * Each stop's scroll-fraction `at` becomes a document-position percentage by
+ * mapping it to the document-y that sits at the viewport CENTER at that scroll
+ * (see file header). Clamped to [0,1] and made monotonically non-decreasing so
+ * the CSS gradient stays well-formed.
+ */
+function buildGradient(stops: Stop[]): { css: string; heightPx: number } | null {
+  const doc = document.documentElement
+  const scrollHeight = doc.scrollHeight
+  const scrollable = scrollHeight - window.innerHeight
+  if (stops.length === 0 || scrollHeight <= 0) return null
 
-function lerp(a: number, b: number, t: number) {
-  return a + (b - a) * t
-}
-
-/** Interpolate the stop map at scroll progress `p` (0..1) into an rgb() string. */
-function colorAt(stops: Stop[], p: number): string {
-  if (stops.length === 0) return HUES.white
-  if (p <= stops[0].at) return stops[0].color
-  if (p >= stops[stops.length - 1].at) return stops[stops.length - 1].color
-  for (let i = 0; i < stops.length - 1; i++) {
-    const a = stops[i]
-    const b = stops[i + 1]
-    if (p >= a.at && p <= b.at) {
-      const span = b.at - a.at || 1
-      const t = (p - a.at) / span
-      const ca = hexToRgb(a.color)
-      const cb = hexToRgb(b.color)
-      return `rgb(${Math.round(lerp(ca[0], cb[0], t))}, ${Math.round(
-        lerp(ca[1], cb[1], t),
-      )}, ${Math.round(lerp(ca[2], cb[2], t))})`
-    }
+  const half = window.innerHeight / 2
+  const parts: string[] = []
+  let lastPct = -1
+  for (const s of stops) {
+    const docY = s.at * scrollable + half
+    let pct = (docY / scrollHeight) * 100
+    pct = Math.min(100, Math.max(0, pct))
+    if (pct < lastPct) pct = lastPct // enforce monotonic order for CSS
+    lastPct = pct
+    parts.push(`${s.color} ${pct.toFixed(3)}%`)
   }
-  return stops[stops.length - 1].color
+
+  // Anchor the very top and very bottom so the gradient covers the full document
+  // even before the first / after the last computed stop (the old colorAt clamped
+  // to the first/last stop color outside the range — replicate that by extending
+  // the first color up to 0% and the last color down to 100%).
+  if (parts.length) {
+    parts.unshift(`${stops[0].color} 0%`)
+    parts.push(`${stops[stops.length - 1].color} 100%`)
+  }
+
+  return {
+    css: `linear-gradient(to bottom, ${parts.join(', ')})`,
+    heightPx: scrollHeight,
+  }
 }
 
 export default function BackgroundMorph() {
-  const bg = useMotionValue<string>(HUES.white)
-  const stopsRef = useRef<Stop[]>([])
-  const [ready, setReady] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const [gradient, setGradient] = useState<{ css: string; heightPx: number } | null>(null)
 
   useEffect(() => {
-    let raf = 0
-
     const remeasure = () => {
-      stopsRef.current = buildStops()
-      update()
-      setReady(true)
-    }
-
-    const update = () => {
-      const doc = document.documentElement
-      const scrollable = doc.scrollHeight - window.innerHeight
-      const p = scrollable > 0 ? window.scrollY / scrollable : 0
-      bg.set(colorAt(stopsRef.current, p))
-    }
-
-    const onScroll = () => {
-      if (raf) return
-      raf = requestAnimationFrame(() => {
-        raf = 0
-        update()
-      })
+      const stops = buildStops()
+      setGradient(buildGradient(stops))
     }
 
     // Initial measure, then re-measure after a frame and once everything (fonts,
-    // images, 3D canvas layout) has settled, so offsets reflect final heights.
+    // images, 3D canvas layout) has settled, so offsets reflect final heights —
+    // same cadence as the old JS morph's remeasure hooks.
     remeasure()
     const rafSettle = requestAnimationFrame(remeasure)
     window.addEventListener('load', remeasure)
     window.addEventListener('resize', remeasure)
-    window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       cancelAnimationFrame(rafSettle)
-      if (raf) cancelAnimationFrame(raf)
       window.removeEventListener('load', remeasure)
       window.removeEventListener('resize', remeasure)
-      window.removeEventListener('scroll', onScroll)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
-    <motion.div
+    <div
+      ref={ref}
       aria-hidden="true"
-      className="fixed inset-0 -z-10 pointer-events-none"
-      style={{ backgroundColor: ready ? bg : HUES.white }}
+      className="absolute top-0 left-0 w-full -z-10 pointer-events-none"
+      style={{
+        height: gradient ? `${gradient.heightPx}px` : '100%',
+        backgroundColor: HUES.white,
+        backgroundImage: gradient?.css,
+      }}
     />
   )
 }

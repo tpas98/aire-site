@@ -212,13 +212,16 @@ function PinnedHero() {
   // Kinetic type moment: the three headline lines drift apart microscopically
   // while pinned — felt, not seen. Mapped over the same scrollYProgress driving
   // the rest of the hero choreography (no second useScroll).
+  // NOTE: line 2 previously also animated letter-spacing (-0.03em -> -0.01em).
+  // letter-spacing is a LAYOUT property — animating it re-flowed the headline on
+  // every pinned scroll frame (a per-frame reflow). Removed for perf; the x drifts
+  // below are GPU transforms (compositor-only) and carry the kinetic feel.
   const line1X = useTransform(scrollYProgress, [0.1, 0.6], [0, -14])
   const line2X = useTransform(scrollYProgress, [0.1, 0.6], [0, 10])
-  const line2LetterSpacing = useTransform(scrollYProgress, [0.1, 0.6], ['-0.03em', '-0.01em'])
   const line3X = useTransform(scrollYProgress, [0.1, 0.6], [0, -6])
   const headlineLineStyles: MotionStyle[] = [
     { x: line1X },
-    { x: line2X, letterSpacing: line2LetterSpacing },
+    { x: line2X },
     { x: line3X },
   ]
 
