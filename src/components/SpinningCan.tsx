@@ -22,8 +22,10 @@ const EASING_STRENGTH = 1.4
 // section transits, landing face-front (rotation.y ≈ 0 mod 2π) when the section
 // is centered (progress ≈ 0.5). Direction is positive-Y to match the hero's
 // scroll rotation (DEFAULT_SCROLL_FX.sceneRotationY is positive).
-const SCRUB_START_ANGLE = -0.9          // rad — enters mid-turn, not face-front
 const SCRUB_TOTAL_TURN = Math.PI * 2 * 1.15 // slightly more than one full turn
+// startAngle = 2π − totalTurn/2 so the FRONT label lands at rotation.y ≡ 0 (mod 2π)
+// exactly at progress 0.5 (smoothstep(0.5) = 0.5); entry still reads mid-turn.
+const SCRUB_START_ANGLE = Math.PI * 2 - SCRUB_TOTAL_TURN / 2
 // Scrubbed scale: dips slightly on entry, peaks face-front, eases back on exit.
 const SCRUB_SCALE_ENTER = 0.94
 const SCRUB_SCALE_MID = 1.0
