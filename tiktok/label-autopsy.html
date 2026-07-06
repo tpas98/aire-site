@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../aire-design-system/fonts/fonts.css">
+<style>
+  :root {
+    --aire-navy: #1a2e4a;
+    --aire-navy-mid: #2c4a6b;
+    --aire-accent: #5a9bbf;
+    --aire-sky-deep: #7ec2df;
+    --aire-sky-light: #c8e6f5;
+    --aire-muted: #6a8099;
+    --aire-teal: #84afb5;
+    --aire-bg: #edf4f9;
+    --aire-salmon: #e8907e;
+    --aire-gold: #f5d78e;
+    --aire-grad-dark: linear-gradient(135deg, #1a2e4a 0%, #0f1e32 100%);
+    --serif: "DM Serif Display", Georgia, serif;
+    --sans: "DM Sans", system-ui, sans-serif;
+    --mono: "Courier New", ui-monospace, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+    font-family: var(--sans); background: var(--aire-bg); }
+  .bg { position: absolute; inset: 0; }
+  #bgDark { background: var(--aire-grad-dark); opacity: 0; }
+  .layer { position: absolute; inset: 0; }
+
+  /* ---------- watermark (visible from first third) ---------- */
+  #watermark { position: absolute; top: 64px; left: 0; right: 0; display: flex; justify-content: center;
+    opacity: 0; z-index: 40; }
+  #watermark img { width: 148px; }
+
+  /* ---------- S1 HOOK ---------- */
+  #hook { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 84px; }
+  #hookLine { text-align: center; font-family: var(--serif); color: var(--aire-navy);
+    font-size: 96px; line-height: 1.18; letter-spacing: -0.01em; }
+  #hookLine .w { display: inline-block; opacity: 0; will-change: transform, opacity; }
+  #hookLine .em { font-style: italic; color: var(--aire-accent); }
+
+  /* ---------- S2 FULL LABEL REVEAL ---------- */
+  #reveal { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  #revealLabelWrap { width: 860px; height: 860px; border-radius: 50%; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(26,46,74,0.22); will-change: transform, opacity; }
+  #revealLabelWrap img { width: 100%; height: 100%; display: block; }
+  #revealCaption { margin-top: 56px; font-family: var(--mono); font-size: 36px; color: var(--aire-navy-mid);
+    letter-spacing: 0.02em; opacity: 0; text-align: center; }
+
+  /* ---------- S3 ZOOM STAGE (shared by 4 beats) ---------- */
+  #zoomStage { background: var(--aire-bg); }
+  #zoomViewport { position: absolute; top: 250px; left: 50%; width: 1080px; height: 1080px;
+    margin-left: -540px; border-radius: 50%; overflow: hidden; box-shadow: 0 24px 70px rgba(26,46,74,0.2); }
+  #zoomImg { position: absolute; top: 0; left: 0; width: 4096px; height: 4096px; will-change: transform;
+    transform-origin: 0 0; }
+  #ring { position: absolute; border: 5px solid var(--aire-accent); border-radius: 50%;
+    box-shadow: 0 0 0 5000px rgba(237,244,249,0.0), 0 0 34px rgba(90,155,191,0.55);
+    will-change: transform, opacity, width, height; opacity: 0; }
+  #zoomEyebrow { position: absolute; top: 152px; left: 0; right: 0; text-align: center;
+    font-family: var(--mono); font-size: 32px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--aire-navy-mid); opacity: 0; }
+
+  .callout { position: absolute; left: 90px; right: 90px; background: #fff; border-radius: 26px;
+    padding: 44px 48px; box-shadow: 0 22px 54px rgba(26,46,74,0.24); opacity: 0; will-change: transform, opacity;
+    border-left: 10px solid var(--aire-accent); }
+  .callout .name { font-family: var(--serif); font-size: 56px; color: var(--aire-navy); line-height: 1.1; }
+  .callout .desc { margin-top: 18px; font-family: var(--sans); font-size: 36px; color: var(--aire-navy-mid);
+    line-height: 1.32; }
+  .callout.top { top: 1370px; }
+  .callout.bottom { top: 1370px; }
+
+  /* ---------- S4 CONTRAST BEAT ---------- */
+  #contrast { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 84px; }
+  #contrastHead { font-family: var(--serif); font-size: 68px; color: var(--aire-navy); text-align: center;
+    line-height: 1.2; opacity: 0; will-change: transform, opacity; margin-bottom: 56px; }
+  #contrastList { display: flex; flex-direction: column; gap: 30px; align-items: center; }
+  .no-item { position: relative; font-family: var(--mono); font-size: 46px; color: var(--aire-muted);
+    opacity: 0; will-change: transform, opacity; text-align: center; }
+  .no-item .strike { position: absolute; left: 50%; top: 50%; height: 4px; background: var(--aire-salmon);
+    transform: translate(-50%, -50%) scaleX(0); transform-origin: center; will-change: transform; }
+  .no-item.final { color: var(--aire-navy); font-weight: 700; }
+
+  /* ---------- S5 COMMENT BAIT ---------- */
+  #bait { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 90px; }
+  #baitLine { font-family: var(--serif); font-size: 76px; color: var(--aire-navy); text-align: center;
+    line-height: 1.22; opacity: 0; will-change: transform, opacity; }
+  #baitLine em { font-style: italic; color: var(--aire-accent); }
+  #baitSub { margin-top: 50px; font-family: var(--mono); font-size: 34px; letter-spacing: 0.05em;
+    color: var(--aire-muted); text-transform: uppercase; opacity: 0; text-align: center; }
+
+  /* ---------- S6 BRAND (verbatim from stress-test.html) ---------- */
+  #brand { opacity: 0; }
+  #brandInner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; }
+  #brandLogo { margin-top: 260px; width: 300px; filter: brightness(0) invert(1); opacity: 0.97; }
+  #brandCan { margin-top: 70px; width: 820px; will-change: transform;
+    -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 62%, transparent 98%);
+            mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 62%, transparent 98%); }
+  #brandLine { margin-top: 56px; font-size: 40px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--aire-sky-light); font-weight: 500; }
+  #brandLine .sep { color: var(--aire-sky-deep); padding: 0 18px; }
+  #brandCta { margin-top: 64px; background: #fff; color: var(--aire-navy); font-weight: 700;
+    font-size: 42px; padding: 34px 78px; border-radius: 9999px; letter-spacing: 0.02em;
+    box-shadow: 0 16px 44px rgba(0,0,0,0.35); }
+  #brandSave { position: absolute; bottom: 330px; left: 0; right: 0; text-align: center;
+    font-size: 38px; color: var(--aire-sky-light); font-style: italic; font-family: var(--serif); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg" id="bgLight" style="background: var(--aire-bg);"></div>
+  <div class="bg" id="bgDark"></div>
+
+  <div id="watermark"><img src="../public/images/logo.png"></div>
+
+  <div class="layer" id="hook">
+    <div id="hookLine">
+      <span class="w">Most</span> <span class="w">pouch</span> <span class="w">brands</span><br>
+      <span class="w">hope</span> <span class="w">you</span> <span class="w em">never</span><br>
+      <span class="w em">read the back.</span>
+    </div>
+  </div>
+
+  <div class="layer" id="reveal">
+    <div id="revealLabelWrap"><img src="../public/images/can-back-texture-2026.png"></div>
+    <div id="revealCaption">we read it for you. line by line.</div>
+  </div>
+
+  <div class="layer" id="zoomStage">
+    <div id="zoomEyebrow">Supplement Facts &mdash; AireComplex Blend</div>
+    <div id="zoomViewport">
+      <img id="zoomImg" src="../public/images/can-back-texture-2026.png">
+      <div id="ring"></div>
+    </div>
+
+    <div class="callout" id="c1">
+      <div class="name">L-Theanine</div>
+      <div class="desc">the calm-without-drowsy amino<br>acid from green tea</div>
+    </div>
+    <div class="callout" id="c2">
+      <div class="name">Rhodiola Rosea</div>
+      <div class="desc">adaptogen studied for<br>stress fatigue</div>
+    </div>
+    <div class="callout" id="c3">
+      <div class="name">L-Tyrosine</div>
+      <div class="desc">supports focus when you're<br>running on empty</div>
+    </div>
+    <div class="callout" id="c4">
+      <div class="name">Saffron</div>
+      <div class="desc">the mood one. yes,<br>the spice.</div>
+    </div>
+  </div>
+
+  <div class="layer" id="contrast">
+    <div id="contrastHead">What you <em style="font-style:italic;color:var(--aire-accent)">won't</em><br>find on it</div>
+    <div id="contrastList">
+      <div class="no-item" id="n1">nicotine<span class="strike"></span></div>
+      <div class="no-item" id="n2">caffeine<span class="strike"></span></div>
+      <div class="no-item" id="n3">a craving loop<span class="strike"></span></div>
+      <div class="no-item final" id="n4">just the fine print</div>
+    </div>
+  </div>
+
+  <div class="layer" id="bait">
+    <div id="baitLine">What's on the back<br>of <em>your</em> can?</div>
+    <div id="baitSub">go check. report back.</div>
+  </div>
+
+  <div class="layer" id="brand">
+    <div id="brandInner">
+      <img id="brandLogo" src="../public/images/logo.png">
+      <img id="brandCan" src="../public/images/open-can-updated-cutout-2026-site-safe.png">
+      <div id="brandLine">No nicotine <span class="sep">&middot;</span> No caffeine</div>
+      <div id="brandCta">airepouches.com</div>
+    </div>
+    <div id="brandSave">Send this to someone who reads labels.</div>
+  </div>
+</div>
+
+<script>
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, t0, d) => clamp((t - t0) / d, 0, 1);
+const easeOutBack = t => { const c = 1.70158; const u = t - 1; return 1 + (c + 1) * u * u * u + c * u * u; };
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+const easeInOutCubic = t => t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+const easeInCubic = t => t * t * t;
+const $ = id => document.getElementById(id);
+const words = document.querySelectorAll('#hookLine .w');
+
+/* ---------- timeline markers ---------- */
+const TOTAL = 24.0;
+window.TOTAL_DURATION = TOTAL;
+const BRAND_START = TOTAL - 4.4; // 19.6 (fixed, verbatim brand card contract)
+
+const HOOK_END = 1.5;
+const REVEAL_START = 1.35;
+const REVEAL_END = 4.55;          // full label hold ends here
+const ZOOM_START = 4.45;
+const BEAT = 2.6;                  // per-ingredient beat length
+const B1 = ZOOM_START;             // 4.45
+const B2 = B1 + BEAT;              // 7.05
+const B3 = B2 + BEAT;              // 9.65
+const B4 = B3 + BEAT;              // 12.25
+const ZOOM_END = B4 + BEAT;        // 14.85
+const CONTRAST_START = ZOOM_END + 0.1;   // 14.95
+const CONTRAST_END = CONTRAST_START + 2.55; // 17.5
+const BAIT_START = CONTRAST_END - 0.05;      // 17.45
+const BAIT_END = BRAND_START;                 // 19.6 (2.15s bait window)
+
+/* ---------- zoom target regions in the 1024x1024 source label ---------- */
+/* zoomImg rendered at 4096x4096 (4x native). Viewport is 1080x1080 circle.
+   For a source pixel (sx,sy) to land at viewport center (540,540):
+   translateX = 540 - sx*4*scale ; translateY = 540 - sy*4*scale (scale applied via CSS transform scale). */
+const REGIONS = [
+  { name: 'L-Theanine',    sx: 405, sy: 574, s: 4.3, ringW: 330, ringH: 120, ringDx: 0, ringDy: 0 },
+  { name: 'Rhodiola Rosea',sx: 555, sy: 584, s: 3.8, ringW: 380, ringH: 160, ringDx: 0, ringDy: 0 },
+  { name: 'L-Tyrosine',    sx: 500, sy: 578, s: 4.3, ringW: 340, ringH: 120, ringDx: 0, ringDy: 55 },
+  { name: 'Saffron',       sx: 436, sy: 598, s: 4.4, ringW: 300, ringH: 120, ringDx: 0, ringDy: 0 },
+];
+
+function applyZoomTransform(region, p) {
+  // p: 0..1 progress into the beat (settle then hold): use eased scale-in from wide(1.0) to region.s
+  const scale = lerp(1.05, region.s, p);
+  const tx = 540 - region.sx * 4 * scale;
+  const ty = 540 - region.sy * 4 * scale;
+  $('zoomImg').style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+}
+
+window.seek = function(t) {
+  $('bgDark').style.opacity = 0;
+
+  // ===== watermark: visible from first third onward (after hook, through zoom beats) =====
+  const wmIn = seg(t, HOOK_END, 0.4);
+  const wmOut = 1 - seg(t, ZOOM_END + 0.2, 0.4);
+  $('watermark').style.opacity = 0.85 * wmIn * Math.max(wmOut, 0) * (t < ZOOM_END + 0.6 ? 1 : 0);
+
+  // ===== S1 hook =====
+  const hook = $('hook');
+  if (t < HOOK_END + 0.3) {
+    hook.style.display = 'flex';
+    words.forEach((w, i) => {
+      const p = seg(t, 0.06 + i * 0.09, 0.2);
+      const e = easeOutBack(p);
+      w.style.opacity = p;
+      w.style.transform = `scale(${lerp(1.3, 1, e)}) translateY(${lerp(26, 0, e)}px)`;
+    });
+    const out = easeInCubic(seg(t, HOOK_END - 0.15, 0.35));
+    hook.style.opacity = 1 - out;
+    hook.style.transform = `translateY(${-80 * out}px)`;
+  } else hook.style.display = 'none';
+
+  // ===== S2 full label reveal =====
+  const reveal = $('reveal');
+  if (t >= REVEAL_START - 0.05 && t < REVEAL_END + 0.5) {
+    reveal.style.display = 'flex';
+    const inP = easeOutBack(seg(t, REVEAL_START, 0.55));
+    const outP = easeInCubic(seg(t, REVEAL_END - 0.35, 0.45));
+    reveal.style.opacity = seg(t, REVEAL_START, 0.3) * (1 - outP);
+    $('revealLabelWrap').style.transform = `scale(${lerp(0.72, 1, inP)})`;
+    $('revealCaption').style.opacity = seg(t, REVEAL_START + 0.5, 0.4) * (1 - outP);
+  } else reveal.style.display = 'none';
+
+  // ===== S3 zoom stage (4 beats) =====
+  const zoomStage = $('zoomStage');
+  if (t >= ZOOM_START - 0.1 && t < ZOOM_END + 0.4) {
+    zoomStage.style.display = 'block';
+    const stageIn = seg(t, ZOOM_START - 0.1, 0.3);
+    const stageOut = 1 - easeInCubic(seg(t, ZOOM_END, 0.35));
+    zoomStage.style.opacity = Math.min(stageIn, stageOut);
+    $('zoomEyebrow').style.opacity = 0.9 * Math.min(stageIn, stageOut);
+
+    const beats = [
+      [B1, REGIONS[0], 'c1'],
+      [B2, REGIONS[1], 'c2'],
+      [B3, REGIONS[2], 'c3'],
+      [B4, REGIONS[3], 'c4'],
+    ];
+    let activeRegion = REGIONS[0];
+    let ringOpacity = 0, ringScale = 1, ringX = 540, ringY = 540, ringW = 210, ringH = 90;
+
+    beats.forEach(([tStart, region, calloutId], idx) => {
+      const localP = seg(t, tStart, BEAT); // 0..1 across this beat
+      const zoomP = easeInOutCubic(seg(t, tStart, 0.65)); // settle into zoom
+      const holdEnd = seg(t, tStart + BEAT - 0.5, 0.4); // begin releasing near beat end
+
+      const callout = $(calloutId);
+      const cIn = easeOutCubic(seg(t, tStart + 0.35, 0.4));
+      const cOut = easeInCubic(seg(t, tStart + BEAT - 0.45, 0.35));
+      const cOpacity = Math.min(cIn, 1) * (1 - cOut);
+      callout.style.opacity = t >= tStart - 0.05 && t < tStart + BEAT ? cOpacity : 0;
+      callout.style.transform = `translateY(${lerp(46, 0, cIn)}px)`;
+
+      if (t >= tStart - 0.05 && t < tStart + BEAT + 0.05) {
+        applyZoomTransform(region, zoomP);
+        const ringIn = easeOutCubic(seg(t, tStart + 0.15, 0.4));
+        const ringOut = 1 - easeInCubic(seg(t, tStart + BEAT - 0.4, 0.35));
+        $('ring').style.opacity = 0.9 * Math.min(ringIn, ringOut);
+        $('ring').style.width = region.ringW + 'px';
+        $('ring').style.height = region.ringH + 'px';
+        $('ring').style.left = (540 + (region.ringDx||0) - region.ringW / 2) + 'px';
+        $('ring').style.top = (540 + (region.ringDy||0) - region.ringH / 2) + 'px';
+      }
+    });
+  } else zoomStage.style.display = 'none';
+
+  // ===== S4 contrast beat =====
+  const contrast = $('contrast');
+  if (t >= CONTRAST_START - 0.1 && t < CONTRAST_END + 0.4) {
+    contrast.style.display = 'flex';
+    const inP = easeOutCubic(seg(t, CONTRAST_START, 0.4));
+    const outP = easeInCubic(seg(t, CONTRAST_END - 0.3, 0.35));
+    contrast.style.opacity = inP * (1 - outP);
+    $('contrastHead').style.opacity = inP;
+    $('contrastHead').style.transform = `translateY(${lerp(30, 0, inP)}px)`;
+
+    const items = [
+      ['n1', CONTRAST_START + 0.15],
+      ['n2', CONTRAST_START + 0.55],
+      ['n3', CONTRAST_START + 0.95],
+      ['n4', CONTRAST_START + 1.55],
+    ];
+    items.forEach(([id, tin]) => {
+      const el = $(id);
+      const p = easeOutCubic(seg(t, tin, 0.3));
+      el.style.opacity = p;
+      el.style.transform = `translateY(${lerp(24, 0, p)}px)`;
+      const strike = el.querySelector('.strike');
+      if (strike) {
+        const sp = easeInOutCubic(seg(t, tin + 0.25, 0.3));
+        strike.style.width = '104%';
+        strike.style.transform = `translate(-50%, -50%) scaleX(${sp})`;
+      }
+    });
+  } else contrast.style.display = 'none';
+
+  // ===== S5 comment bait =====
+  const bait = $('bait');
+  if (t >= BAIT_START - 0.05 && t < BAIT_END + 0.3) {
+    bait.style.display = 'flex';
+    const inP = easeOutCubic(seg(t, BAIT_START, 0.35));
+    const outP = easeInCubic(seg(t, BAIT_END - 0.35, 0.3));
+    bait.style.opacity = inP * (1 - outP);
+    $('baitLine').style.opacity = inP;
+    $('baitLine').style.transform = `translateY(${lerp(30, 0, inP)}px)`;
+    $('baitSub').style.opacity = seg(t, BAIT_START + 0.35, 0.35) * (1 - outP);
+  } else bait.style.display = 'none';
+
+  // ===== S6 brand =====
+  const brand = $('brand');
+  if (t >= BRAND_START - 0.1) {
+    brand.style.display = 'block';
+    brand.style.opacity = seg(t, BRAND_START, 0.5);
+    const rise = easeOutCubic(seg(t, BRAND_START, 0.9));
+    const bob = Math.sin((t - BRAND_START) * 1.1) * 8;
+    $('brandCan').style.transform = `translateY(${lerp(140, 0, rise) + bob}px)`;
+    const lo = easeOutCubic(seg(t, BRAND_START + 0.25, 0.6));
+    $('brandLogo').style.opacity = 0.97 * lo;
+    $('brandLogo').style.transform = `translateY(${lerp(30, 0, lo)}px)`;
+    $('brandLine').style.opacity = easeOutCubic(seg(t, BRAND_START + 0.7, 0.6));
+    const ct = easeOutBack(seg(t, BRAND_START + 1.1, 0.5));
+    $('brandCta').style.opacity = seg(t, BRAND_START + 1.1, 0.3);
+    $('brandCta').style.transform = `scale(${lerp(0.7, 1, ct)})`;
+    $('brandSave').style.opacity = seg(t, BRAND_START + 1.9, 0.6) * 0.9;
+  } else brand.style.display = 'none';
+};
+seek(0);
+</script>
+</body>
+</html>

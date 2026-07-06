@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../aire-design-system/fonts/fonts.css">
+<style>
+  :root {
+    --aire-navy: #1a2e4a;
+    --aire-navy-mid: #2c4a6b;
+    --aire-accent: #5a9bbf;
+    --aire-sky-deep: #7ec2df;
+    --aire-sky-light: #c8e6f5;
+    --aire-teal: #84afb5;
+    --aire-bg: #edf4f9;
+    --aire-muted: #6a8099;
+    --aire-salmon: #e8907e;
+    --aire-gold: #f5d78e;
+    --serif: "DM Serif Display", Georgia, serif;
+    --sans: "DM Sans", system-ui, sans-serif;
+    --mono: "Courier New", Courier, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+    font-family: var(--sans); background: var(--aire-bg); }
+  .bg { position: absolute; inset: 0; }
+  #bgDark { background: linear-gradient(135deg, #1a2e4a 0%, #0f1e32 100%); opacity: 0; }
+  .layer { position: absolute; inset: 0; }
+
+  /* watermark logo, present from first third */
+  #wm { position: absolute; top: 64px; left: 0; right: 0; display: flex; justify-content: center;
+    opacity: 0; z-index: 400; }
+  #wm img { width: 168px; opacity: 0.88; }
+
+  /* ---------- HOOK ---------- */
+  #hook { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 84px; }
+  #hookLine { text-align: center; font-family: var(--serif); color: var(--aire-navy);
+    font-size: 104px; line-height: 1.2; letter-spacing: -0.01em; }
+  #hookLine .w { display: inline-block; opacity: 0; will-change: transform, opacity; }
+  #hookLine .em { font-style: italic; color: var(--aire-navy-mid); }
+
+  /* ---------- APP UI HEADER ---------- */
+  #appHeader { position: absolute; top: 260px; left: 60px; right: 60px; opacity: 0; will-change: transform, opacity; }
+  #appHeaderRow { display: flex; align-items: center; gap: 28px; }
+  #appIcon { width: 108px; height: 108px; border-radius: 26px; background: var(--aire-navy);
+    display: flex; align-items: center; justify-content: center; flex: 0 0 108px;
+    box-shadow: 0 10px 26px rgba(26,46,74,0.28); }
+  #appIcon img { width: 62px; }
+  #appMeta { flex: 1; min-width: 0; }
+  #appName { font-family: var(--serif); font-size: 52px; color: var(--aire-navy); line-height: 1.05; }
+  #appSub { margin-top: 6px; font-size: 28px; color: var(--aire-muted); font-weight: 500; }
+  #ratingRow { margin-top: 30px; display: flex; align-items: center; gap: 20px; }
+  #ratingNum { font-family: var(--serif); font-size: 64px; color: var(--aire-navy); }
+  #ratingStarsBig { font-size: 40px; color: var(--aire-gold); letter-spacing: 4px; }
+  #ratingCount { font-size: 26px; color: var(--aire-muted); font-weight: 500; }
+  #headerRule { margin-top: 34px; height: 2px; background: rgba(26,46,74,0.12); }
+
+  /* ---------- REVIEW CARDS ---------- */
+  #cardWrap { position: absolute; top: 300px; left: 60px; right: 60px; bottom: 300px; overflow: hidden; }
+  .card { position: absolute; left: 0; right: 0; background: #fff; border-radius: 36px;
+    padding: 56px 58px 54px 58px; box-shadow: 0 18px 50px rgba(26,46,74,0.16);
+    opacity: 0; will-change: transform, opacity; border: 1px solid rgba(26,46,74,0.06); }
+  .card.salmon { background: #fff5f2; border: 1px solid rgba(232,144,126,0.35);
+    box-shadow: 0 18px 50px rgba(232,144,126,0.24); }
+  .cardTopRow { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+  .cardIdent { display: flex; align-items: center; gap: 28px; min-width: 0; }
+  .avatar { flex: 0 0 104px; width: 104px; height: 104px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: 48px; color: #fff; }
+  .reviewerName { font-size: 44px; font-weight: 700; color: var(--aire-navy); line-height: 1.15; }
+  .verified { margin-top: 8px; font-family: var(--mono); font-size: 25px; letter-spacing: 0.06em;
+    color: var(--aire-accent); font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .verified .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--aire-accent); display: inline-block; }
+  .card.salmon .verified, .card.salmon .verified .dot { color: var(--aire-salmon); background: var(--aire-salmon); }
+  .stars { font-size: 54px; letter-spacing: 7px; color: var(--aire-gold); white-space: nowrap; }
+  .stars .off { color: rgba(26,46,74,0.16); }
+  .card.salmon .stars .off { color: rgba(232,144,126,0.28); }
+  .cardBody { margin-top: 38px; font-size: 42px; line-height: 1.42; color: var(--aire-navy); font-weight: 500; }
+  .cardBody em { font-style: italic; color: var(--aire-accent); }
+  .card.salmon .cardBody em { color: var(--aire-salmon); }
+  .cardFoot { margin-top: 38px; display: flex; align-items: center; justify-content: space-between; }
+  .helpful { font-size: 30px; color: var(--aire-muted); font-weight: 500; font-family: var(--mono); }
+  .helpful b { color: var(--aire-navy); }
+  .joke-caption { margin-top: 26px; font-family: var(--serif); font-style: italic; font-size: 33px;
+    color: var(--aire-salmon); opacity: 0; will-change: transform, opacity; }
+
+  /* product shot: docked below the card zone (cardWrap bottom = 1620px), never overlaps cards */
+  #productShot { position: absolute; left: 0; right: 0; top: 1650px; display: flex; justify-content: center;
+    opacity: 0; will-change: transform, opacity; z-index: 250; }
+  #productShot img { width: 480px; filter: drop-shadow(0 20px 36px rgba(26,46,74,0.28)); }
+
+  /* ---------- COMMENT BAIT ---------- */
+  #commentBait { display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 44px; opacity: 0; padding: 0 90px; }
+  #commentBait .cb { font-family: var(--serif); font-size: 84px; line-height: 1.2; color: #fff;
+    text-align: center; opacity: 0; will-change: transform, opacity; }
+  #commentBait .cb em { font-style: italic; color: var(--aire-sky-deep); }
+  #commentBait .cbSub { font-size: 32px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--aire-sky-light); font-weight: 600; opacity: 0; }
+
+  /* ---------- BRAND (verbatim block from stress-test.html) ---------- */
+  #brand { opacity: 0; }
+  #brandInner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; }
+  #brandLogo { margin-top: 260px; width: 300px; filter: brightness(0) invert(1); opacity: 0.97; }
+  #brandCan { margin-top: 70px; width: 820px; will-change: transform;
+    -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 62%, transparent 98%);
+            mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 62%, transparent 98%); }
+  #brandLine { margin-top: 56px; font-size: 40px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--aire-sky-light); font-weight: 500; }
+  #brandLine .sep { color: var(--aire-sky-deep); padding: 0 18px; }
+  #brandCta { margin-top: 64px; background: #fff; color: var(--aire-navy); font-weight: 700;
+    font-size: 42px; padding: 34px 78px; border-radius: 9999px; letter-spacing: 0.02em;
+    box-shadow: 0 16px 44px rgba(0,0,0,0.35); }
+  #brandSave { position: absolute; bottom: 330px; left: 0; right: 0; text-align: center;
+    font-size: 38px; color: var(--aire-sky-light); font-style: italic; font-family: var(--serif); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg" id="bgLight" style="background: var(--aire-bg);"></div>
+  <div class="bg" id="bgDark"></div>
+
+  <div id="wm"><img src="../public/images/logo.png"></div>
+
+  <div class="layer" id="hook">
+    <div id="hookLine">
+      <span class="w">we</span> <span class="w">asked</span> <span class="w">your</span> <span class="w">body</span><br>
+      <span class="w">for</span> <span class="w">reviews.</span><br>
+      <span class="w em">it</span> <span class="w em">had</span> <span class="w em">notes.</span>
+    </div>
+  </div>
+
+  <div class="layer" id="reviewScreen">
+    <div id="appHeader">
+      <div id="appHeaderRow">
+        <div id="appIcon"><img src="../public/images/logo.png"></div>
+        <div id="appMeta">
+          <div id="appName">Your Body</div>
+          <div id="appSub">Reviews &middot; Since You Switched</div>
+        </div>
+      </div>
+      <div id="ratingRow">
+        <div id="ratingNum">4.6</div>
+        <div id="ratingStarsBig">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div id="ratingCount">5 reviews</div>
+      </div>
+      <div id="headerRule"></div>
+    </div>
+    <div id="cardWrap"></div>
+    <div id="productShot"><img src="../public/images/three-cans-new.png"></div>
+  </div>
+
+  <div class="layer" id="commentBait">
+    <div class="cb" id="cb1">which body part<br>writes <em>your</em> review?</div>
+    <div class="cbSub">comments.</div>
+  </div>
+
+  <div class="layer" id="brand">
+    <div id="brandInner">
+      <img id="brandLogo" src="../public/images/logo.png">
+      <img id="brandCan" src="../public/images/open-can-updated-cutout-2026-site-safe.png">
+      <div id="brandLine">No nicotine <span class="sep">&middot;</span> No caffeine</div>
+      <div id="brandCta">airepouches.com</div>
+    </div>
+    <div id="brandSave">Send this to someone who just switched.</div>
+  </div>
+</div>
+
+<script>
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, t0, d) => clamp((t - t0) / d, 0, 1);
+const easeOutBack = t => { const c = 1.70158; const u = t - 1; return 1 + (c + 1) * u * u * u + c * u * u; };
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+const easeInCubic = t => t * t * t;
+const $ = id => document.getElementById(id);
+const words = document.querySelectorAll('#hookLine .w');
+
+// ---------- review data ----------
+// [name, initial, avatarColor, stars(0-5, can be .5? no - use whole+empty), body(html), helpful, salmon?, caption]
+const REVIEWS = [
+  { name: 'Heart', initial: 'H', color: '#5a9bbf', stars: 5,
+    body: 'resting rate finally believable. no more <em>2pm sprint</em> while sitting still.',
+    helpful: 214 },
+  { name: 'Sleep', initial: 'S', color: '#2c4a6b', stars: 5,
+    body: 'we are actually doing <em>REM</em> again. who is she.',
+    helpful: 331 },
+  { name: 'Jaw', initial: 'J', color: '#84afb5', stars: 4,
+    body: 'unclenched for the first time since 2023. one star off for <em>the years of service.</em>',
+    helpful: 178 },
+  { name: 'Brain, 3AM Dept.', initial: 'B', color: '#1a2e4a', stars: 5,
+    body: 'the &ldquo;one more pouch&rdquo; notification stopped. <em>eerily quiet.</em> love it.',
+    helpful: 402 },
+  { name: 'Cravings', initial: 'C', color: '#e8907e', stars: 1,
+    body: 'terrible product. i literally have <em>nothing to do</em> anymore.',
+    helpful: 519, salmon: true, caption: 'the only bad review is the point' },
+];
+
+// build stars markup (filled + off)
+function starsHtml(n) {
+  let h = '';
+  for (let i = 0; i < 5; i++) h += i < n ? '&#9733;' : '<span class="off">&#9733;</span>';
+  return h;
+}
+
+// build card DOM
+const wrap = $('cardWrap');
+const cardEls = REVIEWS.map((r, i) => {
+  const d = document.createElement('div');
+  d.className = 'card' + (r.salmon ? ' salmon' : '');
+  d.innerHTML = `
+    <div class="cardTopRow">
+      <div class="cardIdent">
+        <div class="avatar" style="background:${r.color}">${r.initial}</div>
+        <div>
+          <div class="reviewerName">${r.name}</div>
+          <div class="verified"><span class="dot"></span>VERIFIED SWITCH</div>
+        </div>
+      </div>
+      <div class="stars" id="stars${i}"></div>
+    </div>
+    <div class="cardBody">${r.body}</div>
+    <div class="cardFoot">
+      <div class="helpful">Helpful (<b>${r.helpful}</b>)</div>
+    </div>
+    ${r.caption ? `<div class="joke-caption" id="caption${i}">${r.caption}</div>` : ''}
+  `;
+  wrap.appendChild(d);
+  return d;
+});
+
+// ---------- timeline ----------
+const HOOK_END = 1.5;
+const UI_START = 1.5;          // app header fades in
+const CARD_START = 2.3;        // first card begins entering
+const CARD_DUR = 3.0;          // time between each card's entrance
+const CARD_ANIM = 0.55;        // entrance animation length
+const STAR_FILL_DUR = 0.65;    // star tick-fill duration per card, staggered
+const PRODUCT_SHOT_AT = CARD_START + CARD_DUR * 4 + 0.5; // appears just before/with Cravings card (index 4)
+const COMMENT_START = 17.6;
+const BRAND_START = 19.6;      // TOTAL_DURATION - 4.4
+const TOTAL = 24.0;
+window.TOTAL_DURATION = TOTAL;
+
+// Card layout: cards accumulate, scrolling older ones up deterministically.
+// Each card has a fixed "slot index" (order of entrance). At any time t, the number
+// of visible cards determines the total stack height, and we compute each card's
+// target Y so the stack is bottom-anchored to the newest (most recent) card's resting
+// position, with earlier cards pushed upward above it as more arrive.
+const CARD_GAP = 26; // vertical gap between stacked cards
+
+window.seek = function(t) {
+  $('bgDark').style.opacity = seg(t, COMMENT_START - 0.5, 0.6) * (1 - seg(t, BRAND_START - 0.3, 0.4)) +
+                               seg(t, BRAND_START - 0.3, 0.5);
+
+  // watermark logo: present from first third onward (roughly t > TOTAL/3), hidden during hook & brand
+  const wmOn = seg(t, HOOK_END + 0.3, 0.5) * (1 - seg(t, COMMENT_START - 0.2, 0.4));
+  $('wm').style.opacity = wmOn * 0.9;
+
+  // ===== hook =====
+  const hook = $('hook');
+  if (t < HOOK_END + 0.3) {
+    hook.style.display = 'flex';
+    words.forEach((w, i) => {
+      const p = seg(t, 0.05 + i * 0.075, 0.2);
+      const e = easeOutBack(p);
+      w.style.opacity = p;
+      w.style.transform = `scale(${lerp(1.3, 1, e)}) translateY(${lerp(26, 0, e)}px)`;
+    });
+    const out = easeInCubic(seg(t, HOOK_END - 0.35, 0.45));
+    hook.style.opacity = 1 - out;
+    hook.style.transform = `translateY(${-80 * out}px)`;
+  } else hook.style.display = 'none';
+
+  // ===== review screen (app header + cards) =====
+  const screen = $('reviewScreen');
+  const screenOn = t >= UI_START - 0.1 && t < COMMENT_START + 0.5;
+  screen.style.display = screenOn ? 'block' : 'none';
+  if (screenOn) {
+    const fadeOut = easeInCubic(seg(t, COMMENT_START - 0.7, 0.4));
+    screen.style.opacity = seg(t, UI_START, 0.5) * (1 - fadeOut);
+
+    // header: fully visible only while first card hasn't arrived yet; once cards start
+    // accumulating, the header scrolls up and fades out like a real feed being scrolled,
+    // so it can never bleed through behind stacked cards.
+    const hp = easeOutCubic(seg(t, UI_START, 0.6));
+    const headerScroll = easeInCubic(seg(t, CARD_START + 0.15, 0.5));
+    $('appHeader').style.opacity = hp * (1 - headerScroll);
+    $('appHeader').style.transform = `translateY(${lerp(-40, 0, hp) - headerScroll * 90}px)`;
+
+    // determine which cards have "arrived" (entrance start time passed)
+    let numArrived = 0;
+    for (let i = 0; i < REVIEWS.length; i++) {
+      const born = CARD_START + i * CARD_DUR;
+      if (t >= born) numArrived = i + 1;
+    }
+    // stack: measure natural heights via offsetHeight (cards are same-width, near-fixed height per content,
+    // but jaw/cravings differ slightly + caption). Use actual DOM height for accuracy.
+    const heights = cardEls.map(el => el.offsetHeight);
+
+    // Center-anchored feed: the newest card's TOP docks at DOCK_Y (roughly the vertical
+    // middle of #cardWrap), so a full card plus a peek of the previous one both sit
+    // comfortably in frame — no dead space below, no collision with the header above.
+    // When a new card arrives, all earlier cards are pushed upward by (new card's height
+    // + gap). Cards fade out gradually over a generous scroll distance as they rise past
+    // the visible zone, so the transition reads as a real feed scroll rather than a cut.
+    const cardWrapH = $('cardWrap').offsetHeight;
+    const DOCK_Y = Math.round(cardWrapH * 0.40); // newest card's top, within #cardWrap
+    const FADE_DISTANCE = 260; // fully faded by the time topEdge reaches this many px from 0
+    for (let i = 0; i < REVIEWS.length; i++) {
+      const el = cardEls[i];
+      const born = CARD_START + i * CARD_DUR;
+      const p = easeOutBack(seg(t, born, CARD_ANIM));
+      const arrived = t >= born;
+      if (!arrived) { el.style.opacity = 0; el.style.transform = `translateY(60px) scale(0.94)`; continue; }
+
+      // resting Y: sum heights+gaps of all LATER cards that have arrived, pushed above them
+      let stackAbove = 0;
+      for (let j = i + 1; j < numArrived; j++) {
+        stackAbove += heights[j] + CARD_GAP;
+      }
+      const restY = DOCK_Y - stackAbove;
+      const enterY = restY + 90; // slides up into place from slightly below
+      const y = lerp(enterY, restY, p);
+      const scale = lerp(0.94, 1, p);
+
+      // fade out well BEFORE the card's top edge reaches the container's top boundary,
+      // so it's never visibly clipped mid-text by #cardWrap's overflow:hidden.
+      const topEdge = y;
+      const scrollFade = clamp(topEdge / FADE_DISTANCE, 0, 1);
+      el.style.opacity = p * scrollFade;
+      el.style.transform = `translateY(${y}px) scale(${scale})`;
+      el.style.zIndex = 100 + i;
+
+      // stars tick-fill: reveal one star at a time shortly after card lands
+      const starEl = document.getElementById('stars' + i);
+      if (starEl) {
+        const starStartT = born + 0.35;
+        let html = '';
+        for (let s = 0; s < 5; s++) {
+          const sp = seg(t, starStartT + s * (STAR_FILL_DUR / 5), STAR_FILL_DUR / 5);
+          const filled = s < REVIEWS[i].stars;
+          const scaleS = lerp(0.4, 1, easeOutBack(sp));
+          const op = filled ? sp : 0.3;
+          html += `<span style="display:inline-block;opacity:${filled ? 1 : op};transform:scale(${filled ? scaleS : 1});${filled ? '' : 'color:rgba(26,46,74,0.16)'}">&#9733;</span>`;
+        }
+        if (REVIEWS[i].salmon) {
+          html = html.replaceAll('color:rgba(26,46,74,0.16)', 'color:rgba(232,144,126,0.28)');
+        }
+        starEl.innerHTML = html;
+      }
+
+      // joke caption for Cravings card
+      if (REVIEWS[i].caption) {
+        const capEl = document.getElementById('caption' + i);
+        if (capEl) {
+          const cp = easeOutCubic(seg(t, born + 0.9, 0.5));
+          capEl.style.opacity = cp;
+          capEl.style.transform = `translateY(${lerp(14, 0, cp)}px)`;
+        }
+      }
+    }
+
+    // product shot: rises with the Cravings beat
+    const psP = easeOutCubic(seg(t, PRODUCT_SHOT_AT, 0.7));
+    const psOut = easeInCubic(seg(t, COMMENT_START - 0.6, 0.5));
+    $('productShot').style.opacity = psP * (1 - psOut);
+    $('productShot').style.transform = `translateY(${lerp(50, 0, psP)}px)`;
+  }
+
+  // ===== comment bait =====
+  const cbait = $('commentBait');
+  if (t >= COMMENT_START - 0.3 && t < BRAND_START + 0.5) {
+    cbait.style.display = 'flex';
+    cbait.style.opacity = 1 - easeInCubic(seg(t, BRAND_START - 0.4, 0.4));
+    const p1 = easeOutCubic(seg(t, COMMENT_START - 0.15, 0.6));
+    $('cb1').style.opacity = p1;
+    $('cb1').style.transform = `translateY(${lerp(50, 0, p1)}px)`;
+    $('.cbSub');
+    const p2 = easeOutCubic(seg(t, COMMENT_START + 0.85, 0.5));
+    document.querySelector('.cbSub').style.opacity = p2;
+  } else cbait.style.display = 'none';
+
+  // ===== brand (verbatim logic from stress-test.html) =====
+  const brand = $('brand');
+  if (t >= BRAND_START - 0.1) {
+    brand.style.display = 'block';
+    brand.style.opacity = seg(t, BRAND_START, 0.5);
+    const rise = easeOutCubic(seg(t, BRAND_START, 0.9));
+    const bob = Math.sin((t - BRAND_START) * 1.1) * 8;
+    $('brandCan').style.transform = `translateY(${lerp(140, 0, rise) + bob}px)`;
+    const lo = easeOutCubic(seg(t, BRAND_START + 0.25, 0.6));
+    $('brandLogo').style.opacity = 0.97 * lo;
+    $('brandLogo').style.transform = `translateY(${lerp(30, 0, lo)}px)`;
+    $('brandLine').style.opacity = easeOutCubic(seg(t, BRAND_START + 0.7, 0.6));
+    const ct = easeOutBack(seg(t, BRAND_START + 1.1, 0.5));
+    $('brandCta').style.opacity = seg(t, BRAND_START + 1.1, 0.3);
+    $('brandCta').style.transform = `scale(${lerp(0.7, 1, ct)})`;
+    $('brandSave').style.opacity = seg(t, BRAND_START + 1.9, 0.6) * 0.9;
+  } else brand.style.display = 'none';
+};
+seek(0);
+</script>
+</body>
+</html>
