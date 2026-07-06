@@ -48,27 +48,32 @@
   #revealCaption { margin-top: 56px; font-family: var(--mono); font-size: 36px; color: var(--aire-navy-mid);
     letter-spacing: 0.02em; opacity: 0; text-align: center; }
 
-  /* ---------- S3 ZOOM STAGE (shared by 4 beats) ---------- */
+  /* ---------- S3 ZOOM STAGE (shared by 4 beats) — "crisp lens" redesign ---------- */
   #zoomStage { background: var(--aire-bg); }
-  #zoomViewport { position: absolute; top: 250px; left: 50%; width: 1080px; height: 1080px;
-    margin-left: -540px; border-radius: 50%; overflow: hidden; box-shadow: 0 24px 70px rgba(26,46,74,0.2); }
-  #zoomImg { position: absolute; top: 0; left: 0; width: 4096px; height: 4096px; will-change: transform;
-    transform-origin: 0 0; }
-  #ring { position: absolute; border: 5px solid var(--aire-accent); border-radius: 50%;
-    box-shadow: 0 0 0 5000px rgba(237,244,249,0.0), 0 0 34px rgba(90,155,191,0.55);
-    will-change: transform, opacity, width, height; opacity: 0; }
-  #zoomEyebrow { position: absolute; top: 152px; left: 0; right: 0; text-align: center;
+  #labelWrap { position: absolute; top: 300px; left: 130px; width: 820px; height: 820px;
+    border-radius: 40px; overflow: hidden; box-shadow: 0 24px 70px rgba(26,46,74,0.2);
+    background: #fff; }
+  #labelWrap img { position: absolute; top: 0; left: 0; width: 820px; height: 820px; display: block; }
+  #zoomEyebrow { position: absolute; top: 200px; left: 0; right: 0; text-align: center;
     font-family: var(--mono); font-size: 32px; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--aire-navy-mid); opacity: 0; }
+    color: var(--aire-navy-mid); opacity: 0; z-index: 30; }
 
-  .callout { position: absolute; left: 90px; right: 90px; background: #fff; border-radius: 26px;
+  /* magnifier lens: white fill, accent ring, soft shadow, floats above the label */
+  #lens { position: absolute; width: 420px; height: 420px; border-radius: 50%;
+    background: #fff; border: 7px solid var(--aire-accent);
+    box-shadow: 0 20px 46px rgba(26,46,74,0.32), 0 0 0 10px rgba(90,155,191,0.14);
+    opacity: 0; will-change: transform, opacity, left, top; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; z-index: 25; padding: 0 26px; }
+  #lensWord { font-family: var(--sans); font-weight: 800; color: var(--aire-navy);
+    text-align: center; line-height: 1.14; letter-spacing: -0.01em; white-space: pre-line;
+    will-change: opacity, transform; width: 100%; }
+
+  .callout { position: absolute; top: 1370px; left: 90px; right: 90px; background: #fff; border-radius: 26px;
     padding: 44px 48px; box-shadow: 0 22px 54px rgba(26,46,74,0.24); opacity: 0; will-change: transform, opacity;
     border-left: 10px solid var(--aire-accent); }
   .callout .name { font-family: var(--serif); font-size: 56px; color: var(--aire-navy); line-height: 1.1; }
   .callout .desc { margin-top: 18px; font-family: var(--sans); font-size: 36px; color: var(--aire-navy-mid);
     line-height: 1.32; }
-  .callout.top { top: 1370px; }
-  .callout.bottom { top: 1370px; }
 
   /* ---------- S4 CONTRAST BEAT ---------- */
   #contrast { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 84px; }
@@ -128,9 +133,11 @@
 
   <div class="layer" id="zoomStage">
     <div id="zoomEyebrow">Supplement Facts &mdash; AireComplex Blend</div>
-    <div id="zoomViewport">
-      <img id="zoomImg" src="../public/images/can-back-texture-2026.png">
-      <div id="ring"></div>
+    <div id="labelWrap">
+      <img src="../public/images/can-back-texture-2026.png">
+    </div>
+    <div id="lens">
+      <div id="lensWord"></div>
     </div>
 
     <div class="callout" id="c1">
@@ -208,23 +215,44 @@ const CONTRAST_END = CONTRAST_START + 2.55; // 17.5
 const BAIT_START = CONTRAST_END - 0.05;      // 17.45
 const BAIT_END = BRAND_START;                 // 19.6 (2.15s bait window)
 
-/* ---------- zoom target regions in the 1024x1024 source label ---------- */
-/* zoomImg rendered at 4096x4096 (4x native). Viewport is 1080x1080 circle.
-   For a source pixel (sx,sy) to land at viewport center (540,540):
-   translateX = 540 - sx*4*scale ; translateY = 540 - sy*4*scale (scale applied via CSS transform scale). */
+/* ---------- lens anchor points, measured against the source 1024x1024 label ---------- */
+/* Coordinates measured directly on public/images/can-back-texture-2026.png by cropping the
+   Supplement Facts / AireComplex Blend ingredient line at 3x, gridding it, and confirming each
+   word center with a red dot overlay (verified visually, not guessed). Source pixel centers:
+     L-Theanine  -> (374, 579)
+     L-Tyrosine  -> (462, 579)
+     Rhodiola    -> (530, 579)
+     Rosea       -> (365, 596)
+     Saffron     -> (420, 596)
+   The "Rhodiola Rosea" beat anchors on the midpoint between the two words (they wrap across
+   two label lines), so the lens sits over both halves of the ingredient name. */
+const LABEL_X0 = 130, LABEL_Y0 = 300, LABEL_SCALE = 820 / 1024; // displayed label box: sharp, ~0.80x native
+
+function toDisp(sx, sy) { return { x: LABEL_X0 + sx * LABEL_SCALE, y: LABEL_Y0 + sy * LABEL_SCALE }; }
+
+/* wordSize tuned per-word so the rendered text (DM Sans, weight 800) sits well inside the
+   420px lens with clear margin on every side — verified visually against QC stills. */
 const REGIONS = [
-  { name: 'L-Theanine',    sx: 405, sy: 574, s: 4.3, ringW: 330, ringH: 120, ringDx: 0, ringDy: 0 },
-  { name: 'Rhodiola Rosea',sx: 555, sy: 584, s: 3.8, ringW: 380, ringH: 160, ringDx: 0, ringDy: 0 },
-  { name: 'L-Tyrosine',    sx: 500, sy: 578, s: 4.3, ringW: 340, ringH: 120, ringDx: 0, ringDy: 55 },
-  { name: 'Saffron',       sx: 436, sy: 598, s: 4.4, ringW: 300, ringH: 120, ringDx: 0, ringDy: 0 },
+  { name: 'L-Theanine',     word: 'L-Theanine',     wordSize: 78,
+    ...toDisp(374, 579) },
+  { name: 'Rhodiola Rosea', word: 'Rhodiola\nRosea', wordSize: 82,
+    ...toDisp((530 + 365) / 2, (579 + 596) / 2) },
+  { name: 'L-Tyrosine',     word: 'L-Tyrosine',     wordSize: 78,
+    ...toDisp(462, 579) },
+  { name: 'Saffron',        word: 'Saffron',        wordSize: 108,
+    ...toDisp(420, 596) },
 ];
 
-function applyZoomTransform(region, p) {
-  // p: 0..1 progress into the beat (settle then hold): use eased scale-in from wide(1.0) to region.s
-  const scale = lerp(1.05, region.s, p);
-  const tx = 540 - region.sx * 4 * scale;
-  const ty = 540 - region.sy * 4 * scale;
-  $('zoomImg').style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+const LENS_SIZE = 420;
+
+function applyLensPosition(x, y) {
+  $('lens').style.left = (x - LENS_SIZE / 2) + 'px';
+  $('lens').style.top = (y - LENS_SIZE / 2) + 'px';
+}
+
+function setLensWord(region) {
+  $('lensWord').textContent = region.word;
+  $('lensWord').style.fontSize = region.wordSize + 'px';
 }
 
 window.seek = function(t) {
@@ -276,31 +304,52 @@ window.seek = function(t) {
       [B3, REGIONS[2], 'c3'],
       [B4, REGIONS[3], 'c4'],
     ];
-    let activeRegion = REGIONS[0];
-    let ringOpacity = 0, ringScale = 1, ringX = 540, ringY = 540, ringW = 210, ringH = 90;
+
+    // ---- lens glide: find current + next region and eased-blend the anchor position ----
+    // Glide window: last 0.7s of each beat crossfades position/word toward the next beat's region.
+    const GLIDE = 0.7;
+    let curIdx = 0;
+    for (let i = 0; i < beats.length; i++) { if (t >= beats[i][0] - 0.1) curIdx = i; }
+    const curBeat = beats[curIdx];
+    const nextBeat = beats[curIdx + 1];
+    const curRegion = curBeat[1];
+
+    let lensX = curRegion.x, lensY = curRegion.y;
+    let showWord = curRegion, wordBlend = 1; // 1 = fully showing curRegion's word, 0 = next region's word
+
+    if (nextBeat) {
+      const glideStart = nextBeat[0] - GLIDE;
+      const glideP = seg(t, glideStart, GLIDE);
+      if (glideP > 0) {
+        const eased = easeInOutCubic(glideP);
+        lensX = lerp(curRegion.x, nextBeat[1].x, eased);
+        lensY = lerp(curRegion.y, nextBeat[1].y, eased);
+        // swap crisp text at the midpoint of the glide so it never looks smeared
+        wordBlend = glideP < 0.5 ? 1 : 0;
+        showWord = glideP < 0.5 ? curRegion : nextBeat[1];
+      }
+    }
+
+    applyLensPosition(lensX, lensY);
+    setLensWord(showWord);
+
+    // lens visible across the whole zoom-stage window (first appears just before B1, fades after B4)
+    const lensIn = easeOutCubic(seg(t, B1 - 0.15, 0.35));
+    const lensOut = 1 - easeInCubic(seg(t, ZOOM_END - 0.4, 0.35));
+    $('lens').style.opacity = Math.min(lensIn, lensOut);
+    // subtle settle-scale pop each time the lens arrives at a new word (not mid-glide)
+    const arrivedP = nextBeat ? 1 - easeInOutCubic(seg(t, nextBeat[0] - GLIDE, GLIDE)) : 1;
+    const popIn = easeOutBack(seg(t, curBeat[0] - 0.1, 0.3));
+    const settleScale = lerp(0.94, 1, Math.min(popIn, 1)) * lerp(1, 0.985, 1 - arrivedP);
+    $('lens').style.transform = `scale(${settleScale})`;
 
     beats.forEach(([tStart, region, calloutId], idx) => {
-      const localP = seg(t, tStart, BEAT); // 0..1 across this beat
-      const zoomP = easeInOutCubic(seg(t, tStart, 0.65)); // settle into zoom
-      const holdEnd = seg(t, tStart + BEAT - 0.5, 0.4); // begin releasing near beat end
-
       const callout = $(calloutId);
       const cIn = easeOutCubic(seg(t, tStart + 0.35, 0.4));
       const cOut = easeInCubic(seg(t, tStart + BEAT - 0.45, 0.35));
       const cOpacity = Math.min(cIn, 1) * (1 - cOut);
       callout.style.opacity = t >= tStart - 0.05 && t < tStart + BEAT ? cOpacity : 0;
       callout.style.transform = `translateY(${lerp(46, 0, cIn)}px)`;
-
-      if (t >= tStart - 0.05 && t < tStart + BEAT + 0.05) {
-        applyZoomTransform(region, zoomP);
-        const ringIn = easeOutCubic(seg(t, tStart + 0.15, 0.4));
-        const ringOut = 1 - easeInCubic(seg(t, tStart + BEAT - 0.4, 0.35));
-        $('ring').style.opacity = 0.9 * Math.min(ringIn, ringOut);
-        $('ring').style.width = region.ringW + 'px';
-        $('ring').style.height = region.ringH + 'px';
-        $('ring').style.left = (540 + (region.ringDx||0) - region.ringW / 2) + 'px';
-        $('ring').style.top = (540 + (region.ringDy||0) - region.ringH / 2) + 'px';
-      }
     });
   } else zoomStage.style.display = 'none';
 
