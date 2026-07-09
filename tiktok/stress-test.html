@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../aire-design-system/fonts/fonts.css">
+<style>
+  :root {
+    --aire-navy: #1a2e4a;
+    --aire-navy-mid: #2c4a6b;
+    --aire-accent: #5a9bbf;
+    --aire-sky-deep: #7ec2df;
+    --aire-sky-light: #c8e6f5;
+    --aire-off-white: #f3f8fc;
+    --aire-muted: #6a8099;
+    --aire-teal: #84afb5;
+    --aire-bg: #edf4f9;
+    --aire-grad-dark: linear-gradient(135deg, #1a2e4a 0%, #0f1e32 100%);
+    --serif: "DM Serif Display", Georgia, serif;
+    --sans: "DM Sans", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+    font-family: var(--sans); background: var(--aire-bg); }
+  .bg { position: absolute; inset: 0; }
+  #bgDark { background: var(--aire-grad-dark); opacity: 0; }
+  .layer { position: absolute; inset: 0; }
+
+  /* ---------- S1 HOOK ---------- */
+  #hook { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 80px; }
+  #hookLine { text-align: center; font-family: var(--serif); color: var(--aire-navy);
+    font-size: 128px; line-height: 1.14; letter-spacing: -0.01em; }
+  #hookLine .w { display: inline-block; opacity: 0; will-change: transform, opacity; }
+  #hookLine .em { font-style: italic; color: var(--aire-navy-mid); }
+  #hookSub { margin-top: 64px; opacity: 0; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+  #hookSub .rule { width: 72px; height: 2px; background: var(--aire-accent); }
+  #hookSub .t { font-size: 34px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--aire-muted); font-weight: 500; }
+
+  /* ---------- S2 ILLUSION ---------- */
+  #illusion { opacity: 0; }
+  #snakes { position: absolute; inset: 0; }
+  #capScrim { position: absolute; left: 0; right: 0; bottom: 0; height: 860px;
+    background: linear-gradient(to top, rgba(15,30,50,0.92) 0%, rgba(15,30,50,0.78) 45%, rgba(15,30,50,0) 100%); }
+  #capTopScrim { position: absolute; left: 0; right: 0; top: 0; height: 360px;
+    background: linear-gradient(to bottom, rgba(15,30,50,0.72) 0%, rgba(15,30,50,0) 100%); }
+  #wm { position: absolute; top: 64px; left: 50%; transform: translateX(-50%); width: 160px; filter: brightness(0) invert(1); opacity: 0; }
+  #capEyebrow { position: absolute; top: 178px; left: 0; right: 0; text-align: center;
+    font-size: 32px; letter-spacing: 0.24em; text-transform: uppercase; font-weight: 600; color: #fff; opacity: 0;
+    text-shadow: 0 2px 18px rgba(15,30,50,0.9); }
+  .cap { position: absolute; left: 90px; right: 90px; bottom: 270px; text-align: center;
+    font-family: var(--serif); font-size: 66px; line-height: 1.24; color: #fff; opacity: 0; will-change: transform, opacity;
+    text-shadow: 0 2px 24px rgba(15,30,50,0.8); }
+  .cap em { font-style: italic; color: var(--aire-sky-deep); }
+
+  /* ---------- S3 PAYOFF ---------- */
+  #payoff { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 60px; opacity: 0; padding: 0 90px; }
+  #payoff .p { font-family: var(--serif); font-size: 100px; line-height: 1.18; color: #fff; text-align: center; opacity: 0; will-change: transform, opacity; }
+  #payoff .p em { font-style: italic; color: var(--aire-sky-deep); }
+
+  /* ---------- S4 BRAND ---------- */
+  #brand { opacity: 0; }
+  #brandInner { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; }
+  #brandLogo { margin-top: 260px; width: 300px; filter: brightness(0) invert(1); opacity: 0.97; }
+  #brandCan { margin-top: 70px; width: 820px; will-change: transform;
+    -webkit-mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 62%, transparent 98%);
+            mask-image: radial-gradient(ellipse 92% 88% at 50% 50%, #000 62%, transparent 98%); }
+  #brandLine { margin-top: 56px; font-size: 40px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--aire-sky-light); font-weight: 500; }
+  #brandLine .sep { color: var(--aire-sky-deep); padding: 0 18px; }
+  #brandCta { margin-top: 64px; background: #fff; color: var(--aire-navy); font-weight: 700;
+    font-size: 42px; padding: 34px 78px; border-radius: 9999px; letter-spacing: 0.02em;
+    box-shadow: 0 16px 44px rgba(0,0,0,0.35); }
+  #brandSave { position: absolute; bottom: 330px; left: 0; right: 0; text-align: center;
+    font-size: 38px; color: var(--aire-sky-light); font-style: italic; font-family: var(--serif); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="bg" id="bgLight" style="background: var(--aire-bg);"></div>
+  <div class="bg" id="bgDark"></div>
+
+  <div class="layer" id="hook">
+    <div id="hookLine">
+      <span class="w">This</span> <span class="w">image</span> <span class="w">is</span><br>
+      <span class="w em">completely</span><br>
+      <span class="w em">still.</span>
+    </div>
+    <div id="hookSub">
+      <div class="rule"></div>
+      <div class="t">If it moves &mdash; keep watching</div>
+    </div>
+  </div>
+
+  <div class="layer" id="illusion">
+    <canvas id="snakes" width="1080" height="1920"></canvas>
+    <div id="capTopScrim"></div>
+    <img id="wm" src="../public/images/logo.png">
+    <div id="capScrim"></div>
+    <div id="capEyebrow">A 10-second stress test</div>
+    <div class="cap" id="cap1">Not a video. Not a GIF.<br>A frozen image.</div>
+    <div class="cap" id="cap2">The more it drifts,<br>the more <em>overstimulated</em> you are.</div>
+    <div class="cap" id="cap3">Stare at one circle.<br>Everything <em>stops.</em></div>
+    <div class="cap" id="cap4">Rate the drift <em>1&ndash;10</em><br>in the comments.</div>
+  </div>
+
+  <div class="layer" id="payoff">
+    <div class="p" id="pay1">That&rsquo;s your brain<br>on high alert.</div>
+    <div class="p" id="pay2">It doesn&rsquo;t need more<br>stimulation. It needs <em>balance.</em></div>
+  </div>
+
+  <div class="layer" id="brand">
+    <div id="brandInner">
+      <img id="brandLogo" src="../public/images/logo.png">
+      <img id="brandCan" src="../public/images/open-can-updated-cutout-2026-site-safe.png">
+      <div id="brandLine">No nicotine <span class="sep">&middot;</span> No caffeine</div>
+      <div id="brandCta">airepouches.com</div>
+    </div>
+    <div id="brandSave">Send this to someone who&rsquo;s overstimulated.</div>
+  </div>
+</div>
+
+<script>
+const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, t0, d) => clamp((t - t0) / d, 0, 1);
+const easeOutBack = t => { const c = 1.70158; const u = t - 1; return 1 + (c + 1) * u * u * u + c * u * u; };
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+const easeInCubic = t => t * t * t;
+const $ = id => document.getElementById(id);
+const words = document.querySelectorAll('#hookLine .w');
+
+// ---------- draw the peripheral-drift illusion (static; drawn once) ----------
+// Rotating-snakes luminance sequence in brand palette:
+// dark navy -> mid-dark blue -> white -> mid-light sky  (repeating)
+(function drawSnakes() {
+  const cv = $('snakes'), ctx = cv.getContext('2d');
+  ctx.fillStyle = '#edf4f9';
+  ctx.fillRect(0, 0, 1080, 1920);
+  const COLS = ['#0f1e32', '#4c92ba', '#ffffff', '#9fd0e8'];
+  function disk(cx, cy, R, dir) {
+    const rings = [[1.0, 0.75], [0.75, 0.52], [0.52, 0.32]];
+    const SEGS = 11; // color-cycles per ring (chunky = stronger drift)
+    rings.forEach((rr, ri) => {
+      const r0 = R * rr[1], r1 = R * rr[0];
+      const offset = (ri * (Math.PI * 2 / (SEGS * 4)) * 0.5) * dir; // stagger rings
+      for (let s = 0; s < SEGS * 4; s++) {
+        const a0 = offset + (s / (SEGS * 4)) * Math.PI * 2;
+        const a1 = offset + ((s + 1.03) / (SEGS * 4)) * Math.PI * 2;
+        ctx.fillStyle = COLS[dir > 0 ? s % 4 : (3 - s % 4)];
+        ctx.beginPath();
+        ctx.arc(cx, cy, r1, a0, a1);
+        ctx.arc(cx, cy, r0, a1, a0, true);
+        ctx.closePath();
+        ctx.fill();
+      }
+    });
+    // calm center = brand orb
+    const g = ctx.createRadialGradient(cx - R*0.1, cy - R*0.11, 0, cx, cy, R*0.32);
+    g.addColorStop(0, '#c8e6f5'); g.addColorStop(0.6, '#84afb5'); g.addColorStop(1, '#5a9bbf');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, R * 0.32, 0, Math.PI * 2); ctx.fill();
+  }
+  // hex-packed grid, alternating spin direction
+  const R = 265, dx = R * 1.98, dy = R * 1.72;
+  let row = 0;
+  for (let y = 80; y < 2100; y += dy, row++) {
+    const xoff = (row % 2) ? dx / 2 : 0;
+    let col = 0;
+    for (let x = 10 + xoff - dx / 2; x < 1350; x += dx, col++) {
+      disk(x, y, R, ((row + col) % 2) ? 1 : -1);
+    }
+  }
+})();
+
+// ---------- timeline ----------
+const HOOK_END = 2.6;
+const ILL_START = 2.4;
+const CAP1 = 3.1, CAP2 = 5.7, CAP3 = 8.6, CAP4 = 11.2;
+const PAYOFF_START = 13.4;
+const BRAND_START = 17.0;
+const TOTAL = 21.4;
+window.TOTAL_DURATION = TOTAL;
+
+window.seek = function(t) {
+  $('bgDark').style.opacity = seg(t, PAYOFF_START - 0.7, 0.7);
+
+  // ===== hook =====
+  const hook = $('hook');
+  if (t < HOOK_END + 0.3) {
+    hook.style.display = 'flex';
+    words.forEach((w, i) => {
+      const p = seg(t, 0.12 + i * 0.13, 0.22);
+      const e = easeOutBack(p);
+      w.style.opacity = p;
+      w.style.transform = `scale(${lerp(1.35, 1, e)}) translateY(${lerp(30, 0, e)}px)`;
+    });
+    $('hookSub').style.opacity = seg(t, 1.3, 0.4);
+    const out = easeInCubic(seg(t, 2.1, 0.5));
+    hook.style.opacity = 1 - out;
+    hook.style.transform = `translateY(${-90 * out}px)`;
+  } else hook.style.display = 'none';
+
+  // ===== illusion =====
+  const ill = $('illusion');
+  if (t >= ILL_START - 0.1 && t < PAYOFF_START + 0.6) {
+    ill.style.display = 'block';
+    ill.style.opacity = seg(t, ILL_START, 0.7) * (1 - easeInCubic(seg(t, PAYOFF_START - 0.5, 0.6)));
+    $('capEyebrow').style.opacity = seg(t, ILL_START + 0.5, 0.5) * (1 - seg(t, CAP4 + 1.6, 0.5));
+    $('wm').style.opacity = 0.92 * (seg(t, ILL_START + 0.4, 0.5) * (1 - seg(t, PAYOFF_START - 0.6, 0.5)));
+    const caps = [
+      ['cap1', CAP1, CAP2 - 0.35],
+      ['cap2', CAP2, CAP3 - 0.35],
+      ['cap3', CAP3, CAP4 - 0.35],
+      ['cap4', CAP4, PAYOFF_START - 0.45],
+    ];
+    caps.forEach(([id, tin, tout]) => {
+      const el = $(id);
+      const p = easeOutCubic(seg(t, tin, 0.45));
+      el.style.opacity = p * (1 - seg(t, tout, 0.3));
+      el.style.transform = `translateY(${lerp(44, 0, p)}px)`;
+    });
+  } else ill.style.display = 'none';
+
+  // ===== payoff =====
+  const payoff = $('payoff');
+  if (t >= PAYOFF_START - 0.1 && t < BRAND_START + 0.5) {
+    payoff.style.display = 'flex';
+    payoff.style.opacity = 1 - easeInCubic(seg(t, BRAND_START - 0.5, 0.5));
+    const p1 = easeOutCubic(seg(t, PAYOFF_START + 0.15, 0.6));
+    $('pay1').style.opacity = p1;
+    $('pay1').style.transform = `translateY(${lerp(50, 0, p1)}px)`;
+    const p2 = easeOutCubic(seg(t, PAYOFF_START + 1.5, 0.6));
+    $('pay2').style.opacity = p2;
+    $('pay2').style.transform = `translateY(${lerp(50, 0, p2)}px)`;
+  } else payoff.style.display = 'none';
+
+  // ===== brand =====
+  const brand = $('brand');
+  if (t >= BRAND_START - 0.1) {
+    brand.style.display = 'block';
+    brand.style.opacity = seg(t, BRAND_START, 0.5);
+    const rise = easeOutCubic(seg(t, BRAND_START, 0.9));
+    const bob = Math.sin((t - BRAND_START) * 1.1) * 8;
+    $('brandCan').style.transform = `translateY(${lerp(140, 0, rise) + bob}px)`;
+    const lo = easeOutCubic(seg(t, BRAND_START + 0.25, 0.6));
+    $('brandLogo').style.opacity = 0.97 * lo;
+    $('brandLogo').style.transform = `translateY(${lerp(30, 0, lo)}px)`;
+    $('brandLine').style.opacity = easeOutCubic(seg(t, BRAND_START + 0.7, 0.6));
+    const ct = easeOutBack(seg(t, BRAND_START + 1.1, 0.5));
+    $('brandCta').style.opacity = seg(t, BRAND_START + 1.1, 0.3);
+    $('brandCta').style.transform = `scale(${lerp(0.7, 1, ct)})`;
+    $('brandSave').style.opacity = seg(t, BRAND_START + 1.9, 0.6) * 0.9;
+  } else brand.style.display = 'none';
+};
+seek(0);
+</script>
+</body>
+</html>
