@@ -8,7 +8,7 @@ export default function Ticker() {
   const doubled = [...items, ...items]
 
   return (
-    <div className="mt-[64px] bg-navy text-white/70 py-2.5 overflow-hidden whitespace-nowrap" aria-hidden="true">
+    <div className="mt-[100px] bg-navy text-white/70 py-2.5 overflow-hidden whitespace-nowrap" aria-hidden="true">
       <div className="inline-flex animate-ticker">
         {doubled.map((item, i) => (
           <span key={i} className="flex items-center">
