@@ -4,7 +4,6 @@ import Image from 'next/image'
 const images = [
   { src: '/images/lifestyle-01-photoreal-2026.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
   { src: '/images/lifestyle-02-photoreal-2026.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
-  { src: '/images/lifestyle-03-photoreal-2026.png', alt: 'Aire Calm Mint tin on a creative studio desk' },
   { src: '/images/lifestyle-04-photoreal-2026.png', alt: 'Aire Calm Mint tin on a hiking overlook with a daypack' },
   { src: '/images/lifestyle-05-photoreal-2026.png', alt: 'Aire Calm Mint tin on a rooftop garden work table' },
   { src: '/images/lifestyle-06-photoreal-2026.png', alt: 'Open Aire Calm Mint tin on a beach towel near the water' },
