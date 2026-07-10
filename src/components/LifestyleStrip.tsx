@@ -2,16 +2,16 @@
 import Image from 'next/image'
 
 const images = [
-  { src: '/images/lifestyle-wild-01-sidefix-2026.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
-  { src: '/images/lifestyle-wild-02-sidefix-2026.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
-  { src: '/images/lifestyle-wild-03-sidefix-2026.png', alt: 'Aire Calm Mint tin on a creative studio desk' },
-  { src: '/images/lifestyle-wild-04-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a hiking overlook with a daypack' },
-  { src: '/images/lifestyle-wild-05-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a rooftop garden work table' },
-  { src: '/images/lifestyle-wild-06-airecomplex-2026.png', alt: 'Open Aire Calm Mint tin on a beach towel near the water' },
-  { src: '/images/lifestyle-wild-07-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a bright morning kitchen counter' },
-  { src: '/images/lifestyle-wild-08-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a cafe table with a relaxed customer nearby' },
-  { src: '/images/lifestyle-wild-09-airecomplex-2026.png', alt: 'Aire Calm Mint tin on a park bench after a run' },
-  { src: '/images/lifestyle-wild-10-airecomplex-2026.png', alt: 'Aire Calm Mint tin in a scenic road trip moment' },
+  { src: '/images/lifestyle-01-photoreal-2026.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
+  { src: '/images/lifestyle-02-photoreal-2026.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
+  { src: '/images/lifestyle-03-photoreal-2026.png', alt: 'Aire Calm Mint tin on a creative studio desk' },
+  { src: '/images/lifestyle-04-photoreal-2026.png', alt: 'Aire Calm Mint tin on a hiking overlook with a daypack' },
+  { src: '/images/lifestyle-05-photoreal-2026.png', alt: 'Aire Calm Mint tin on a rooftop garden work table' },
+  { src: '/images/lifestyle-06-photoreal-2026.png', alt: 'Open Aire Calm Mint tin on a beach towel near the water' },
+  { src: '/images/lifestyle-07-photoreal-2026.png', alt: 'Aire Calm Mint tin on a bright morning kitchen counter' },
+  { src: '/images/lifestyle-08-photoreal-2026.png', alt: 'Aire Calm Mint tin on a cafe table with a relaxed customer nearby' },
+  { src: '/images/lifestyle-09-photoreal-2026.png', alt: 'Aire Calm Mint tin on a park bench after a run' },
+  { src: '/images/lifestyle-10-photoreal-2026.png', alt: 'Aire Calm Mint tin in a scenic road trip moment' },
 ]
 
 export default function LifestyleStrip() {
@@ -34,8 +34,8 @@ export default function LifestyleStrip() {
               <Image
                 src={src}
                 alt={alt}
-                width={700}
-                height={400}
+                width={800}
+                height={600}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               />
             </div>
@@ -45,8 +45,8 @@ export default function LifestyleStrip() {
               <Image
                 src={src}
                 alt={alt}
-                width={700}
-                height={400}
+                width={800}
+                height={600}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               />
             </div>
