@@ -11,7 +11,7 @@ const compRows = [
 
 export default function ProductFeature() {
   return (
-    <section className="bg-off-white py-24 px-6 md:px-20">
+    <section className="bg-off-white py-24 px-6 md:px-20 overflow-x-hidden">
       <div className="max-w-[800px] mx-auto">
         <FadeUp>
           <div className="flex items-center gap-3 mb-5">

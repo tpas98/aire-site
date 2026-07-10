@@ -9,6 +9,9 @@
     scroll-behavior: smooth;
     /* Offset anchor scrolling so section tops aren't hidden under the fixed 64px navbar */
     scroll-padding-top: 84px;
+    /* Root document element must also clip horizontal overflow — overflow-x-hidden on
+       body alone does not contain the root scrolling box in all browsers. */
+    @apply overflow-x-hidden;
   }
   body { @apply font-sans text-navy overflow-x-hidden; }
 }
