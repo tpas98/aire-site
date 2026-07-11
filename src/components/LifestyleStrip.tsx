@@ -4,13 +4,13 @@ import Image from 'next/image'
 const images = [
   { src: '/images/lifestyle-01-photoreal-2026.png', alt: 'Aire Calm Mint tin on a coastal lookout at golden hour' },
   { src: '/images/lifestyle-02-photoreal-2026.png', alt: 'Aire Calm Mint tin on a quiet lake dock with morning mist' },
-  { src: '/images/lifestyle-04-photoreal-2026.png', alt: 'Aire Calm Mint tin on a hiking overlook with a daypack' },
+  { src: '/images/lifestyle-11-photoreal-2026.png', alt: 'Hand lifting a pouch from an open Aire Calm Mint tin' },
   { src: '/images/lifestyle-05-photoreal-2026.png', alt: 'Aire Calm Mint tin on a rooftop garden work table' },
   { src: '/images/lifestyle-06-photoreal-2026.png', alt: 'Open Aire Calm Mint tin on a beach towel near the water' },
   { src: '/images/lifestyle-07-photoreal-2026.png', alt: 'Aire Calm Mint tin on a bright morning kitchen counter' },
   { src: '/images/lifestyle-08-photoreal-2026.png', alt: 'Aire Calm Mint tin on a cafe table with a relaxed customer nearby' },
   { src: '/images/lifestyle-09-photoreal-2026.png', alt: 'Aire Calm Mint tin on a park bench after a run' },
-  { src: '/images/lifestyle-10-photoreal-2026.png', alt: 'Aire Calm Mint tin in a scenic road trip moment' },
+  { src: '/images/lifestyle-12-photoreal-2026.png', alt: 'Hand reaching for an Aire Calm Mint tin on a gym bench' },
 ]
 
 export default function LifestyleStrip() {
