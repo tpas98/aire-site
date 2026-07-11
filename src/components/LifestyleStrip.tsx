@@ -10,7 +10,7 @@ const images = [
   { src: '/images/lifestyle-07-photoreal-2026.png', alt: 'Aire Calm Mint tin on a bright morning kitchen counter' },
   { src: '/images/lifestyle-08-photoreal-2026.png', alt: 'Aire Calm Mint tin on a cafe table with a relaxed customer nearby' },
   { src: '/images/lifestyle-09-photoreal-2026.png', alt: 'Aire Calm Mint tin on a park bench after a run' },
-  { src: '/images/lifestyle-12-photoreal-2026.png', alt: 'Hand reaching for an Aire Calm Mint tin on a gym bench' },
+  { src: '/images/lifestyle-10-photoreal-2026.png', alt: 'Aire Calm Mint tin in a scenic road trip moment' },
 ]
 
 export default function LifestyleStrip() {
