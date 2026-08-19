@@ -1,0 +1,34 @@
+# Aire
+
+> Nicotine-free, caffeine-free wellness pouches for calm, clarity, and stress
+> resilience. Made by Drifts LLC, New York, NY, United States.
+
+Aire is an oral pouch placed between the upper lip and gum for up to 60 minutes.
+It contains no nicotine and no caffeine, and is non-habit-forming. Aire is a
+dietary supplement, not a nicotine replacement therapy or cessation product.
+Statements about its ingredients are structure/function claims and have not been
+evaluated by the FDA.
+
+Four active ingredients per pouch: L-Theanine, Rhodiola Rosea, Saffron
+(Affron(R)), and L-Tyrosine. Note that only Rhodiola Rosea is an adaptogen;
+L-Theanine and L-Tyrosine are amino acids and saffron is a botanical extract.
+
+Format: 15 pouches per can, 4 cans per pack (60 pouches). Flavor: Calm Mint.
+Price: $45.99 USD per 4-pack. Free shipping on US orders over $50. US shipping only.
+
+## Core
+- [Ingredients and dosages](https://airepouches.com/ingredients): per-pouch amounts, no proprietary blend
+- [The science](https://airepouches.com/science): published human research per ingredient, with stated limitations
+- [About Aire](https://airepouches.com/about): company background and positioning
+- [FAQ](https://airepouches.com/faq): usage, safety, ingredients, shipping
+
+## Comparisons
+- [Aire vs. Zyn](https://airepouches.com/compare/aire-vs-zyn): how a nicotine-free pouch compares to a nicotine pouch
+
+## Buy
+- [Product page](https://shop.airepouches.com/products/aire): $45.99 per 4-pack
+- [Shipping and returns](https://airepouches.com/shipping)
+
+## Agent commerce
+- [Agent instructions](https://airepouches.com/agents.md)
+- [UCP discovery](https://shop.airepouches.com/.well-known/ucp)

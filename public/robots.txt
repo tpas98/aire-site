@@ -1,29 +1,40 @@
 User-agent: *
 Allow: /
 
-# OpenAI / ChatGPT search crawler
+# --- AI retrieval crawlers (these are what matter for citations) ---
 User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-# Perplexity AI crawler
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
-# Google AI (Gemini)
-User-agent: Google-Extended
+User-agent: Perplexity-User
 Allow: /
 
-# Anthropic Claude
+# --- AI training crawlers ---
+# Allowed on purpose. Blocking these removes Aire from the models' background
+# knowledge of the category, which is where most brand recommendations come from.
+User-agent: GPTBot
+Allow: /
+
 User-agent: ClaudeBot
 Allow: /
 
-# Common AI training crawlers - block if you don't want content used for training
-# User-agent: CCBot
-# Disallow: /
-# User-agent: GPTBot
-# Disallow: /
+User-agent: CCBot
+Allow: /
 
-Sitemap: https://www.airepouches.com/sitemap.xml
+# Google-Extended is not a crawler. It is an opt-out token controlling whether
+# already-crawled content can ground Gemini. Allow = opted in.
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://airepouches.com/sitemap.xml

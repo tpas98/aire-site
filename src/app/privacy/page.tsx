@@ -4,7 +4,7 @@ import Image from 'next/image'
 export const metadata = {
   title: 'Privacy Policy | Aire Wellness Pouches',
   description: 'Privacy Policy for Aire wellness pouches by Drifts LLC. Learn how we protect your data.',
-  alternates: { canonical: 'https://www.airepouches.com/privacy' },
+  alternates: { canonical: 'https://airepouches.com/privacy' },
 }
 
 export default function PrivacyPolicy() {

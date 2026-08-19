@@ -14,6 +14,7 @@ const faqData = [
   { question: "Can I use Aire with other supplements or medications?", answer: "While Aire's ingredients are generally considered safe, we recommend consulting your healthcare provider before combining with other supplements or medications, especially if you take SSRIs, anti-anxiety medication, or blood thinners." },
   { question: "How many pouches can I use per day?", answer: "We recommend 4–6 pouches throughout the day. No nicotine or caffeine means no crash, dependency risk, or sleep consequences." },
   { question: "Where do you ship?", answer: "We currently ship within the United States. Most orders ship within 1–2 business days and arrive within 3–5 business days. Free shipping on orders over $50." },
+  { question: "How do I contact Aire?", answer: "Have a question that's not covered here? Reach out to us at hello@airepouches.com and we'll get back to you within 24-48 hours." },
 ]
 
 const faqSchema = {
@@ -33,7 +34,7 @@ export const metadata = {
   title: "FAQ: Aire Wellness Pouches | Ingredients, Usage, Shipping & More",
   description: "Everything you need to know about Aire nicotine-free wellness pouches: ingredients, how to use, pricing ($45.99/4-pack), side effects, shipping, and more.",
   alternates: {
-    canonical: 'https://www.airepouches.com/faq',
+    canonical: 'https://airepouches.com/faq',
   },
   openGraph: {
     title: "FAQ: Aire Wellness Pouches | Ingredients, Usage, Shipping & More",

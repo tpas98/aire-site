@@ -3,12 +3,12 @@ import './globals.css'
 import EmailPopup from '@/components/EmailPopup'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.airepouches.com'),
+  metadataBase: new URL('https://airepouches.com'),
   title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
   description: 'Aire is the nicotine-free, caffeine-free wellness pouch with Rhodiola Rosea, L-Theanine, Saffron, and L-Tyrosine. Science-backed calm, clarity, and balance in every pouch.',
   keywords: ['wellness pouches', 'nicotine free pouches', 'nicotine alternative', 'pouches for calm', 'pouches for focus', 'adaptogens', 'rhodiola rosea', 'l-theanine', 'saffron pouch', 'non addictive pouches'],
   alternates: {
-    canonical: 'https://www.airepouches.com',
+    canonical: 'https://airepouches.com',
   },
   icons: {
     icon: [
@@ -41,9 +41,9 @@ const organizationSchema = {
   '@type': 'Organization',
   name: 'Aire',
   legalName: 'Drifts LLC',
-  url: 'https://www.airepouches.com',
-  logo: 'https://www.airepouches.com/images/logo.png',
-  description: 'Nicotine-free, caffeine-free wellness oral pouches with adaptogens for calm, clarity, and balance.',
+  url: 'https://airepouches.com',
+  logo: 'https://airepouches.com/images/logo.png',
+  description: 'Nicotine-free, caffeine-free wellness oral pouches with L-Theanine, Rhodiola Rosea, Saffron, and L-Tyrosine for calm, clarity, and balance.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'New York',
@@ -54,51 +54,25 @@ const organizationSchema = {
     '@type': 'ContactPoint',
     email: 'hello@airepouches.com',
     contactType: 'customer service',
+    areaServed: 'US',
   },
+  // Add every profile you control. Consistent cross-linking is the strongest
+  // entity signal available to a small brand.
   sameAs: [
     'https://www.instagram.com/airepouches',
+    // 'https://x.com/airepouches',
+    // 'https://www.linkedin.com/company/aire-pouches',
+    // 'https://www.tiktok.com/@airepouches',
   ],
 }
 
-// Structured Data: Product schema
-const productSchema = {
+// Structured Data: WebSite schema (helps engines resolve the canonical host)
+const websiteSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Product',
-  name: 'Aire Calm Mint Pouches - 4 Pack',
-  description: 'Nicotine-free wellness pouches with Rhodiola Rosea, L-Theanine, Saffron, and L-Tyrosine. 60 pouches (15 per can × 4 cans). Calm Mint flavor.',
-  brand: { '@type': 'Brand', name: 'Aire' },
-  image: 'https://www.airepouches.com/images/three-cans-full-frame-2026.png',
-  offers: {
-    '@type': 'Offer',
-    price: '45.99',
-    priceCurrency: 'USD',
-    availability: 'https://schema.org/InStock',
-    url: 'https://www.airepouches.com',
-    shippingDetails: {
-      '@type': 'OfferShippingDetails',
-      shippingRate: {
-        '@type': 'MonetaryAmount',
-        value: '0',
-        currency: 'USD',
-      },
-      shippingDestination: {
-        '@type': 'DefinedRegion',
-        addressCountry: 'US',
-      },
-      deliveryTime: {
-        '@type': 'ShippingDeliveryTime',
-        handlingTime: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 2, unitCode: 'DAY' },
-        transitTime: { '@type': 'QuantitativeValue', minValue: 3, maxValue: 5, unitCode: 'DAY' },
-      },
-    },
-  },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    bestRating: '5',
-    reviewCount: '200',
-  },
-  category: 'Health & Wellness > Dietary Supplements',
+  '@type': 'WebSite',
+  name: 'Aire',
+  url: 'https://airepouches.com',
+  publisher: { '@type': 'Organization', name: 'Aire', url: 'https://airepouches.com' },
 }
 
 export const viewport = {
@@ -120,7 +94,7 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
       <body>

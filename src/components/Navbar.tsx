@@ -16,9 +16,13 @@ export default function Navbar() {
         <Image src="/images/logo.png" alt="Aire" width={120} height={40} className="h-7 w-auto" style={{ mixBlendMode: 'multiply' }} />
       </a>
       <ul className="hidden md:flex items-center gap-10 list-none">
-        {['Ingredients', 'Science', 'Reviews'].map((item) => (
-          <li key={item}>
-            <a href={`#${item.toLowerCase()}`} className="text-[0.78rem] font-medium tracking-[0.08em] uppercase text-navy-mid hover:text-accent transition-colors duration-200">{item}</a>
+        {[
+          { label: 'Ingredients', href: '/ingredients' },
+          { label: 'Science', href: '/science' },
+          { label: 'Reviews', href: '/#reviews' },
+        ].map(({ label, href }) => (
+          <li key={label}>
+            <a href={href} className="text-[0.78rem] font-medium tracking-[0.08em] uppercase text-navy-mid hover:text-accent transition-colors duration-200">{label}</a>
           </li>
         ))}
         <li>
