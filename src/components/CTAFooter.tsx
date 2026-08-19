@@ -17,13 +17,11 @@ const footerLinks = {
   Explore: [
     { label: 'Home', href: '/' },
     { label: 'Shop Aire', href: CHECKOUT_URL },
-    { label: 'Ingredients', href: '/ingredients' },
-    { label: 'The Science', href: '/science' },
-    { label: 'Aire vs. Zyn', href: '/compare/aire-vs-zyn' },
-    { label: 'About Us', href: '/about' },
+    { label: 'The Science', href: '/#ingredients' },
+    { label: 'About Us', href: '/#science' },
   ],
   Support: [
-    { label: 'FAQ', href: '/faq' },
+    { label: 'FAQ', href: '/#faq' },
     { label: 'Shipping & Returns', href: '/shipping' },
     { label: 'Contact Us', href: 'mailto:hello@airepouches.com' },
   ],
