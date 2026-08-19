@@ -3,7 +3,7 @@ import Image from "next/image"
 
 export const metadata = {
   title: "Shipping & Returns | Aire | Free Shipping Over $50",
-  description: "Free shipping on orders over $50. Aire wellness pouches ship within 1–2 business days. Free replacements for damaged or defective items.",
+  description: "Free shipping on orders over $50. Aire wellness pouches are handled within 7–10 business days. Free replacements for damaged or defective items.",
   alternates: { canonical: 'https://airepouches.com/shipping' },
 }
 
@@ -26,9 +26,10 @@ export default function ShippingPage() {
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Shipping</h2>
             <p className="mb-4">We currently ship to all 50 U.S. states. International shipping is not available at this time.</p>
-            <p className="mb-4"><strong className="text-navy">Processing time:</strong> Orders are processed within 1–2 business days after payment is confirmed. You&apos;ll receive a confirmation email with tracking information once your order ships.</p>
+            <p className="mb-4"><strong className="text-navy">Handling time:</strong> Orders are handled and packed within 7–10 business days after payment is confirmed. You&apos;ll receive a confirmation email with tracking information once your order ships.</p>
             <p className="mb-4"><strong className="text-navy">Delivery time:</strong> Standard shipping takes 5–7 business days from the date of shipment. Delivery times may vary depending on your location and carrier conditions.</p>
-            <p><strong className="text-navy">Shipping cost:</strong> Shipping rates are calculated at checkout based on your location and order size.</p>
+            <p className="mb-4"><strong className="text-navy">Shipping cost:</strong> Free on orders over $50. Orders under $50 are charged a rate calculated at checkout based on your location and order size.</p>
+            <p><strong className="text-navy">Total time:</strong> Most orders arrive about 12–17 business days after they are placed (7–10 business days handling, plus 5–7 business days in transit).</p>
           </section>
 
           <section>

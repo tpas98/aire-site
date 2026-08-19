@@ -29,7 +29,7 @@ const faqs = [
   },
   {
     q: 'Where do you ship?',
-    a: 'We currently ship within the United States. Most orders ship within 1–2 business days and arrive within 3–5 business days. Free shipping on orders over $50.',
+    a: 'We currently ship within the United States. Orders are handled and packed within 7–10 business days, then ship and arrive within 5–7 business days — about 12–17 business days from order to doorstep. Free shipping on orders over $50.',
   },
   {
     q: 'What\'s in a can? And what\'s in a pouch?',

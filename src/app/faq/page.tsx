@@ -13,7 +13,7 @@ const faqData = [
   { question: "Is Aire FDA approved?", answer: "Aire is classified as a dietary supplement and is manufactured in an FDA-registered, GMP-certified facility. Like all dietary supplements, Aire has not been evaluated by the FDA to diagnose, treat, cure, or prevent any disease." },
   { question: "Can I use Aire with other supplements or medications?", answer: "While Aire's ingredients are generally considered safe, we recommend consulting your healthcare provider before combining with other supplements or medications, especially if you take SSRIs, anti-anxiety medication, or blood thinners." },
   { question: "How many pouches can I use per day?", answer: "We recommend 4–6 pouches throughout the day. No nicotine or caffeine means no crash, dependency risk, or sleep consequences." },
-  { question: "Where do you ship?", answer: "We currently ship within the United States. Most orders ship within 1–2 business days and arrive within 3–5 business days. Free shipping on orders over $50." },
+  { question: "Where do you ship?", answer: "We currently ship within the United States. Orders are handled and packed within 7–10 business days, then ship and arrive within 5–7 business days — about 12–17 business days from order to doorstep. Free shipping on orders over $50." },
   { question: "How do I contact Aire?", answer: "Have a question that's not covered here? Reach out to us at hello@airepouches.com and we'll get back to you within 24-48 hours." },
 ]
 
@@ -145,7 +145,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Where do you ship?</h2>
-            <p>We currently ship within the United States. Most orders ship within 1–2 business days and arrive within 3–5 business days. Free shipping on orders over $50.</p>
+            <p>We currently ship within the United States. Orders are handled and packed within 7–10 business days, then ship and arrive within 5–7 business days — about 12–17 business days from order to doorstep. Free shipping on orders over $50.</p>
           </section>
 
           <section>
