@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
+import { CHECKOUT_URL } from '@/lib/checkout'
 
 export default function StickyMobileCTA() {
   const [visible, setVisible] = useState(false)
@@ -33,8 +33,6 @@ export default function StickyMobileCTA() {
             </div>
             <a
               href={CHECKOUT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
               className="bg-white text-navy px-6 py-3 rounded-full text-[0.75rem] font-semibold tracking-[0.08em] uppercase whitespace-nowrap"
             >
               Order Now

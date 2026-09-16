@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import EmailPopup from '@/components/EmailPopup'
+import TikTokPixel from '@/components/TikTokPixel'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://airepouches.com'),
@@ -87,6 +88,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Buy buttons go to shop.airepouches.com; warm DNS + TLS before the click. */}
+        <link rel="preconnect" href="https://shop.airepouches.com" />
+        <link rel="dns-prefetch" href="https://shop.airepouches.com" />
         <link rel="shortcut icon" type="image/png" href="/aire-icon-32.png" />
         <script
           type="application/ld+json"
@@ -100,6 +104,7 @@ export default function RootLayout({
       <body>
         {children}
         <EmailPopup />
+        <TikTokPixel />
       </body>
     </html>
   )

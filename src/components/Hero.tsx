@@ -1,10 +1,9 @@
 'use client'
 import { motion } from 'framer-motion'
-import dynamic from 'next/dynamic'
+import StackedAlphaVideo from './StackedAlphaVideo'
 
-const ThreeCanHero = dynamic(() => import('./ThreeCanHero'), { ssr: false })
 
-const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
+import { CHECKOUT_URL } from '@/lib/checkout'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -55,7 +54,7 @@ export default function Hero() {
             <span className="text-[0.78rem] text-navy-mid font-medium">Loved by 200+ customers</span>
           </motion.div>
           <motion.div className="flex items-center gap-4 flex-wrap" variants={fadeUp} initial="hidden" animate="visible" custom={0.3}>
-            <a href={CHECKOUT_URL} target="_blank" rel="noopener noreferrer" className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
+            <a href={CHECKOUT_URL} className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
               Get Your 4-Pack
             </a>
             <a href="#how-to-use" className="text-[0.8rem] font-medium text-navy-mid hover:text-accent transition-colors duration-200 flex items-center gap-1.5 group whitespace-nowrap">
@@ -71,10 +70,18 @@ export default function Hero() {
           <div aria-hidden="true" className="pointer-events-none absolute top-[7%] right-[18%] w-[220px] h-[220px] md:w-[280px] md:h-[280px] rounded-full bg-white/20 blur-[70px]" />
           <div aria-hidden="true" className="pointer-events-none absolute bottom-[8%] right-[26%] w-[320px] h-[220px] md:w-[420px] md:h-[260px] rounded-full bg-[#6ea0ca]/24 blur-[90px]" />
           <div aria-hidden="true" className="pointer-events-none absolute bottom-[6%] right-[-2%] w-[260px] h-[200px] md:w-[340px] md:h-[240px] rounded-full bg-[#496d98]/18 blur-[95px]" />
-          <ThreeCanHero
-            aria-label="Aire nicotine-free wellness pouch tins rendered in 3D"
-            className=""
-          />
+          <div className="relative z-10 w-full h-full">
+            <StackedAlphaVideo
+              sources={[
+                { src: '/images/three-cans-hero-av1.mp4', type: 'video/mp4; codecs=av01.0.04M.08' },
+                { src: '/images/three-cans-hero-h264.mp4', type: 'video/mp4; codecs=avc1.64001f' },
+              ]}
+              poster="/images/three-cans-hero-2026.webp"
+              width={1370}
+              height={972}
+              alt="Three Aire nicotine-free wellness pouch tins floating, Calm Mint"
+            />
+          </div>
         </motion.div>
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white/30 to-transparent z-10" />

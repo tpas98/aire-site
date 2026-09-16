@@ -1,9 +1,9 @@
 'use client'
-import { motion } from 'framer-motion'
-import dynamic from 'next/dynamic'
+import StackedAlphaVideo from './StackedAlphaVideo'
 import FadeUp from './FadeUp'
 
-const SpinningCan = dynamic(() => import('./SpinningCan'), { ssr: false })
+import { CHECKOUT_URL } from '@/lib/checkout'
+
 
 export default function About() {
   return (
@@ -23,7 +23,7 @@ export default function About() {
           <p className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-8">
             So we built Aire from scratch. A lifestyle pouch for people who want to stay grounded for peak enjoyment from every pursuit. No dependency. No crash. Just balance, whenever you need it.
           </p>
-          <a href="#shop" className="btn-primary inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase shadow-[0_8px_30px_rgba(26,46,74,0.2)]">
+          <a href={CHECKOUT_URL} className="btn-primary inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase shadow-[0_8px_30px_rgba(26,46,74,0.2)]">
             Try Aire Today
           </a>
         </FadeUp>
@@ -40,7 +40,17 @@ export default function About() {
                 `,
               }}
             />
-            <SpinningCan className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]" />
+            <StackedAlphaVideo
+              sources={[
+                { src: '/images/story-can-av1.mp4', type: 'video/mp4; codecs=av01.0.04M.08' },
+                { src: '/images/story-can-h264.mp4', type: 'video/mp4; codecs=avc1.64001f' },
+              ]}
+              poster="/images/story-can-poster.webp"
+              width={1052}
+              height={996}
+              alt="Aire Calm Mint pouch tin rotating"
+              className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]"
+            />
           </div>
         </FadeUp>
       </div>

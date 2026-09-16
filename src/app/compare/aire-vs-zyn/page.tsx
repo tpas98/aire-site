@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 
-const CHECKOUT_URL = 'https://drifts-7838.myshopify.com/cart/47952645161208:1'
+import { CHECKOUT_URL } from '@/lib/checkout'
 
 const rows: [string, string, string][] = [
   ["Nicotine", "None", "3mg or 6mg per pouch"],
@@ -137,8 +137,6 @@ export default function AireVsZynPage() {
             </p>
             <a
               href={CHECKOUT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase hover:bg-accent transition-colors duration-200"
             >
               Order a 4-Pack — $45.99
