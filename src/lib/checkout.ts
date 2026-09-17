@@ -43,14 +43,14 @@ export const CART_URL =
 /**
  * What the buttons actually use.
  *
- * CART_URL — one click straight to checkout, which is the behaviour Aire wants and
- * the behaviour the site had before. The Shopify product page is still on an
- * unedited theme (placeholder "Collapsible Tab" sections, weak product photo), so
- * routing buyers through it would cost more conversion than the two extra pixel
- * events are worth.
+ * PRODUCT_URL since 2026-09-17, by Aire's decision. The Shopify product page
+ * was rebuilt (see Website/shopify-pdp-draft.md) and published, so buyers now
+ * land on it first and its Buy Now posts to /cart/add with
+ * return_to=/checkout?skip_shop_pay=true, which reaches checkout in one hop
+ * with no shop.app detour. This path also fires ViewContent and AddToCart.
  *
- * Switch to PRODUCT_URL only once that page has been properly built out — you'd
- * gain ViewContent and AddToCart, which are useful but not required: PageView,
- * ClickButton, InitiateCheckout and Purchase all still fire on this path.
+ * CART_URL is kept as the direct-to-checkout alternative. Only switch back to
+ * it if the product page is ever unpublished: the previous live theme
+ * JS-redirected every product page to airepouches.com, which would loop.
  */
-export const CHECKOUT_URL = CART_URL
+export const CHECKOUT_URL = PRODUCT_URL
