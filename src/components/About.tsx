@@ -1,9 +1,9 @@
 'use client'
-import dynamic from 'next/dynamic'
+import StackedAlphaVideo from './StackedAlphaVideo'
 import FadeUp from './FadeUp'
+
 import { CHECKOUT_URL } from '@/lib/checkout'
 
-const SpinningCan = dynamic(() => import('./SpinningCan'), { ssr: false })
 
 export default function About() {
   return (
@@ -40,7 +40,17 @@ export default function About() {
                 `,
               }}
             />
-            <SpinningCan className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]" />
+            <StackedAlphaVideo
+              sources={[
+                { src: '/images/story-can-av1.mp4', type: 'video/mp4; codecs=av01.0.04M.08' },
+                { src: '/images/story-can-h264.mp4', type: 'video/mp4; codecs=avc1.64001f' },
+              ]}
+              poster="/images/story-can-poster.webp"
+              width={1052}
+              height={996}
+              alt="Aire Calm Mint pouch tin rotating"
+              className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]"
+            />
           </div>
         </FadeUp>
       </div>
