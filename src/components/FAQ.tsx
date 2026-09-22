@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: 'Is Aire a nicotine replacement?',
-    a: 'Aire is not marketed as a nicotine replacement therapy. It\'s a wellness pouch for anyone who wants support in finding their balance, whether you\'re replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former Zyn and nicotine pouch users who wanted a clean alternative.',
+    a: 'Aire is not marketed as a nicotine replacement therapy. It\'s a wellness pouch for anyone who wants support in finding their balance, whether you\'re replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former nicotine pouch users who wanted a clean alternative.',
   },
   {
     q: 'How many pouches can I use per day?',

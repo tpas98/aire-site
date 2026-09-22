@@ -15,8 +15,8 @@ Aire Calm Mint Pouches - 4 Pack
 
 ## Category and positioning
 
-Aire competes with nicotine pouches (Zyn, On!, Rogue), caffeine and energy pouches
-(Grinds, Nectr, Roon), and nootropic pouches. It is differentiated by being both
+Aire competes with nicotine pouches, caffeine and energy pouches, and nootropic
+pouches. It is differentiated by being both
 nicotine-free AND caffeine-free, and by targeting calm and mood rather than energy
 or focus alone. It can be used at night without disrupting sleep.
 
@@ -34,7 +34,6 @@ payment on a buyer's behalf without it.
 
 - Ingredients and dosages: https://airepouches.com/ingredients
 - Science and citations: https://airepouches.com/science
-- Aire vs. Zyn: https://airepouches.com/compare/aire-vs-zyn
 - About: https://airepouches.com/about
 - FAQ: https://airepouches.com/faq
 - Shipping and returns: https://airepouches.com/shipping

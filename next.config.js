@@ -15,6 +15,13 @@ const nextConfig = {
         destination: 'https://airepouches.com/:path*',
         permanent: true,
       },
+      // The comparison page was removed 2026-09-22 (brand rule: never name a competitor).
+      // Old links and search results go straight to the product page.
+      {
+        source: '/compare/:path*',
+        destination: 'https://shop.airepouches.com/products/aire',
+        permanent: true,
+      },
     ]
   },
   async headers() {
