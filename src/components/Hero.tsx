@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import StackedAlphaVideo from './StackedAlphaVideo'
 
 
-import { CHECKOUT_URL } from '@/lib/checkout'
+import { buyUrl } from '@/lib/checkout'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -54,7 +54,7 @@ export default function Hero() {
             <span className="text-[0.78rem] text-navy-mid font-medium">Loved by 200+ customers</span>
           </motion.div>
           <motion.div className="flex items-center gap-4 flex-wrap" variants={fadeUp} initial="hidden" animate="visible" custom={0.3}>
-            <a href={CHECKOUT_URL} className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
+            <a href={buyUrl()} className="btn-primary inline-block bg-navy text-white px-7 py-3.5 rounded-full text-[0.78rem] font-semibold tracking-[0.1em] uppercase shadow-[0_10px_36px_rgba(26,46,74,0.28)] whitespace-nowrap">
               Get Your 4-Pack
             </a>
             <a href="#how-to-use" className="text-[0.8rem] font-medium text-navy-mid hover:text-accent transition-colors duration-200 flex items-center gap-1.5 group whitespace-nowrap">

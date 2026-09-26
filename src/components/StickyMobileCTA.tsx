@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import { CHECKOUT_URL } from '@/lib/checkout'
+import { buyUrl } from '@/lib/checkout'
 
 export default function StickyMobileCTA() {
   const [visible, setVisible] = useState(false)
@@ -32,7 +32,7 @@ export default function StickyMobileCTA() {
               <span className="text-[1rem] text-white font-semibold">$45.99</span>
             </div>
             <a
-              href={CHECKOUT_URL}
+              href={buyUrl()}
               className="bg-white text-navy px-6 py-3 rounded-full text-[0.75rem] font-semibold tracking-[0.08em] uppercase whitespace-nowrap"
             >
               Order Now

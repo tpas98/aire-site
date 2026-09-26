@@ -8,6 +8,7 @@
  * Everything must stay on *.airepouches.com. That keeps one cookie root from the
  * landing page through checkout, which is what makes TikTok / Meta attribution work.
  */
+import { saleActive, SALE_URL } from '@/lib/sale'
 
 /** Shopify product page — fires ViewContent and AddToCart before checkout. */
 export const PRODUCT_URL = 'https://shop.airepouches.com/products/aire'
@@ -54,3 +55,11 @@ export const CART_URL =
  * JS-redirected every product page to airepouches.com, which would loop.
  */
 export const CHECKOUT_URL = PRODUCT_URL
+
+/**
+ * Buy-button target right now: the product page, via the sale-code link while
+ * the End of Summer Sale runs (see src/lib/sale.ts).
+ */
+export function buyUrl(): string {
+  return saleActive() ? SALE_URL : CHECKOUT_URL
+}

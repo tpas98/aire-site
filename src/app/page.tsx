@@ -1,5 +1,7 @@
 import Navbar from '@/components/Navbar'
 import Ticker from '@/components/Ticker'
+import SaleBanner from '@/components/SaleBanner'
+import { saleActive } from '@/lib/sale'
 import Hero from '@/components/Hero'
 import LifestyleStrip from '@/components/LifestyleStrip'
 import About from '@/components/About'
@@ -76,15 +78,20 @@ const productSchema = {
   // ---------------------------------------------------------------------
 }
 
+// Re-render hourly so the sale banner comes down on its own after SALE_ENDS_AT.
+export const revalidate = 3600
+
 export default function Home() {
+  const sale = saleActive()
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      <Navbar />
-      <Ticker />
+      {sale && <SaleBanner />}
+      <Navbar belowBanner={sale} />
+      <Ticker belowBanner={sale} />
       <Hero />
       <LifestyleStrip />
       <Testimonials />

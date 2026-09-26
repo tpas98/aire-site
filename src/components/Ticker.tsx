@@ -1,4 +1,4 @@
-export default function Ticker() {
+export default function Ticker({ belowBanner = false }: { belowBanner?: boolean }) {
   const items = [
     'L-Theanine', 'Rhodiola Rosea', 'L-Tyrosine',
     'Saffron', 'Zero Nicotine',
@@ -8,7 +8,7 @@ export default function Ticker() {
   const doubled = [...items, ...items]
 
   return (
-    <div className="mt-[64px] bg-navy text-white/70 py-2.5 overflow-hidden whitespace-nowrap" aria-hidden="true">
+    <div className={`${belowBanner ? 'mt-[100px]' : 'mt-[64px]'} bg-navy text-white/70 py-2.5 overflow-hidden whitespace-nowrap`} aria-hidden="true">
       <div className="inline-flex animate-ticker">
         {doubled.map((item, i) => (
           <span key={i} className="flex items-center">

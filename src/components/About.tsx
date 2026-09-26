@@ -2,7 +2,7 @@
 import StackedAlphaVideo from './StackedAlphaVideo'
 import FadeUp from './FadeUp'
 
-import { CHECKOUT_URL } from '@/lib/checkout'
+import { buyUrl } from '@/lib/checkout'
 
 
 export default function About() {
@@ -23,7 +23,7 @@ export default function About() {
           <p className="text-[0.96rem] text-navy-mid leading-[1.84] font-light mb-8">
             So we built Aire from scratch. A lifestyle pouch for people who want to stay grounded for peak enjoyment from every pursuit. No dependency. No crash. Just balance, whenever you need it.
           </p>
-          <a href={CHECKOUT_URL} className="btn-primary inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase shadow-[0_8px_30px_rgba(26,46,74,0.2)]">
+          <a href={buyUrl()} className="btn-primary inline-block bg-navy text-white px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase shadow-[0_8px_30px_rgba(26,46,74,0.2)]">
             Try Aire Today
           </a>
         </FadeUp>
