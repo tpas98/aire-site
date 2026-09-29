@@ -8,16 +8,17 @@ export default function SaleBanner() {
       <style>{'html{scroll-padding-top:120px}'}</style>
       <a
         href={SALE_URL}
-        className="fixed top-0 inset-x-0 z-[60] h-9 bg-navy text-white px-3 flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap overflow-hidden text-[10.5px] sm:text-xs font-medium uppercase tracking-[0.08em] sm:tracking-[0.12em] hover:bg-navy-mid transition-colors duration-200"
+        className="fixed top-0 inset-x-0 z-[60] h-9 bg-navy text-white px-3 flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap overflow-hidden text-[10.5px] sm:text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] hover:bg-navy-mid transition-colors duration-200"
+        style={{ color: '#fff', fontWeight: 700 }}
       >
         <span>End of Summer Sale</span>
-        <span aria-hidden="true" className="text-sky-deep">·</span>
+        <span aria-hidden="true" className="text-white/75">·</span>
         <span>{SALE_PERCENT}% off</span>
         <span className="hidden sm:inline">everything</span>
-        <span aria-hidden="true" className="text-sky-deep">·</span>
+        <span aria-hidden="true" className="text-white/75">·</span>
         <span>
           <span className="hidden sm:inline">Code </span>
-          <span className="font-bold tracking-[0.14em] text-sky-light border border-dashed border-sky-light/60 rounded px-1.5 py-0.5">
+          <span className="font-bold tracking-[0.14em] text-white border border-dashed border-white/75 rounded px-1.5 py-0.5">
             {SALE_CODE}
           </span>
         </span>
