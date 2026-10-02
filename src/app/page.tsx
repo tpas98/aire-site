@@ -78,7 +78,7 @@ const productSchema = {
   // ---------------------------------------------------------------------
 }
 
-// Re-render hourly so the sale banner comes down on its own after SALE_ENDS_AT.
+// Re-render hourly so the banner comes down on its own if SALE_ENDS_AT is ever set.
 export const revalidate = 3600
 
 export default function Home() {
