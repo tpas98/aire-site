@@ -15,6 +15,11 @@ module.exports = {
         'sky-light': '#c8e6f5',
         'off-white': '#f3f8fc',
         muted: '#6a8099',
+        ink: '#0a1424',
+        'ink-2': '#0f1d33',
+        salmon: '#e8907e',
+        gold: '#f5d78e',
+        teal: '#84afb5',
       },
       fontFamily: {
         serif: ['"DM Serif Display"', 'Georgia', 'serif'],

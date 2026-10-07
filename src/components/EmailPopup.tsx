@@ -1,20 +1,32 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
+
+/**
+ * Pages where the 10%-off popup stays hidden. /discover is the cold-traffic
+ * landing page: it already leads with the 30% FIRST30 offer, and a 10% modal
+ * over its hero would both cover the explanation and undercut the bigger deal.
+ */
+const NO_POPUP = ['/discover']
 
 export default function EmailPopup() {
+  const pathname = usePathname()
+  const suppressed = NO_POPUP.some((p) => pathname?.startsWith(p))
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
+  const [company, setCompany] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
+    if (suppressed) return
     const dismissed = sessionStorage.getItem('aire-popup-dismissed')
     if (dismissed) return
     const timer = setTimeout(() => setVisible(true), 5000)
     return () => clearTimeout(timer)
-  }, [])
+  }, [suppressed])
 
   const handleDismiss = () => {
     setVisible(false)
@@ -29,7 +41,7 @@ export default function EmailPopup() {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, company }),
       })
       if (!res.ok) throw new Error('Failed')
       setSubmitted(true)
@@ -88,6 +100,18 @@ export default function EmailPopup() {
                     Join the Aire community and get 10% off your first order, plus early access to new drops.
                   </p>
                   <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+                    {/* Honeypot: hidden from people, irresistible to bots.
+                        Anything submitted here is silently discarded server-side. */}
+                    <input
+                      type="text"
+                      name="company"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      className="absolute left-[-9999px] w-px h-px opacity-0"
+                    />
                     <input
                       type="email"
                       required

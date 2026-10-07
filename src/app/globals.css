@@ -9,11 +9,14 @@
     scroll-behavior: smooth;
     /* Offset anchor scrolling so section tops aren't hidden under the fixed 64px navbar */
     scroll-padding-top: 84px;
-    /* Root document element must also clip horizontal overflow — overflow-x-hidden on
-       body alone does not contain the root scrolling box in all browsers. */
-    @apply overflow-x-hidden;
+    /* Clip horizontal overflow on the root as well as body. `clip`, not `hidden`:
+       overflow-x:hidden forces overflow-y to auto, which made <body> its own scroll
+       container and silently disabled every position:sticky on the site (found
+       2026-10-06 building /discover). `clip` cuts the overflow without that. */
+    overflow-x: hidden;
+    overflow-x: clip;
   }
-  body { @apply font-sans text-navy overflow-x-hidden; }
+  body { @apply font-sans text-navy; overflow-x: hidden; overflow-x: clip; }
 }
 
 @layer components {
