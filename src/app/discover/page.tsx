@@ -6,7 +6,6 @@ import { Footer } from '@/components/CTAFooter'
 import { saleActive } from '@/lib/sale'
 import { faqs, hero } from './content'
 import Hero from './sections/Hero'
-import ProductFilm from './sections/ProductFilm'
 import PouchAisle from './sections/PouchAisle'
 import CaseForCalm from './sections/CaseForCalm'
 import Inside from './sections/Inside'
@@ -52,7 +51,6 @@ export default function DiscoverPage() {
       <Navbar belowBanner={sale} />
       <main>
         <Hero />
-        <ProductFilm />
         <PouchAisle />
         <CaseForCalm />
         <Inside />
