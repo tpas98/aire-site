@@ -4,15 +4,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 
 /**
- * Pages where the 10%-off popup stays hidden. /discover is the cold-traffic
- * landing page: it already leads with the 30% FIRST30 offer, and a 10% modal
- * over its hero would both cover the explanation and undercut the bigger deal.
+ * Pages where the 10%-off popup stays hidden. The homepage (formerly /discover)
+ * is the cold-traffic landing page: it already leads with the 30% FIRST30 offer,
+ * and a 10% modal over its hero would cover the explanation and undercut the deal.
  */
-const NO_POPUP = ['/discover']
+const NO_POPUP = (p: string) => p === '/' || p.startsWith('/discover')
 
 export default function EmailPopup() {
   const pathname = usePathname()
-  const suppressed = NO_POPUP.some((p) => pathname?.startsWith(p))
+  const suppressed = NO_POPUP(pathname ?? '')
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')

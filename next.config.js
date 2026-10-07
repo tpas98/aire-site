@@ -15,6 +15,8 @@ const nextConfig = {
         destination: 'https://airepouches.com/:path*',
         permanent: true,
       },
+      // /discover became the homepage on 2026-10-07. Keep ad and shared links working.
+      { source: '/discover', destination: '/', permanent: true },
       // The comparison page was removed 2026-09-22 (brand rule: never name a competitor).
       // Old links and search results go straight to the product page.
       {

@@ -1,39 +1,18 @@
-/**
- * Homepage (since 2026-10-07): the education-first page built as /discover.
- * Sections and copy live in src/app/discover/ (no route there; /discover
- * 308-redirects here). The previous homepage is kept at /classic, noindex.
- */
-import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
+import Ticker from '@/components/Ticker'
 import SaleBanner from '@/components/SaleBanner'
-import StickyMobileCTA from '@/components/StickyMobileCTA'
-import { Footer } from '@/components/CTAFooter'
 import { saleActive } from '@/lib/sale'
-import { faqs, hero } from './discover/content'
-import Hero from './discover/sections/Hero'
-import PouchAisle from './discover/sections/PouchAisle'
-import CaseForCalm from './discover/sections/CaseForCalm'
-import Inside from './discover/sections/Inside'
-import Aisle from './discover/sections/Aisle'
-import HowItWorks from './discover/sections/HowItWorks'
-import Moments from './discover/sections/Moments'
-import Reviews from './discover/sections/Reviews'
-import DiscoverFAQ from './discover/sections/DiscoverFAQ'
-import Offer from './discover/sections/Offer'
-
-const strip = (s: string) => s.replace(/†/g, '')
-
-export const metadata: Metadata = {
-  title: 'Aire | Calm focus in a pouch. No nicotine, no caffeine.',
-  description: strip(hero.sub),
-  alternates: { canonical: 'https://airepouches.com' },
-  openGraph: {
-    title: 'Aire | Calm focus in a pouch. No nicotine, no caffeine.',
-    description: strip(hero.sub),
-    url: 'https://airepouches.com',
-    images: ['/images/three-cans-full-frame-2026.png'],
-  },
-}
+import Hero from '@/components/Hero'
+import LifestyleStrip from '@/components/LifestyleStrip'
+import About from '@/components/About'
+import Ingredients from '@/components/Ingredients'
+import ProductFeature from '@/components/ProductFeature'
+import HowToUse from '@/components/HowToUse'
+import Balance from '@/components/Balance'
+import Testimonials from '@/components/Testimonials'
+import FAQ from '@/components/FAQ'
+import StickyMobileCTA from '@/components/StickyMobileCTA'
+import { CTA, Footer } from '@/components/CTAFooter'
 
 // Structured Data: Product schema.
 // Lives HERE, not in layout.tsx — it was previously rendered on every route,
@@ -99,40 +78,38 @@ const productSchema = {
   // ---------------------------------------------------------------------
 }
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
-    '@type': 'Question',
-    name: strip(f.q),
-    acceptedAnswer: { '@type': 'Answer', text: strip(f.a) },
-  })),
+// Re-render hourly so the banner comes down on its own if SALE_ENDS_AT is ever set.
+export const metadata = {
+  title: 'Aire | Classic homepage',
+  robots: { index: false, follow: true },
+  alternates: { canonical: 'https://airepouches.com' },
 }
 
 export const revalidate = 3600
 
-export default function Home() {
+export default function ClassicHome() {
   const sale = saleActive()
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
       {sale && <SaleBanner />}
       <Navbar belowBanner={sale} />
-      <main>
-        <Hero />
-        <PouchAisle />
-        <CaseForCalm />
-        <Inside />
-        <Aisle />
-        <HowItWorks />
-        <Moments />
-        <Reviews />
-        <DiscoverFAQ />
-        <Offer />
-      </main>
+      <Ticker belowBanner={sale} />
+      <Hero />
+      <LifestyleStrip />
+      <Testimonials />
+      <About />
+      <Ingredients />
+      <ProductFeature />
+      <Balance />
+      <HowToUse />
+      <FAQ />
+      <CTA />
       <Footer />
-      <StickyMobileCTA label="New customers, code FIRST30" price="30% off first order" cta="Try Aire" />
+      <StickyMobileCTA />
     </>
   )
 }

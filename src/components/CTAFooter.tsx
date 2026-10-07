@@ -18,7 +18,7 @@ const footerLinks = {
     { label: 'Home', href: '/' },
     { label: 'Shop Aire', href: buyUrl() },
     { label: 'The Science', href: '/#ingredients' },
-    { label: 'About Us', href: '/#science' },
+    { label: 'About Us', href: '/about' },
   ],
   Support: [
     { label: 'FAQ', href: '/#faq' },
