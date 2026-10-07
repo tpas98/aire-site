@@ -22,8 +22,9 @@ function Backdrop({ i, progress }: { i: number; progress: MotionValue<number> })
   const last = i === inside.items.length - 1
   const opacity = useTransform(progress, last ? [a - 0.05, a + 0.02] : [a - 0.05, a + 0.02, b - 0.02, b + 0.05], last ? [0, 1] : [0, 1, 1, 0])
   const scale = useTransform(progress, [a - 0.05, b + 0.05], [1.12, 1])
+  const visibility = useTransform(opacity, (o) => (o < 0.01 ? 'hidden' : 'visible'))
   return (
-    <motion.div style={{ opacity }} className="absolute inset-0">
+    <motion.div style={{ opacity, visibility }} className="absolute inset-0">
       <motion.div style={{ scale }} className="h-full w-full">
         <Image src={inside.images[i]} alt={`${inside.items[i].name}, ${inside.items[i].from.toLowerCase()}`} fill sizes="100vw" className="object-cover object-center" />
       </motion.div>
@@ -52,11 +53,11 @@ export default function Inside() {
     setActive((c) => (c === i ? c : i))
   })
   // Intro: cans big and centred, then they lift off.
-  const cansY = useTransform(scrollYProgress, [0, INTRO, INTRO + 0.06], [30, 0, -260])
-  const cansO = useTransform(scrollYProgress, [INTRO, INTRO + 0.06], [1, 0])
-  const cansScale = useTransform(scrollYProgress, [0, INTRO], [0.92, 1])
-  const titleO = useTransform(scrollYProgress, [INTRO, INTRO + 0.05], [1, 0])
-  const copyO = useTransform(scrollYProgress, [INTRO - 0.03, INTRO + 0.02], [0, 1])
+  const cansY = useTransform(scrollYProgress, [0, INTRO - 0.04, INTRO + 0.02], [30, 0, -220])
+  const cansO = useTransform(scrollYProgress, [INTRO - 0.04, INTRO], [1, 0])
+  const cansScale = useTransform(scrollYProgress, [0, INTRO - 0.04], [0.92, 1])
+  const titleO = useTransform(scrollYProgress, [INTRO - 0.05, INTRO - 0.01], [1, 0])
+  const copyO = useTransform(scrollYProgress, [INTRO, INTRO + 0.03], [0, 1])
 
   if (reduce) {
     return (
@@ -106,7 +107,7 @@ export default function Inside() {
                 width={1370}
                 height={972}
                 sizes="(min-width: 768px) 760px, 96vw"
-                className="h-full max-h-full w-full max-w-[760px] object-contain [filter:drop-shadow(0_30px_40px_rgba(26,46,74,0.25))]"
+                className="h-full max-h-full w-full max-w-[760px] object-contain md:[filter:drop-shadow(0_30px_40px_rgba(26,46,74,0.25))]"
               />
             </motion.div>
           </div>
@@ -114,7 +115,7 @@ export default function Inside() {
 
         {/* Ingredient copy */}
         <motion.div style={{ opacity: copyO }} className="absolute inset-x-0 bottom-0 px-4 pb-[96px] md:px-16 md:pb-14">
-          <div className="mx-auto max-w-[1100px] rounded-[26px] border border-white/60 bg-white/65 p-5 shadow-[0_20px_60px_rgba(26,46,74,0.15)] backdrop-blur-xl md:max-w-[560px] md:ml-0 md:p-7">
+          <div className="mx-auto max-w-[1100px] rounded-[26px] border border-white/60 bg-white/90 p-5 shadow-[0_20px_60px_rgba(26,46,74,0.15)] md:bg-white/65 md:backdrop-blur-xl md:max-w-[560px] md:ml-0 md:p-7">
             <div className="mb-4 flex max-w-[420px] gap-1.5" aria-hidden="true">
               {inside.items.map((x, i) => <Seg key={x.name} i={i} progress={scrollYProgress} />)}
             </div>

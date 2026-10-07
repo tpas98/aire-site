@@ -18,9 +18,9 @@ const WIN = (i: number): [number, number] => [0.04 + i * 0.2, 0.04 + i * 0.2 + 0
 const AIRE_AT = 0.66
 
 const CHIP: Record<string, string> = {
-  warm: 'bg-salmon/15 text-[#b5503c] border-salmon/30',
-  grey: 'bg-navy/[0.06] text-navy-mid border-navy/15',
-  deep: 'bg-[#5f74a6]/15 text-[#3f5287] border-[#5f74a6]/30',
+  warm: 'bg-[#fdeee9] text-[#b5503c] border-salmon/30',
+  grey: 'bg-[#f1f4f7] text-navy-mid border-navy/15',
+  deep: 'bg-[#eaedf6] text-[#3f5287] border-[#5f74a6]/30',
 }
 
 function useBox(ref: React.RefObject<HTMLElement>) {
@@ -40,7 +40,7 @@ function Card({ i, progress, box }: { i: number; progress: MotionValue<number>; 
   const s = aisleStory.steps[i]
   const [a, b] = WIN(i)
   const R = 716 / 557 // card image aspect (h / w)
-  const thumb = Math.min(box.w / N - 10, box.w < 600 ? 78 : 112, box.h * 0.2)
+  const thumb = Math.min(box.w / N - 10, box.w < 600 ? 62 : 112, box.h * 0.2)
   const thumbH = thumb * R
   // The big card fills the space under the thumbnail row.
   const avail = box.h - thumbH - 14
@@ -66,9 +66,11 @@ function Card({ i, progress, box }: { i: number; progress: MotionValue<number>; 
     >
       <div className="relative overflow-hidden rounded-[28px] bg-white shadow-[0_24px_60px_rgba(26,46,74,0.18)]">
         <Image src={s.img} alt={`${s.label}, unbranded`} width={557} height={716} sizes="420px" className="aspect-[557/716] h-auto w-full object-cover" />
-        <motion.div style={{ opacity: detail }} className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-white via-white/85 to-transparent p-5 pt-14">
-          <div className="text-[1.05rem] font-semibold leading-tight text-navy">{s.label}</div>
-          <span className={`shrink-0 rounded-full border px-3 py-1 text-[0.72rem] font-semibold ${CHIP[s.tone]}`}>{s.chip}</span>
+        <motion.span style={{ opacity: detail }} className={`absolute left-3 top-3 rounded-full border px-3 py-1 text-[0.72rem] font-semibold ${CHIP[s.tone]} shadow-sm`}>
+          {s.chip}
+        </motion.span>
+        <motion.div style={{ opacity: detail }} className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-white via-white/90 to-transparent p-4 pt-12 md:p-5 md:pt-14">
+          <div className="text-[1rem] font-semibold leading-tight text-navy md:text-[1.05rem]">{s.label}</div>
         </motion.div>
       </div>
     </motion.div>
@@ -111,7 +113,7 @@ export default function PouchAisle() {
   const ctaO = useTransform(scrollYProgress, [AIRE_AT + 0.08, AIRE_AT + 0.14], [0, 1])
 
   const cur = step < N ? aisleStory.steps[step] : aisleStory.aire
-  const thumbH = Math.min(box.w / N - 10, box.w < 600 ? 78 : 112, box.h * 0.2) * (716 / 557)
+  const thumbH = Math.min(box.w / N - 10, box.w < 600 ? 62 : 112, box.h * 0.2) * (716 / 557)
   const aireW = Math.max(150, Math.min(box.w * 0.9, 440, (box.h - thumbH - 14) * (box.w < 768 ? 1.25 : 1)))
 
   if (reduce) {

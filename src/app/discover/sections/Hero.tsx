@@ -60,16 +60,16 @@ export default function Hero() {
           <p className="mt-4 max-w-[440px] text-[0.98rem] font-light leading-[1.55] text-white/85 md:mt-6 md:text-[1.12rem]">
             <Dag>{hero.sub}</Dag>
           </p>
+            <ul aria-label="What's not in it" className="mt-5 flex flex-wrap gap-2 md:mt-7">
+              {hero.chips.map((c) => (
+                <li key={c} className="rounded-full border border-white/20 bg-ink/60 px-3.5 py-1.5 text-[0.72rem] font-semibold tracking-[0.04em] text-white">
+                  {c}
+                </li>
+              ))}
+            </ul>
         </div>
 
         <div className="md:mt-8">
-          <ul aria-label="What's not in it" className="mb-5 flex flex-wrap gap-2">
-            {hero.chips.map((c) => (
-              <li key={c} className="rounded-full border border-white/20 bg-ink/40 px-3.5 py-1.5 text-[0.72rem] font-semibold tracking-[0.04em] text-white backdrop-blur-md">
-                {c}
-              </li>
-            ))}
-          </ul>
           <div className="flex flex-wrap items-center gap-5">
             <a
               href={buyUrl()}

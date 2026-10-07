@@ -273,7 +273,7 @@ function Story({ reduce }: { reduce: boolean }) {
           </div>
 
           {/* Chart: keeps its aspect and is capped so it never outgrows the pinned stage. */}
-          <div className="mx-auto w-full" style={{ maxWidth: 'min(100%, calc((100svh - 400px) * 1.133 + 44px))' }}>
+          <div className="mx-auto w-full" style={{ maxWidth: 'min(100%, calc((100svh - 450px) * 1.133 + 44px))' }}>
             <div className="relative ml-11">
               {/* Axis labels, HTML so they never distort */}
               <div aria-hidden="true" className="pointer-events-none absolute right-full top-0 mr-2 h-full text-[0.58rem] font-semibold uppercase tracking-[0.14em]">
@@ -294,16 +294,6 @@ function Story({ reduce }: { reduce: boolean }) {
                     <stop offset="0.5" stopColor="#7ec2df" stopOpacity="0.2" />
                     <stop offset="1" stopColor="#7ec2df" stopOpacity="0" />
                   </linearGradient>
-                  <filter id="cfc-glow" filterUnits="userSpaceOnUse" x={-20} y={-20} width={W + 40} height={H + 40}>
-                    <feGaussianBlur stdDeviation="4" result="b" />
-                    <feMerge>
-                      <feMergeNode in="b" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                  <filter id="cfc-dot" filterUnits="userSpaceOnUse" x={-20} y={-20} width={40} height={40}>
-                    <feGaussianBlur stdDeviation="3" />
-                  </filter>
                   <clipPath id="cfc-clip" clipPathUnits="userSpaceOnUse">
                     <rect ref={clipRect} x={-10} y={-30} width={W + 10} height={H + 60} />
                   </clipPath>
@@ -319,6 +309,16 @@ function Story({ reduce }: { reduce: boolean }) {
 
                 {/* series, revealed up to the cursor by one shared clip */}
                 <g clipPath="url(#cfc-clip)">
+                  <path
+                    d={PATHS.aire}
+                    fill="none"
+                    stroke={COLORS.aire}
+                    strokeOpacity={0.22}
+                    strokeWidth={12}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ opacity: dim('aire'), transition: 'opacity 0.3s ease' }}
+                  />
                   {(['nic', 'caf', 'aire'] as Key[]).map((k) => (
                     <path
                       key={k}
@@ -328,7 +328,6 @@ function Story({ reduce }: { reduce: boolean }) {
                       strokeWidth={k === 'aire' ? 4 : 2.2}
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      filter={k === 'aire' ? 'url(#cfc-glow)' : undefined}
                       style={{ opacity: dim(k), transition: 'opacity 0.3s ease' }}
                     />
                   ))}
@@ -347,7 +346,7 @@ function Story({ reduce }: { reduce: boolean }) {
                     transform={`translate(${W} ${toY(FN[k](1))})`}
                     style={{ opacity: dim(k), transition: 'opacity 0.3s ease' }}
                   >
-                    <circle r={k === 'aire' ? 8 : 6} fill={COLORS[k]} opacity={0.55} filter="url(#cfc-dot)" />
+                    <circle r={k === 'aire' ? 9 : 7} fill={COLORS[k]} opacity={0.3} />
                     <circle r={k === 'aire' ? 4.5 : 3.5} fill={COLORS[k]} stroke="#0a1424" strokeWidth={1.2} />
                   </g>
                 ))}
@@ -376,7 +375,7 @@ function Story({ reduce }: { reduce: boolean }) {
                         ref={(el) => {
                           pills.current[i] = el
                         }}
-                        className="whitespace-nowrap rounded-full border border-white/15 bg-white/10 px-2 py-[3px] text-[11px] leading-none text-white/90 backdrop-blur-sm"
+                        className="whitespace-nowrap rounded-full border border-white/15 bg-[#1a2638] px-2 py-[3px] text-[11px] leading-none text-white/90"
                       >
                         {c.text}
                       </div>
