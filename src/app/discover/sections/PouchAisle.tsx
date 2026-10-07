@@ -173,7 +173,7 @@ export default function PouchAisle() {
             className="absolute inset-x-0 bottom-0 mx-auto"
           >
             <div className="relative overflow-hidden rounded-[30px] shadow-[0_30px_80px_rgba(26,46,74,0.28)] ring-1 ring-white/60">
-              <Image src={aisleStory.aire.img} alt="Aire Calm Mint can, open, with pouches" width={1254} height={1254} sizes="440px" className="aspect-[5/4] h-auto w-full object-cover md:aspect-square" />
+              <Image src={aisleStory.aire.img} alt="Aire Calm Mint can, open, with pouches" width={1254} height={1254} sizes="440px" className="aspect-[5/4] h-auto w-full object-cover object-[50%_22%] md:aspect-square" />
               <div className="absolute left-4 top-4 rounded-full bg-navy px-3 py-1 text-[0.72rem] font-semibold tracking-[0.04em] text-white">{aisleStory.aire.chip}</div>
             </div>
           </motion.div>
