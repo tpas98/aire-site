@@ -70,9 +70,9 @@ export function MaskSwap({ k, children, className = '' }: { k: string; children:
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={k}
-          initial={{ y: '105%' }}
-          animate={{ y: '0%' }}
-          exit={{ y: '-105%', transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
+          initial={{ transform: 'translateY(105%)' }}
+          animate={{ transform: 'translateY(0%)' }}
+          exit={{ transform: 'translateY(-105%)', transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
           transition={{ type: 'spring', stiffness: 230, damping: 26, mass: 0.85 }}
         >
           {children}

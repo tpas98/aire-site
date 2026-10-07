@@ -82,6 +82,33 @@
   animation-play-state: paused;
 }
 
+/* Scroll-scrubbed scenes (src/app/discover/scrollAnim.tsx). The element names
+   its own keyframes inline; this supplies the timeline. Without scroll
+   timelines the animation is paused and scrubbed by --p (0..1) from JS. */
+.sa {
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+  animation-delay: calc(var(--p, 0) * -0.9999s);
+}
+@supports (animation-timeline: view()) {
+  .sa {
+    animation-duration: auto;
+    animation-delay: 0s;
+    animation-play-state: running;
+    animation-timeline: var(--sa-tl);
+    animation-range: var(--sa-range);
+  }
+}
+/* Reduced motion: hold every scrubbed layer on its final frame. */
+[data-sa-end] .sa {
+  animation-timeline: auto;
+  animation-duration: 1s;
+  animation-play-state: paused;
+  animation-delay: -0.9999s;
+}
+
 /* Respect users who prefer reduced motion: stop infinite marquees */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

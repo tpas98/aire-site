@@ -25,9 +25,9 @@ export default function StickyMobileCTA({
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
+          initial={{ transform: 'translateY(100px)', opacity: 0 }}
+          animate={{ transform: 'translateY(0px)', opacity: 1 }}
+          exit={{ transform: 'translateY(100px)', opacity: 0 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="fixed bottom-0 left-0 right-0 z-[80] md:hidden"
         >

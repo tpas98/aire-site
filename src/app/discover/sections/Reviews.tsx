@@ -15,8 +15,8 @@ export default function Reviews() {
           {reviews.items.map((r, i) => (
             <motion.figure
               key={r.author}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, transform: 'translateY(24px)' }}
+              whileInView={reduce ? undefined : { opacity: 1, transform: 'translateY(0px)' }}
               viewport={{ once: true, margin: '-5% 0px' }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="flex shrink-0 basis-[84%] snap-start flex-col justify-between rounded-3xl bg-white p-7 shadow-[0_20px_60px_rgba(26,46,74,0.10)] md:basis-auto"

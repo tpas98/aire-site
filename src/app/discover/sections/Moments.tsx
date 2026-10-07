@@ -14,8 +14,8 @@ export default function Moments() {
           {moments.items.map((m, i) => (
             <motion.div
               key={m.title}
-              initial={reduce ? false : { opacity: 0, y: 24 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              initial={reduce ? false : { opacity: 0, transform: 'translateY(24px)' }}
+              whileInView={reduce ? undefined : { opacity: 1, transform: 'translateY(0px)' }}
               viewport={{ once: true, margin: '-5% 0px' }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="relative shrink-0 basis-[80%] snap-start overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] p-7 md:basis-auto"

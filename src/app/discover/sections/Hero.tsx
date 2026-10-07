@@ -1,9 +1,18 @@
 'use client'
 import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { useReducedMotion, useScroll } from 'framer-motion'
 import { buyUrl } from '@/lib/checkout'
 import { hero } from '../content'
+import { Keyframes, timeline, useScrub } from '../scrollAnim'
 import Dag, { Eyebrow, GradientText } from './Dag'
+
+// Scroll-away parallax, on the compositor (see scrollAnim.tsx). The intro
+// zoom is a plain CSS animation so it stays smooth while the page hydrates.
+const CSS =
+  '@keyframes hero-img{from{transform:translateY(0)}to{transform:translateY(120px)}}' +
+  '@keyframes hero-text{0%{transform:translateY(0);opacity:1}65%{opacity:0}100%{transform:translateY(-60px);opacity:0}}' +
+  '@keyframes hero-in{from{transform:scale(1.08);opacity:.6}to{transform:none;opacity:1}}' +
+  '.hero-in{animation:hero-in 2.2s cubic-bezier(.16,1,.3,1) both}'
 
 /**
  * Full-bleed cinematic hero: the real can (AI scene, label checked and the
@@ -16,19 +25,13 @@ export default function Hero() {
   const reduce = !!useReducedMotion()
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const imgY = useTransform(scrollYProgress, [0, 1], [0, 120])
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -60])
-  const fade = useTransform(scrollYProgress, [0, 0.65], [1, 0])
+  useScrub(ref, scrollYProgress)
 
   return (
-    <section ref={ref} className="relative min-h-[100svh] overflow-hidden bg-ink text-white">
-      <motion.div style={reduce ? undefined : { y: imgY }} className="absolute inset-0">
-        <motion.div
-          initial={reduce ? false : { scale: 1.08, opacity: 0.6 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
-          className="h-full w-full"
-        >
+    <section ref={ref} style={reduce ? undefined : timeline('--hero', 'exit-crossing')} className="relative min-h-[100svh] overflow-hidden bg-ink text-white">
+      {!reduce && <Keyframes css={CSS} />}
+      <div style={reduce ? undefined : { animationName: 'hero-img' }} className={`absolute inset-0 ${reduce ? '' : 'sa'}`}>
+        <div className={`h-full w-full ${reduce ? '' : 'hero-in'}`}>
           <div className="h-full w-full [@media(max-height:720px)_and_(max-width:767px)]:translate-y-[9%]">
           <picture>
             <source media="(min-width: 768px)" srcSet="/images/discover/hero-wide.webp" />
@@ -41,14 +44,14 @@ export default function Hero() {
             />
           </picture>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
       {/* Legibility scrims */}
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/10 to-ink/85 md:bg-gradient-to-r md:from-ink/90 md:via-ink/40 md:to-transparent" />
 
-      <motion.div
-        style={reduce ? undefined : { y: textY, opacity: fade }}
-        className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-between px-6 pb-10 pt-[112px] md:justify-center md:px-16 md:pb-20"
+      <div
+        style={reduce ? undefined : { animationName: 'hero-text' }}
+        className={`${reduce ? '' : 'sa '}relative z-10 mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-between px-6 pb-10 pt-[112px] md:justify-center md:px-16 md:pb-20`}
       >
         <div className="max-w-[620px]">
           <Eyebrow dark>{hero.eyebrow}</Eyebrow>
@@ -83,7 +86,7 @@ export default function Hero() {
             </a>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

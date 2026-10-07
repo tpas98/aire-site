@@ -24,7 +24,7 @@ export default function Offer() {
           style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
         />
         <motion.div
-          animate={reduce ? undefined : { y: [0, -10, 0] }}
+          animate={reduce ? undefined : { transform: ['translateY(0px)', 'translateY(-10px)', 'translateY(0px)'] }}
           transition={reduce ? undefined : { duration: 7, repeat: Infinity, ease: 'easeInOut' }}
         >
           <Image

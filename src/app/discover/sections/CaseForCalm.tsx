@@ -2,6 +2,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { animate, motion, useInView, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion'
 import { caseForCalm } from '../content'
+import { Keyframes, keyframes, n, timeline, useScrub } from '../scrollAnim'
 import Dag, { Eyebrow, GRADIENT } from './Dag'
 
 const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
@@ -199,57 +200,75 @@ const calloutT = (c: Callout) => (c.hour - 8) / 12
 
 const TICKS = [0, 0.25, 0.5, 0.75, 1]
 
+// The story completes at 88% of the pin, then holds on the final frame.
+const END = 0.88
+/** Reveal edge runs 10 units ahead of the cursor, as the SVG clip did. */
+const LEAD = 10 / W
+/** The reveal window overhangs the chart by 4% each side (stroke caps). */
+const OVER = 0.04
+
+/**
+ * Every scrubbed value on the chart, as compositor keyframes (scrollAnim.tsx).
+ * The old version rewrote SVG attributes per frame, which repainted the whole
+ * chart on every scroll tick: the single most expensive thing on the page for
+ * a phone. Now the series are revealed by a translated overflow window (with
+ * a counter-translated inner layer so the lines stay put), and the cursor,
+ * dots and callouts are transformed / faded HTML layers.
+ */
+const STORY_CSS = (() => {
+  const t = (v: number) => ((v + LEAD - 1 - OVER) / (1 + 2 * OVER)) * 100
+  let css = keyframes('cfc-reveal', { x: [[0, END], [t(0), t(1)]] }, (v) => `transform:translateX(${n(v.x)}%)`)
+  css += keyframes('cfc-unreveal', { x: [[0, END], [-t(0), -t(1)]] }, (v) => `transform:translateX(${n(v.x)}%)`)
+  css += keyframes('cfc-x', { x: [[0, END], [0, 100]] }, (v) => `transform:translateX(${n(v.x)}%)`)
+  const samples = Array.from({ length: N + 1 }, (_, i) => i / N)
+  for (const k of KEYS) {
+    css += keyframes(
+      `cfc-y-${k}`,
+      { y: [samples.map((t) => t * END), samples.map((t) => (toY(FN[k](t)) / H) * 100)] },
+      (v) => `transform:translateY(${n(v.y)}%)`,
+    )
+  }
+  CALLOUTS.forEach((c, i) => {
+    const t0 = calloutT(c)
+    css += keyframes(`cfc-pill${i}`, { o: [[t0 * END, (t0 + 0.025) * END], [0, 1]] }, (v) => `opacity:${n(v.o)}`)
+  })
+  return css
+})()
+
+const DOT: Record<Key, [number, number]> = { nic: [12, 6], caf: [12, 6], aire: [16, 8] }
+
 function Story({ reduce }: { reduce: boolean }) {
   const { chart } = caseForCalm
   const wrapRef = useRef<HTMLDivElement>(null)
-  const clipRect = useRef<SVGRectElement>(null)
-  const cursor = useRef<SVGLineElement>(null)
   const clockRef = useRef<HTMLSpanElement>(null)
-  const dots = useRef<Partial<Record<Key, SVGGElement | null>>>({})
-  const pills = useRef<(HTMLDivElement | null)[]>([])
   const [hl, setHl] = useState<Key | null>(null)
 
   const { scrollYProgress } = useScroll({ target: wrapRef, offset: ['start start', 'end end'] })
-  // The story completes at 88% of the pin, then holds on the final frame.
-  const p = useMotionValue(1)
+  useScrub(wrapRef, scrollYProgress)
 
-  const paint = (v: number) => {
-    const x = v * W
-    clipRect.current?.setAttribute('width', (x + 10).toFixed(2))
-    if (cursor.current) {
-      cursor.current.setAttribute('x1', x.toFixed(2))
-      cursor.current.setAttribute('x2', x.toFixed(2))
-    }
-    if (clockRef.current) clockRef.current.textContent = clockText(v)
-    for (const k of KEYS) dots.current[k]?.setAttribute('transform', `translate(${x.toFixed(2)} ${toY(FN[k](v)).toFixed(2)})`)
-    CALLOUTS.forEach((c, i) => {
-      const el = pills.current[i]
-      if (el) el.style.opacity = String(clamp01((v - calloutT(c)) / 0.025))
-    })
+  // The clock is text, so it stays on the main thread (a late digit is invisible).
+  const tick = (sp: number) => {
+    if (clockRef.current) clockRef.current.textContent = clockText(clamp01(sp / END))
   }
-
   useIsoLayoutEffect(() => {
-    if (reduce) return
-    const sync = (sp: number) => {
-      const v = clamp01(sp / 0.88)
-      p.set(v)
-      paint(v)
-    }
-    sync(scrollYProgress.get())
+    if (!reduce) tick(scrollYProgress.get())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reduce])
-
   useMotionValueEvent(scrollYProgress, 'change', (sp) => {
-    if (reduce) return
-    const v = clamp01(sp / 0.88)
-    p.set(v)
-    paint(v)
+    if (!reduce) tick(sp)
   })
 
   const dim = (k: Key) => (hl && hl !== k ? 0.2 : 1)
+  const fade = { transition: 'opacity 0.3s ease' }
 
   return (
-    <div ref={wrapRef} className="relative h-[260vh] bg-ink motion-reduce:h-auto">
+    <div
+      ref={wrapRef}
+      style={timeline('--story', 'contain')}
+      data-sa-end={reduce ? '' : undefined}
+      className="relative h-[260vh] bg-ink motion-reduce:h-auto"
+    >
+      <Keyframes css={STORY_CSS} />
       <div className="sticky top-0 flex h-[100svh] flex-col bg-ink px-5 pb-[96px] pt-[110px] text-white motion-reduce:static motion-reduce:h-auto motion-reduce:min-h-[100svh] motion-reduce:py-24 md:px-10 md:pb-10">
         <div className="mx-auto flex w-full max-w-[980px] min-h-0 flex-1 flex-col justify-center">
           {/* Header: title + illustration tag, live clock */}
@@ -282,106 +301,114 @@ function Story({ reduce }: { reduce: boolean }) {
                 <span className="absolute right-0 -translate-y-1/2 text-white/55" style={{ top: `${(toY(0.96) / H) * 100}%` }}>Out</span>
               </div>
 
-              <svg
-                viewBox={`0 0 ${W} ${H}`}
-                className="block h-auto w-full overflow-visible"
-                role="img"
-                aria-label="Illustration: nicotine rises and falls about every two hours, caffeine spikes and slides, Aire stays in the level band."
-              >
-                <defs>
-                  <linearGradient id="cfc-band" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0" stopColor="#7ec2df" stopOpacity="0" />
-                    <stop offset="0.5" stopColor="#7ec2df" stopOpacity="0.2" />
-                    <stop offset="1" stopColor="#7ec2df" stopOpacity="0" />
-                  </linearGradient>
-                  <clipPath id="cfc-clip" clipPathUnits="userSpaceOnUse">
-                    <rect ref={clipRect} x={-10} y={-30} width={W + 10} height={H + 60} />
-                  </clipPath>
-                </defs>
-
-                {/* hour ticks */}
-                {TICKS.map((t) => (
-                  <line key={t} x1={t * W} x2={t * W} y1={0} y2={H} stroke="#fff" strokeOpacity="0.06" />
-                ))}
-                {/* level band + dashed level line */}
-                <rect x={0} y={toY(0.4)} width={W} height={toY(0.6) - toY(0.4)} fill="url(#cfc-band)" />
-                <line x1={0} x2={W} y1={toY(0.5)} y2={toY(0.5)} stroke="#c8e6f5" strokeOpacity="0.3" strokeDasharray="3 4" />
-
-                {/* series, revealed up to the cursor by one shared clip */}
-                <g clipPath="url(#cfc-clip)">
-                  <path
-                    d={PATHS.aire}
-                    fill="none"
-                    stroke={COLORS.aire}
-                    strokeOpacity={0.22}
-                    strokeWidth={12}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{ opacity: dim('aire'), transition: 'opacity 0.3s ease' }}
-                  />
-                  {(['nic', 'caf', 'aire'] as Key[]).map((k) => (
-                    <path
-                      key={k}
-                      d={PATHS[k]}
-                      fill="none"
-                      stroke={COLORS[k]}
-                      strokeWidth={k === 'aire' ? 4 : 2.2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      style={{ opacity: dim(k), transition: 'opacity 0.3s ease' }}
-                    />
+              <div className="relative">
+                {/* Static frame: hour ticks, level band, dashed level line */}
+                <svg
+                  viewBox={`0 0 ${W} ${H}`}
+                  className="block h-auto w-full overflow-visible"
+                  role="img"
+                  aria-label="Illustration: nicotine rises and falls about every two hours, caffeine spikes and slides, Aire stays in the level band."
+                >
+                  <defs>
+                    <linearGradient id="cfc-band" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0" stopColor="#7ec2df" stopOpacity="0" />
+                      <stop offset="0.5" stopColor="#7ec2df" stopOpacity="0.2" />
+                      <stop offset="1" stopColor="#7ec2df" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  {TICKS.map((t) => (
+                    <line key={t} x1={t * W} x2={t * W} y1={0} y2={H} stroke="#fff" strokeOpacity="0.06" />
                   ))}
-                </g>
+                  <rect x={0} y={toY(0.4)} width={W} height={toY(0.6) - toY(0.4)} fill="url(#cfc-band)" />
+                  <line x1={0} x2={W} y1={toY(0.5)} y2={toY(0.5)} stroke="#c8e6f5" strokeOpacity="0.3" strokeDasharray="3 4" />
+                </svg>
 
-                {/* time cursor */}
-                <line ref={cursor} x1={W} x2={W} y1={0} y2={H} stroke="#fff" strokeOpacity="0.4" strokeWidth={1} />
-
-                {/* dots riding each series */}
-                {KEYS.map((k) => (
-                  <g
-                    key={k}
-                    ref={(el) => {
-                      dots.current[k] = el
-                    }}
-                    transform={`translate(${W} ${toY(FN[k](1))})`}
-                    style={{ opacity: dim(k), transition: 'opacity 0.3s ease' }}
-                  >
-                    <circle r={k === 'aire' ? 9 : 7} fill={COLORS[k]} opacity={0.3} />
-                    <circle r={k === 'aire' ? 4.5 : 3.5} fill={COLORS[k]} stroke="#0a1424" strokeWidth={1.2} />
-                  </g>
-                ))}
-              </svg>
-
-              {/* Callouts: HTML pills pinned to chart coordinates */}
-              <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-                {CALLOUTS.map((c, i) => {
-                  const t = calloutT(c)
-                  const y = (toY(FN[c.key](t)) / H) * 100
-                  const above = c.place === 'above'
-                  const tx = c.align === 'right' ? '-100%' : '-50%'
-                  return (
-                    <div
-                      key={c.text}
-                      className="absolute"
-                      style={{
-                        left: `${t * 100}%`,
-                        top: `${y}%`,
-                        transform: `translate(${tx}, ${above ? 'calc(-100% - 9px)' : '9px'})`,
-                        opacity: dim(c.key),
-                        transition: 'opacity 0.3s ease',
-                      }}
-                    >
-                      <div
-                        ref={(el) => {
-                          pills.current[i] = el
-                        }}
-                        className="whitespace-nowrap rounded-full border border-white/15 bg-[#1a2638] px-2 py-[3px] text-[11px] leading-none text-white/90"
-                      >
-                        {c.text}
-                      </div>
+                {/* Series, revealed up to the cursor: the window slides right, its
+                    contents slide left by the same amount, so the lines hold still. */}
+                <div
+                  aria-hidden="true"
+                  className="sa pointer-events-none absolute -bottom-8 -top-8 overflow-hidden"
+                  style={{ animationName: 'cfc-reveal', left: `${-OVER * 100}%`, right: `${-OVER * 100}%` }}
+                >
+                  <div className="sa absolute inset-0" style={{ animationName: 'cfc-unreveal' }}>
+                    <div className="absolute bottom-8 top-8" style={{ left: `${(OVER / (1 + 2 * OVER)) * 100}%`, width: `${(1 / (1 + 2 * OVER)) * 100}%` }}>
+                      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="block h-full w-full overflow-visible">
+                        <path
+                          d={PATHS.aire}
+                          fill="none"
+                          stroke={COLORS.aire}
+                          strokeOpacity={0.22}
+                          strokeWidth={12}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          style={{ opacity: dim('aire'), ...fade }}
+                        />
+                        {(['nic', 'caf', 'aire'] as Key[]).map((k) => (
+                          <path
+                            key={k}
+                            d={PATHS[k]}
+                            fill="none"
+                            stroke={COLORS[k]}
+                            strokeWidth={k === 'aire' ? 4 : 2.2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            style={{ opacity: dim(k), ...fade }}
+                          />
+                        ))}
+                      </svg>
                     </div>
-                  )
-                })}
+                  </div>
+                </div>
+
+                {/* Time cursor */}
+                <div aria-hidden="true" className="sa pointer-events-none absolute inset-0" style={{ animationName: 'cfc-x' }}>
+                  <div className="absolute inset-y-0 left-0 w-px -translate-x-1/2 bg-white/40" />
+                </div>
+
+                {/* Dots riding each series: x and y on separate layers */}
+                {KEYS.map((k) => (
+                  <div key={k} aria-hidden="true" className="sa pointer-events-none absolute inset-0" style={{ animationName: 'cfc-x', opacity: dim(k), ...fade }}>
+                    <div className="sa absolute inset-0" style={{ animationName: `cfc-y-${k}` }}>
+                      <span
+                        className="absolute left-0 top-0 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
+                        style={{ width: DOT[k][0], height: DOT[k][0], background: `${COLORS[k]}4d` }}
+                      >
+                        <span className="block rounded-full border border-[#0a1424]" style={{ width: DOT[k][1], height: DOT[k][1], background: COLORS[k] }} />
+                      </span>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Callouts: HTML pills placed against the chart plus its hour-label
+                    row (mt-2 + h-4), the spacing the approved layout was tuned on. */}
+                <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-6 top-0">
+                  {CALLOUTS.map((c, i) => {
+                    const t = calloutT(c)
+                    const y = (toY(FN[c.key](t)) / H) * 100
+                    const above = c.place === 'above'
+                    const tx = c.align === 'right' ? '-100%' : '-50%'
+                    return (
+                      <div
+                        key={c.text}
+                        className="absolute"
+                        style={{
+                          left: `${t * 100}%`,
+                          top: `${y}%`,
+                          transform: `translate(${tx}, ${above ? 'calc(-100% - 9px)' : '9px'})`,
+                          opacity: dim(c.key),
+                          ...fade,
+                        }}
+                      >
+                        <div
+                          className="sa whitespace-nowrap rounded-full border border-white/15 bg-[#1a2638] px-2 py-[3px] text-[11px] leading-none text-white/90"
+                          style={{ animationName: `cfc-pill${i}` }}
+                        >
+                          {c.text}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
               </div>
 
               {/* Hour labels */}
