@@ -11,7 +11,7 @@ export default function Navbar({ belowBanner = false }: { belowBanner?: boolean 
       initial={{ transform: 'translateY(-80px)', opacity: 0 }}
       animate={{ transform: 'translateY(0px)', opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed ${belowBanner ? 'top-9' : 'top-0'} left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-[64px] bg-white md:bg-white/80 md:backdrop-blur-xl border-b border-sky-deep/20`}
+      className={`fixed ${belowBanner ? 'top-9' : 'top-0'} left-0 right-0 z-50 flex items-center justify-between px-6 md:px-16 h-[64px] bg-white border-b border-sky-deep/20`}
     >
       <a href="/">
         <Image src="/images/logo.png" alt="Aire" width={120} height={40} className="h-7 w-auto" style={{ mixBlendMode: 'multiply' }} />

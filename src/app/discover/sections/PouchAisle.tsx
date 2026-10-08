@@ -174,7 +174,7 @@ export default function PouchAisle() {
         <div className="relative mx-auto w-full max-w-[1100px]">
           <Eyebrow>{aisleStory.eyebrow}</Eyebrow>
           <div className="relative min-h-[118px] md:min-h-[150px] [@media(max-height:700px)]:min-h-[96px]" aria-live="polite">
-            <MaskSwap k={cur.title}>
+            <MaskSwap k={cur.title} bleed={16}>
               <h2 className="font-serif text-[clamp(2rem,7.6vw,4rem)] leading-[1.02] tracking-[-0.02em] text-navy [@media(max-height:700px)_and_(max-width:767px)]:text-[1.8rem]">
                 {step === N ? (
                   <>

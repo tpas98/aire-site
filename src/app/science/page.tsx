@@ -135,9 +135,9 @@ export default function SciencePage() {
           </section>
 
           <section>
-            <h2 className="font-serif text-[1.4rem] text-navy mb-3">See the amounts</h2>
+            <h2 className="font-serif text-[1.4rem] text-navy mb-3">See what&apos;s in a pouch</h2>
             <p>
-              Per-pouch amounts for every active are published on the{' '}
+              All four actives and the 185 mg blend total are on the{' '}
               <Link href="/ingredients" className="text-accent hover:underline">ingredients page</Link>.
             </p>
           </section>

@@ -63,21 +63,30 @@ export function Eyebrow({ children, dark = false, center = false, light }: { chi
  * Text swap that rises out of a mask line (the okihome / Apple pattern) instead
  * of blurring in. The old block exits upward out of the same mask. `k` changes
  * trigger the swap. Spring with a hint of overshoot, no opacity tricks.
+ *
+ * `bleed` (px) widens the mask below (and a little above) without moving the
+ * layout: a mask cut at the line box crops descenders (the "g" in a tight
+ * serif headline lost its tail). Swapped text travels the extra distance too,
+ * so nothing peeks out of the widened mask.
  */
-export function MaskSwap({ k, children, className = '' }: { k: string; children: React.ReactNode; className?: string }) {
+export function MaskSwap({ k, children, className = '', bleed = 10 }: { k: string; children: React.ReactNode; className?: string; bleed?: number }) {
+  const top = Math.min(bleed, 6)
+  const off = (sign: 1 | -1) => `translateY(calc(${sign * 105}% ${sign > 0 ? '+' : '-'} ${bleed + top}px))`
   return (
-    <div className={`relative overflow-hidden ${className}`}>
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={k}
-          initial={{ transform: 'translateY(105%)' }}
-          animate={{ transform: 'translateY(0%)' }}
-          exit={{ transform: 'translateY(-105%)', transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
-          transition={{ type: 'spring', stiffness: 230, damping: 26, mass: 0.85 }}
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
+    <div className={className}>
+      <div className="relative overflow-hidden" style={{ paddingTop: top, paddingBottom: bleed, marginTop: -top, marginBottom: -bleed }}>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={k}
+            initial={{ transform: off(1) }}
+            animate={{ transform: 'translateY(0%)' }}
+            exit={{ transform: off(-1), transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }}
+            transition={{ type: 'spring', stiffness: 230, damping: 26, mass: 0.85 }}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   )
 }

@@ -144,7 +144,7 @@ export default function Inside() {
                   <span className="block">{it ? `${String(active + 1).padStart(2, '0')} / 04 \u00b7 ${it.from}` : inside.note}</span>
                 </MaskSwap>
               </div>
-              <MaskSwap k={`n-${active}`} className="mt-1 pb-1">
+              <MaskSwap k={`n-${active}`} className="mt-1" bleed={18}>
                 <div className="font-serif leading-[1.02] tracking-[-0.02em] text-navy" style={{ fontSize: 'clamp(2.6rem, 12vw, 5.2rem)' }}>
                   {it ? it.name : '\u00a0'}
                 </div>

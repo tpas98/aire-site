@@ -68,7 +68,7 @@ export default function AboutPage() {
             </p>
             <p>
               So we built Aire from scratch — a pouch for people who want to stay grounded without dependency
-              and without a crash. Four active ingredients, published amounts, no proprietary blend.†
+              and without a crash. Four active ingredients in one 185 mg blend.†
             </p>
           </section>
 
@@ -80,8 +80,8 @@ export default function AboutPage() {
                 we say so everywhere.
               </li>
               <li>
-                We don&apos;t hide doses behind a proprietary blend. Every active and its amount is published
-                on the <Link href="/ingredients" className="text-accent hover:underline">ingredients page</Link>.
+                We don&apos;t hide what&apos;s in it. Every active, the blend total and the other ingredients
+                are on the <Link href="/ingredients" className="text-accent hover:underline">ingredients page</Link>.
               </li>
               <li>
                 We don&apos;t overstate the research. Our{' '}

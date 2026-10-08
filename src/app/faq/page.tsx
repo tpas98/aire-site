@@ -4,7 +4,7 @@ import Image from "next/image"
 const faqData = [
   { question: "What is Aire?", answer: "Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence. Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience. 100% nicotine-free and caffeine-free." },
   { question: "How do I use Aire pouches?", answer: "Most people feel the effects within 5–15 minutes. Place the pouch between your upper lip and gum. The botanicals and adaptogens absorb through your gum tissue. A gentle tingle lets you know it's working. Enjoy for up to 60 minutes." },
-  { question: "What's in a can? And what's in a pouch?", answer: "Each can of Aire contains 15 pouches. Active ingredients per pouch: the AireComplex Blend containing L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, and Saffron. Other Ingredients: Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Malitol, Cooling Agent." },
+  { question: "What's in a can? And what's in a pouch?", answer: "Each can of Aire contains 15 pouches. Active ingredients per pouch: the AireComplex Blend containing L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, and Saffron. Other Ingredients: Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Maltitol, Cooling Agent." },
   { question: "How many pouches are in each can?", answer: "Each can of Aire contains 15 pouches. A 4-pack ($45.99) gives you 60 pouches total." },
   { question: "What does Aire taste like?", answer: "Aire comes in Calm Mint, a smooth, refreshing mint flavor that's not overpowering. It's designed to be pleasant and subtle so you can use it comfortably throughout the day." },
   { question: "Is Aire a nicotine replacement or cessation product?", answer: "Aire is not marketed as a nicotine replacement therapy. It's a wellness pouch for anyone who wants support in finding their balance, whether you're replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former nicotine pouch users who wanted a clean alternative." },
@@ -100,7 +100,7 @@ export default function FAQPage() {
                 </div>
               </div>
             </div>
-            <p><strong className="text-navy">Other Ingredients:</strong> Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Malitol, Cooling Agent</p>
+            <p><strong className="text-navy">Other Ingredients:</strong> Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Maltitol, Cooling Agent</p>
           </section>
 
           <section>

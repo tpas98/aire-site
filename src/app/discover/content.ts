@@ -244,7 +244,7 @@ export const offer = {
   stamp: 'NO NICOTINE · NO CAFFEINE',
   title: 'Find your balance.',
   sub: 'Calm Mint, 4 cans for $45.99. New customers take 30% off with code FIRST30, applied automatically.',
-  cta: 'airepouches.com',
+  cta: 'Try Aire',
   ctaAria: 'Try Aire, 30% off your first order',
   closer: 'Save this for your next 3 p.m. Send it to the friend who needs it.',
 }

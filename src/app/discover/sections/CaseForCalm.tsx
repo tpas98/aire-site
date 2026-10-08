@@ -187,14 +187,15 @@ function clockText(p: number) {
 }
 
 /** Callouts: x = time, anchored above/below the series. Appear as the cursor passes. */
-type Callout = { key: Key; hour: number; text: string; place: 'above' | 'below'; align: 'center' | 'right' }
+/** `drop` pushes a 'below' pill further down (px), clear of neighbours on a narrow chart. */
+type Callout = { key: Key; hour: number; text: string; place: 'above' | 'below'; align: 'center' | 'right'; drop?: number }
 const CALLOUTS: Callout[] = [
   { key: 'nic', hour: 10, text: 'pouch #2', place: 'above', align: 'center' },
   { key: 'nic', hour: 14, text: 'pouch #4', place: 'above', align: 'center' },
   { key: 'nic', hour: 18, text: 'pouch #6', place: 'above', align: 'center' },
   { key: 'caf', hour: 13, text: 'the 1 p.m. slide', place: 'below', align: 'center' },
   { key: 'caf', hour: 19.4, text: 'still in you at 8 p.m.', place: 'above', align: 'right' },
-  { key: 'aire', hour: 16, text: 'Aire: level', place: 'below', align: 'center' },
+  { key: 'aire', hour: 16, text: 'Aire: level', place: 'below', align: 'center', drop: 40 },
 ]
 const calloutT = (c: Callout) => (c.hour - 8) / 12
 
@@ -291,8 +292,13 @@ function Story({ reduce }: { reduce: boolean }) {
             </div>
           </div>
 
-          {/* Chart: keeps its aspect and is capped so it never outgrows the pinned stage. */}
-          <div className="mx-auto w-full" style={{ maxWidth: 'min(100%, calc((100svh - 450px) * 1.133 + 44px))' }}>
+          {/* Chart: keeps its aspect and is capped so it never outgrows the pinned stage.
+              --cap is everything else in the stage (padding, header, legend, caption):
+              phones reserve more because the legend wraps to three rows there. */}
+          <div
+            className="mx-auto w-full [--cap:470px] md:[--cap:450px]"
+            style={{ maxWidth: 'min(100%, calc((100svh - var(--cap)) * 1.133 + 44px))' }}
+          >
             <div className="relative ml-11">
               {/* Axis labels, HTML so they never distort */}
               <div aria-hidden="true" className="pointer-events-none absolute right-full top-0 mr-2 h-full text-[0.58rem] font-semibold uppercase tracking-[0.14em]">
@@ -394,7 +400,7 @@ function Story({ reduce }: { reduce: boolean }) {
                         style={{
                           left: `${t * 100}%`,
                           top: `${y}%`,
-                          transform: `translate(${tx}, ${above ? 'calc(-100% - 9px)' : '9px'})`,
+                          transform: `translate(${tx}, ${above ? 'calc(-100% - 9px)' : `${9 + (c.drop ?? 0)}px`})`,
                           opacity: dim(c.key),
                           ...fade,
                         }}
@@ -423,7 +429,7 @@ function Story({ reduce }: { reduce: boolean }) {
           </div>
 
           {/* Legend chips: tap to isolate a series */}
-          <ul className="mx-auto mt-4 flex w-full flex-wrap justify-center gap-2 md:mt-6">
+          <ul className="mx-auto mt-3 flex w-full flex-wrap justify-center gap-1.5 md:mt-6 md:gap-2">
             {chart.lines.map((l) => {
               const k = l.key as Key
               const on = hl === k
@@ -433,7 +439,7 @@ function Story({ reduce }: { reduce: boolean }) {
                     type="button"
                     aria-pressed={on}
                     onClick={() => setHl(on ? null : k)}
-                    className={`flex min-h-[40px] items-center gap-2 rounded-full border px-3.5 py-2 text-[12px] leading-none transition-colors md:text-[0.82rem] ${
+                    className={`flex min-h-[36px] items-center gap-2 rounded-full border px-3.5 py-1.5 text-[12px] leading-none transition-colors md:min-h-[40px] md:py-2 md:text-[0.82rem] ${
                       on ? 'border-white/40 bg-white/15 text-white' : 'border-white/15 bg-white/[0.04] text-white/75 hover:bg-white/10'
                     }`}
                   >

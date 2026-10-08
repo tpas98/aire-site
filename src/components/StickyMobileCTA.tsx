@@ -22,6 +22,10 @@ export default function StickyMobileCTA({
   }, [])
 
   return (
+    <>
+    {/* Room at the end of the page so the fixed bar never covers the footer's
+        last lines (the FDA disclaimer). Same navy as the footer and the bar. */}
+    <div aria-hidden="true" className="bg-navy md:hidden" style={{ height: 'calc(72px + env(safe-area-inset-bottom))' }} />
     <AnimatePresence>
       {visible && (
         <motion.div
@@ -46,5 +50,6 @@ export default function StickyMobileCTA({
         </motion.div>
       )}
     </AnimatePresence>
+    </>
   )
 }

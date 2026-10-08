@@ -65,7 +65,7 @@ function SupplementFacts() {
           </div>
         </div>
       </div>
-      <p className="text-[0.78rem] text-navy-mid"><strong className="text-navy">Other Ingredients:</strong> Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Malitol, Cooling Agent</p>
+      <p className="text-[0.78rem] text-navy-mid"><strong className="text-navy">Other Ingredients:</strong> Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Maltitol, Cooling Agent</p>
     </div>
   )
 }

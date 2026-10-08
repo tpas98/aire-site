@@ -1,12 +1,11 @@
 import Link from "next/link"
 import Image from "next/image"
 
-// TODO: fill in the three DOSE_TBD amounts before launch. L-Theanine 100mg is
-// carried over from shop.airepouches.com — confirm it's current.
+// No per-active milligrams: the can label declares only the 185 mg AireComplex
+// Blend. Publish an individual amount only once it is on the label.
 const actives = [
   {
     name: "L-Theanine",
-    amount: "100 mg",
     kind: "Amino acid",
     source: "Naturally found in green tea (Camellia sinensis)",
     detail:
@@ -14,7 +13,6 @@ const actives = [
   },
   {
     name: "Rhodiola Rosea",
-    amount: "DOSE_TBD",
     kind: "Adaptogenic herb",
     source: "Root extract of Rhodiola rosea",
     detail:
@@ -22,7 +20,6 @@ const actives = [
   },
   {
     name: "Saffron (Affron®)",
-    amount: "DOSE_TBD",
     kind: "Botanical extract",
     source: "Patented, standardized extract of Crocus sativus",
     detail:
@@ -30,7 +27,6 @@ const actives = [
   },
   {
     name: "L-Tyrosine",
-    amount: "DOSE_TBD",
     kind: "Amino acid",
     source: "Produced by the body from phenylalanine",
     detail:
@@ -52,18 +48,18 @@ const schema = {
   '@type': 'WebPage',
   name: 'Aire Ingredients & Dosages',
   url: 'https://airepouches.com/ingredients',
-  description: 'Full per-pouch ingredient amounts for Aire nicotine-free, caffeine-free wellness pouches.',
+  description: 'The four actives in the 185 mg AireComplex Blend in every Aire nicotine-free, caffeine-free wellness pouch.',
   isPartOf: { '@type': 'WebSite', name: 'Aire', url: 'https://airepouches.com' },
 }
 
 export const metadata = {
-  title: "Aire Ingredients & Dosages | What's In a Nicotine-Free Wellness Pouch",
+  title: "Aire Ingredients | What's In a Nicotine-Free Wellness Pouch",
   description:
-    "Full ingredient list and per-pouch amounts for Aire wellness pouches: L-Theanine, Rhodiola Rosea, Affron® saffron, and L-Tyrosine. No proprietary blend, no nicotine, no caffeine.",
+    "Full ingredient list for Aire wellness pouches: L-Theanine, Rhodiola Rosea, Affron® saffron and L-Tyrosine in a 185 mg blend per pouch. No nicotine, no caffeine.",
   alternates: { canonical: 'https://airepouches.com/ingredients' },
   openGraph: {
-    title: "Aire Ingredients & Dosages",
-    description: "Every active in an Aire pouch, with amounts. No proprietary blend.",
+    title: "Aire Ingredients",
+    description: "Every active in an Aire pouch: four ingredients in a 185 mg blend.",
     images: ['/images/three-cans-full-frame-2026.png'],
   },
 }
@@ -82,24 +78,24 @@ export default function IngredientsPage() {
 
       <div className="max-w-3xl mx-auto px-6 md:px-16 py-16">
         <h1 className="font-serif text-[2.4rem] text-navy mb-2">What&apos;s in an Aire pouch</h1>
-        <p className="text-muted mb-12">Four actives, published amounts, no proprietary blend.</p>
+        <p className="text-muted mb-12">Four actives in one 185 mg blend. No nicotine, no caffeine.</p>
 
         <div className="space-y-10">
           <section>
             <p className="mb-4">
-              Each Aire pouch contains four active ingredients: L-Theanine, Rhodiola Rosea, Saffron, and
-              L-Tyrosine. There is no nicotine, no caffeine, and no sugar. We publish the amount of every
-              active rather than hiding them behind a proprietary blend.†
+              Each Aire pouch contains the AireComplex Blend: 185 mg of four active ingredients,
+              L-Theanine, Rhodiola Rosea, Saffron and L-Tyrosine. There is no nicotine, no caffeine and
+              no sugar.†
             </p>
           </section>
 
           <section>
-            <h2 className="font-serif text-[1.4rem] text-navy mb-5">Active ingredients per pouch</h2>
+            <h2 className="font-serif text-[1.4rem] text-navy mb-5">The four actives</h2>
             <div className="space-y-7">
               {actives.map((a) => (
                 <div key={a.name} className="border-l-2 border-sky-deep/50 pl-5">
                   <h3 className="text-navy font-semibold text-[1.05rem]">
-                    {a.name} — {a.amount}
+                    {a.name}
                   </h3>
                   <p className="text-[0.8rem] text-muted mt-0.5">{a.kind} · {a.source}</p>
                   <p className="mt-2">{a.detail}†</p>
