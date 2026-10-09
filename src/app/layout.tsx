@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import EmailPopup from '@/components/EmailPopup'
 import TikTokPixel from '@/components/TikTokPixel'
+import RedditPixel from '@/components/RedditPixel'
+import AttributionCarry from '@/components/AttributionCarry'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://airepouches.com'),
@@ -105,6 +107,8 @@ export default function RootLayout({
         {children}
         <EmailPopup />
         <TikTokPixel />
+        <RedditPixel />
+        <AttributionCarry />
       </body>
     </html>
   )
