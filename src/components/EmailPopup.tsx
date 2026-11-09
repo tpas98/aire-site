@@ -4,15 +4,26 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
 
 /**
- * Pages where the 10%-off popup stays hidden. The homepage (formerly /discover)
- * is the cold-traffic landing page: it already leads with the Black Friday sale,
- * and a 10% modal over its hero would cover the explanation and undercut the deal.
+ * 10% WELCOME10 capture. The subscribe request is unchanged.
+ *
+ * The homepage (formerly /discover) always skips the popup: it already leads
+ * with the product, and a 10% modal would cover that.
+ *
+ * Every page skips it through 11:59:59 PM America/New_York on December 15,
+ * 2026 so the 10% offer does not undercut the public BF40 sale. On that date
+ * Eastern time is EST (UTC−5). After that instant the popup returns on its own
+ * everywhere except the homepage.
  */
-const NO_POPUP = (p: string) => p === '/' || p.startsWith('/discover')
+const POPUP_RETURNS_AT = new Date('2026-12-16T00:00:00-05:00')
+
+export function emailPopupSuppressed(pathname: string, now: Date = new Date()): boolean {
+  if (now < POPUP_RETURNS_AT) return true
+  return pathname === '/' || pathname.startsWith('/discover')
+}
 
 export default function EmailPopup() {
   const pathname = usePathname()
-  const suppressed = NO_POPUP(pathname ?? '')
+  const suppressed = emailPopupSuppressed(pathname ?? '')
   const [visible, setVisible] = useState(false)
   const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
