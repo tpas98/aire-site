@@ -21,6 +21,8 @@
 export const DISCLAIMER =
   '† These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.'
 
+import { SALE_CODE, SALE_PERCENT } from '@/lib/sale'
+
 export const hero = {
   eyebrow: 'The balance pouch',
   titleLine1: 'Calm focus,',
@@ -28,6 +30,9 @@ export const hero = {
   sub: 'Aire is a mint pouch made with L-Theanine, Rhodiola Rosea, L-Tyrosine and Saffron for calm, clear focus.†',
   chips: ['No nicotine', 'No caffeine', 'No stimulants'],
   ctaPrimary: 'Try Aire',
+  /** Shown while the sale is live; the percent comes from SALE_PERCENT. */
+  ctaPrimarySale: `Try Aire · ${SALE_PERCENT}% off`,
+  ctaPrimarySaleAria: `Try Aire · ${SALE_PERCENT}% off with code ${SALE_CODE}`,
   ctaSecondary: 'Why it’s different',
 }
 
@@ -243,9 +248,10 @@ export const faqs = [
 export const offer = {
   stamp: 'NO NICOTINE · NO CAFFEINE',
   title: 'Find your balance.',
-  sub: 'Calm Mint, 4 cans. 40% off for Black Friday with code BF40, applied automatically.',
+  sub: `Calm Mint, 4 cans. ${SALE_PERCENT}% off for Black Friday with code ${SALE_CODE}, applied automatically.`,
+  subRegular: 'Calm Mint, 4 cans, 15 pouches to a can.',
   cta: 'Try Aire',
-  ctaAria: 'Try Aire, 40% off with code BF40',
+  ctaAria: `Try Aire, ${SALE_PERCENT}% off with code ${SALE_CODE}`,
   closer: 'Save this for your next 3 p.m. Send it to the friend who needs it.',
 }
 

@@ -2,14 +2,24 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import { buyUrl } from '@/lib/checkout'
+import { useBuyUrl, useSaleActive } from '@/lib/useSale'
 
 /** Defaults are the homepage bar; /discover passes offer-led copy. */
 export default function StickyMobileCTA({
   label = '4-Pack · 60 Pouches',
   price = '$45.99',
   cta = 'Order Now',
-}: { label?: string; price?: string; cta?: string } = {}) {
+  saleOffer,
+}: {
+  label?: string
+  price?: string
+  cta?: string
+  /** Copy used instead of the defaults while the sale is live. */
+  saleOffer?: { label: string; price: string; cta: string }
+} = {}) {
+  const sale = useSaleActive()
+  const buyUrl = useBuyUrl()
+  if (sale && saleOffer) ({ label, price, cta } = saleOffer)
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -41,7 +51,7 @@ export default function StickyMobileCTA({
               <span className="text-[1rem] text-white font-semibold">{price}</span>
             </div>
             <a
-              href={buyUrl()}
+              href={buyUrl}
               className="bg-white text-navy px-6 py-3 rounded-full text-[0.75rem] font-semibold tracking-[0.08em] uppercase whitespace-nowrap"
             >
               {cta}

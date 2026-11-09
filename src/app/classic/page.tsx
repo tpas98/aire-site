@@ -1,7 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Ticker from '@/components/Ticker'
 import SaleBanner from '@/components/SaleBanner'
-import { saleActive } from '@/lib/sale'
 import Hero from '@/components/Hero'
 import LifestyleStrip from '@/components/LifestyleStrip'
 import About from '@/components/About'
@@ -88,16 +87,15 @@ export const metadata = {
 export const revalidate = 3600
 
 export default function ClassicHome() {
-  const sale = saleActive()
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      {sale && <SaleBanner />}
-      <Navbar belowBanner={sale} />
-      <Ticker belowBanner={sale} />
+      <SaleBanner />
+      <Navbar />
+      <Ticker />
       <Hero />
       <LifestyleStrip />
       <Testimonials />

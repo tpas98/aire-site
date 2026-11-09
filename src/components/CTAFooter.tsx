@@ -3,7 +3,7 @@ import Image from 'next/image'
 import FadeUp from './FadeUp'
 import { motion } from 'framer-motion'
 
-import { buyUrl } from '@/lib/checkout'
+import { useBuyUrl } from '@/lib/useSale'
 
 const grain = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")"
 
@@ -13,10 +13,10 @@ const trust = [
   { icon: '✦', label: 'Zero Nicotine. Zero Caffeine.' },
 ]
 
-const footerLinks = {
+const footerLinks = (buyUrl: string) => ({
   Explore: [
     { label: 'Home', href: '/' },
-    { label: 'Shop Aire', href: buyUrl() },
+    { label: 'Shop Aire', href: buyUrl },
     { label: 'The Science', href: '/#ingredients' },
     { label: 'About Us', href: '/about' },
   ],
@@ -29,9 +29,10 @@ const footerLinks = {
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms of Service', href: '/terms' },
   ],
-}
+})
 
 export function CTA() {
+  const buyUrl = useBuyUrl()
   return (
     <section id="shop" className="bg-navy py-24 px-6 md:px-16 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.035] pointer-events-none z-0"
@@ -57,7 +58,7 @@ export function CTA() {
             ))}
           </div>
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <a href={buyUrl()} className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
+            <a href={buyUrl} className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
               Order Now - $45.99 / 4-Pack
             </a>
             <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 transition-all duration-200 text-center">
@@ -92,6 +93,7 @@ export function CTA() {
 }
 
 export function Footer() {
+  const buyUrl = useBuyUrl()
   return (
     <footer className="bg-navy border-t border-white/10 px-6 md:px-16 pt-16 pb-10">
       <div className="grid grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr_1fr] gap-8 md:gap-12 mb-12">
@@ -115,7 +117,7 @@ export function Footer() {
             </a>
           </div>
         </div>
-        {Object.entries(footerLinks).map(([heading, links]) => (
+        {Object.entries(footerLinks(buyUrl)).map(([heading, links]) => (
           <div key={heading}>
             <h4 className="text-[0.64rem] font-semibold tracking-[0.15em] uppercase text-white/30 mb-4">{heading}</h4>
             <ul className="space-y-2.5">

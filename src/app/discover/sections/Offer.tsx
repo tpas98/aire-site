@@ -4,9 +4,11 @@ import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import Dag from './Dag'
 import { offer, DISCLAIMER, sources } from '../content'
-import { buyUrl } from '@/lib/checkout'
+import { useBuyUrl, useSaleActive } from '@/lib/useSale'
 
 export default function Offer() {
+  const buyUrl = useBuyUrl()
+  const sale = useSaleActive()
   const reduce = useReducedMotion()
   return (
     <section
@@ -37,10 +39,10 @@ export default function Offer() {
         </motion.div>
         <div className="mt-6 text-[0.7rem] tracking-[0.3em] text-white/70">{offer.stamp}</div>
         <h2 className="mt-5 font-serif text-[clamp(2.4rem,8vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-white">{offer.title}</h2>
-        <p className="mt-5 max-w-[420px] leading-[1.6] text-white/75">{offer.sub}</p>
+        <p className="mt-5 max-w-[420px] leading-[1.6] text-white/75">{sale ? offer.sub : offer.subRegular}</p>
         <a
-          href={buyUrl()}
-          aria-label={offer.ctaAria}
+          href={buyUrl}
+          aria-label={sale ? offer.ctaAria : undefined}
           className="mt-9 inline-block rounded-full bg-white px-9 py-4 font-semibold tracking-[0.06em] text-navy shadow-[0_12px_40px_rgba(126,194,223,0.35)] transition-transform duration-200 hover:scale-[1.03]"
         >
           {offer.cta}
