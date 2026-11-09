@@ -8,13 +8,14 @@ export default function SaleBanner() {
       <style>{'html{scroll-padding-top:120px}'}</style>
       <a
         href={SALE_URL}
+        aria-label={`Black Friday Sale, ${SALE_PERCENT}% off through November 30, code ${SALE_CODE}`}
         className="fixed top-0 inset-x-0 z-[60] h-9 bg-navy text-white px-3 flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap overflow-hidden text-[10.5px] sm:text-xs font-bold uppercase tracking-[0.08em] sm:tracking-[0.12em] hover:bg-navy-mid transition-colors duration-200"
         style={{ color: '#fff', fontWeight: 700 }}
       >
-        <span>New Customer Offer</span>
+        <span>Black Friday Sale</span>
         <span aria-hidden="true" className="text-white/75">·</span>
         <span>{SALE_PERCENT}% off</span>
-        <span className="hidden sm:inline">your first order</span>
+        <span className="hidden sm:inline">through Nov 30</span>
         <span aria-hidden="true" className="text-white/75">·</span>
         <span>
           <span className="hidden sm:inline">Code </span>

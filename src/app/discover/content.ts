@@ -243,9 +243,9 @@ export const faqs = [
 export const offer = {
   stamp: 'NO NICOTINE · NO CAFFEINE',
   title: 'Find your balance.',
-  sub: 'Calm Mint, 4 cans for $45.99. New customers take 30% off with code FIRST30, applied automatically.',
+  sub: 'Calm Mint, 4 cans for $45.99. Black Friday, 40% off through November 30 with code BF40, applied automatically.',
   cta: 'Try Aire',
-  ctaAria: 'Try Aire, 30% off your first order',
+  ctaAria: 'Try Aire, 40% off with code BF40',
   closer: 'Save this for your next 3 p.m. Send it to the friend who needs it.',
 }
 

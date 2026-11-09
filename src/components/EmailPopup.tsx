@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 /**
  * Pages where the 10%-off popup stays hidden. The homepage (formerly /discover)
- * is the cold-traffic landing page: it already leads with the 30% FIRST30 offer,
+ * is the cold-traffic landing page: it already leads with the Black Friday sale,
  * and a 10% modal over its hero would cover the explanation and undercut the deal.
  */
 const NO_POPUP = (p: string) => p === '/' || p.startsWith('/discover')

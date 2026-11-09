@@ -132,7 +132,7 @@ export default function Home() {
         <Offer />
       </main>
       <Footer />
-      <StickyMobileCTA label="New customers, code FIRST30" price="30% off first order" cta="Try Aire" />
+      <StickyMobileCTA label="Black Friday · through Nov 30" price="40% off · BF40" cta="Try Aire" />
     </>
   )
 }
