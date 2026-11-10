@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
       </nav>
       <div className="max-w-[780px] mx-auto px-6 py-20">
         <h1 className="font-serif text-[clamp(2rem,4vw,3rem)] text-navy tracking-[-0.02em] mb-3">Privacy Policy</h1>
-        <p className="text-[0.85rem] text-muted mb-12">Last updated: February 2026</p>
+        <p className="text-[0.85rem] text-muted mb-12">Last updated: November 2026</p>
 
         <div className="prose prose-slate max-w-none space-y-10 text-[0.95rem] text-navy-mid leading-[1.85]">
 
@@ -62,11 +62,12 @@ export default function PrivacyPolicy() {
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">4. Sharing Your Information</h2>
             <p>We do not sell your personal information to third parties. We may share your information with trusted service providers only as necessary to operate our business, including:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
-              <li>E-commerce and fulfillment platforms (e.g., Shopify) to process orders and manage our store</li>
+              <li>E-commerce and fulfillment platforms (e.g., Shopify, which hosts our store and checkout at shop.airepouches.com) to process orders and manage our store</li>
               <li>Shipping and logistics carriers to deliver your orders</li>
               <li>Payment processors (e.g., Shopify Payments, Stripe) to handle transactions securely</li>
-              <li>Email and marketing platforms to send order updates and promotional communications</li>
-              <li>Analytics providers (e.g., Google Analytics) to help us understand website usage</li>
+              <li>Email and marketing platforms (we use Klaviyo, which receives the email address you enter in our website sign-up form) to send order updates and promotional communications</li>
+              <li>Analytics and session-recording providers (Vercel Web Analytics, Vercel Speed Insights, and Microsoft Clarity) to help us understand website usage</li>
+              <li>Advertising platforms (TikTok and Reddit, through their website pixels) to measure the effectiveness of our advertising</li>
               <li>Legal and compliance advisors when required</li>
               <li>Law enforcement or regulatory authorities when required by applicable law, court order, or to protect our legal rights</li>
             </ul>
@@ -78,8 +79,9 @@ export default function PrivacyPolicy() {
             <p>We use cookies and similar tracking technologies on our website. Cookies are small text files stored on your device. We use the following types:</p>
             <ul className="list-disc pl-6 mt-3 space-y-2">
               <li><strong>Essential Cookies:</strong> Required for the website to function, including shopping cart and checkout functionality. These cannot be disabled without affecting site functionality.</li>
-              <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website (e.g., Google Analytics). These are used in aggregate, anonymized form.</li>
-              <li><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements and track the effectiveness of marketing campaigns.</li>
+              <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our website. We use Vercel Web Analytics and Vercel Speed Insights, which report page views, referring sites, and page performance, and Microsoft Clarity (see Session Recording below).</li>
+              <li><strong>Session Recording:</strong> We use Microsoft Clarity to record how visitors use our website, including clicks, taps, scrolls, mouse movement, and other page interactions. We use these recordings and related analytics to understand and improve the site. The same Clarity project also runs on our store at shop.airepouches.com. Clarity is operated by Microsoft; see the <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">Microsoft Privacy Statement</a>.</li>
+              <li><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements and track the effectiveness of marketing campaigns. We use the TikTok Pixel and the Reddit Pixel, which may set cookies or similar identifiers in your browser and report your visits and clicks on our website to TikTok and Reddit.</li>
             </ul>
             <p className="mt-3">You can control or disable cookies through your browser settings. Note that disabling certain cookies may affect the functionality of our website. Most browsers also offer a &ldquo;Do Not Track&rdquo; option. Please see Section 12 below.</p>
           </section>

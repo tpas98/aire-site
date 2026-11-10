@@ -11,8 +11,8 @@ import { saleActive } from '@/lib/sale'
 export const metadata: Metadata = {
   metadataBase: new URL('https://airepouches.com'),
   title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
-  description: 'Aire is the nicotine-free, caffeine-free wellness pouch with Rhodiola Rosea, L-Theanine, Saffron, and L-Tyrosine. Science-backed calm, clarity, and balance in every pouch.',
-  keywords: ['wellness pouches', 'nicotine free pouches', 'nicotine alternative', 'pouches for calm', 'pouches for focus', 'adaptogens', 'rhodiola rosea', 'l-theanine', 'saffron pouch', 'non addictive pouches'],
+  description: 'Aire is the nicotine-free, caffeine-free wellness pouch with Rhodiola Rosea, L-Theanine, Saffron, and L-Tyrosine. Calm, clarity, and balance in every pouch.',
+  keywords: ['wellness pouches', 'nicotine free pouches', 'pouches for calm', 'pouches for focus', 'adaptogens', 'rhodiola rosea', 'l-theanine', 'saffron pouch'],
   alternates: {
     canonical: 'https://airepouches.com',
   },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
-    description: 'Science-backed calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & L-Tyrosine. Zero nicotine. Zero caffeine.',
+    description: 'Calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & L-Tyrosine. Zero nicotine. Zero caffeine.',
     images: ['/images/three-cans-full-frame-2026.png'],
     siteName: 'Aire',
     type: 'website',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Aire | Nicotine-Free Wellness Pouches | Find Your Balance',
-    description: 'Science-backed calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & L-Tyrosine. Zero nicotine. Zero caffeine.',
+    description: 'Calm in a pouch. Rhodiola Rosea, L-Theanine, Saffron & L-Tyrosine. Zero nicotine. Zero caffeine.',
     images: ['/images/three-cans-full-frame-2026.png'],
   },
 }
