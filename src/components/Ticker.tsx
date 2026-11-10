@@ -1,4 +1,9 @@
-export default function Ticker({ belowBanner = false }: { belowBanner?: boolean }) {
+'use client'
+import { useSaleActive } from '@/lib/useSale'
+
+/** Sits under the fixed navbar (and the sale banner while the sale is live). */
+export default function Ticker() {
+  const belowBanner = useSaleActive()
   const items = [
     'L-Theanine', 'Rhodiola Rosea', 'L-Tyrosine',
     'Saffron', 'Zero Nicotine',

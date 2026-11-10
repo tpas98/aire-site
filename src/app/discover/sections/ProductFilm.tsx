@@ -7,30 +7,36 @@ import { Eyebrow } from './Dag'
  * The 13-second product film (rendered from code: ingredients into the pouch,
  * pouch into the real can, brand card). Muted, inline, looping; it only loads
  * when it is about to scroll into view and pauses when it leaves, so it costs
- * nothing for people who bounce from the hero. Reduced motion: poster + controls.
+ * nothing for people who bounce from the hero. Reduced motion: poster only, no video bytes.
  */
 export default function ProductFilm() {
   const reduce = !!useReducedMotion()
   const ref = useRef<HTMLVideoElement>(null)
   const [src, setSrc] = useState<string | undefined>(undefined)
+  const [visible, setVisible] = useState(false)
 
+  // Near the viewport: attach the source (first time only) and mark visible.
   useEffect(() => {
     const v = ref.current
     if (!v || reduce) return
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) {
-          setSrc((s) => s ?? '/images/discover/film-4x5.mp4')
-          v.play().catch(() => {})
-        } else {
-          v.pause()
-        }
+        setVisible(e.isIntersecting)
+        if (e.isIntersecting) setSrc((s) => s ?? '/images/discover/film-4x5.mp4')
       },
       { rootMargin: '200px 0px', threshold: 0.25 },
     )
     io.observe(v)
     return () => io.disconnect()
   }, [reduce])
+
+  // Play/pause after the source is attached (play() with no src would reject).
+  useEffect(() => {
+    const v = ref.current
+    if (!v || !src) return
+    if (visible) v.play().catch(() => {})
+    else v.pause()
+  }, [visible, src])
 
   return (
     <section aria-labelledby="film-title" className="bg-ink px-6 py-20 text-white md:px-16 md:py-28">
@@ -47,13 +53,12 @@ export default function ProductFilm() {
         <div className="mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] bg-black shadow-[0_30px_80px_rgba(0,0,0,0.45)] ring-1 ring-white/10">
           <video
             ref={ref}
-            src={reduce ? '/images/discover/film-4x5.mp4' : src}
+            src={reduce ? undefined : src}
             poster="/images/discover/film-4x5-poster.webp"
             muted
             loop
             playsInline
             preload="none"
-            controls={reduce}
             aria-label="Product film: four ingredients go into an Aire pouch, the pouch goes into the can"
             className="aspect-[4/5] h-auto w-full object-cover"
           />

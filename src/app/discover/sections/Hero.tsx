@@ -1,7 +1,7 @@
 'use client'
 import { useRef } from 'react'
 import { useReducedMotion, useScroll } from 'framer-motion'
-import { buyUrl } from '@/lib/checkout'
+import { useBuyUrl, useSaleActive } from '@/lib/useSale'
 import { hero } from '../content'
 import { Keyframes, timeline, useScrub } from '../scrollAnim'
 import Dag, { Eyebrow, GradientText } from './Dag'
@@ -23,6 +23,8 @@ const CSS =
  */
 export default function Hero() {
   const reduce = !!useReducedMotion()
+  const sale = useSaleActive()
+  const buyUrl = useBuyUrl()
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   useScrub(ref, scrollYProgress)
@@ -75,10 +77,11 @@ export default function Hero() {
         <div className="md:mt-8">
           <div className="flex flex-wrap items-center gap-5">
             <a
-              href={buyUrl()}
+              href={buyUrl}
+              aria-label={sale ? hero.ctaPrimarySaleAria : undefined}
               className="inline-block whitespace-nowrap rounded-full bg-white px-9 py-4 text-[0.82rem] font-semibold uppercase tracking-[0.1em] text-navy shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5"
             >
-              {hero.ctaPrimary}
+              {sale ? hero.ctaPrimarySale : hero.ctaPrimary}
             </a>
             <a href="#why" className="group flex min-h-[44px] items-center gap-1.5 whitespace-nowrap px-1 text-[0.85rem] font-medium text-white/85 transition-colors hover:text-white">
               {hero.ctaSecondary}

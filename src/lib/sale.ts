@@ -26,5 +26,15 @@ export function saleActive(now: Date = new Date()): boolean {
   return now >= SALE_STARTS_AT && now < SALE_ENDS_AT
 }
 
+/**
+ * Milliseconds from `now` until the sale next starts or ends, or null when
+ * the sale is already over. Used to flip the UI at the boundary without a reload.
+ */
+export function msUntilSaleChange(now: Date = new Date()): number | null {
+  if (now < SALE_STARTS_AT) return SALE_STARTS_AT.getTime() - now.getTime()
+  if (now < SALE_ENDS_AT) return SALE_ENDS_AT.getTime() - now.getTime()
+  return null
+}
+
 /** Product page with the sale code pre-applied. */
 export const SALE_URL = `https://shop.airepouches.com/discount/${SALE_CODE}?redirect=/products/aire`

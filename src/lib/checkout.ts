@@ -60,6 +60,6 @@ export const CHECKOUT_URL = PRODUCT_URL
  * Buy-button target right now: the product page, via the sale-code link while
  * the offer runs (see src/lib/sale.ts).
  */
-export function buyUrl(): string {
-  return saleActive() ? SALE_URL : CHECKOUT_URL
+export function buyUrl(sale: boolean = saleActive()): string {
+  return sale ? SALE_URL : CHECKOUT_URL
 }

@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { buyUrl } from '@/lib/checkout'
+import { useBuyUrl } from '@/lib/useSale'
 import { aisleStory } from '../content'
 import { Keyframes, keyframes, n, timeline, useScrub } from '../scrollAnim'
 import Dag, { Eyebrow, GRADIENT, MaskSwap } from './Dag'
@@ -118,6 +118,7 @@ function Marker({ i }: { i: number }) {
 }
 
 export default function PouchAisle() {
+  const buyUrl = useBuyUrl()
   const reduce = !!useReducedMotion()
   const ref = useRef<HTMLElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
@@ -219,7 +220,7 @@ export default function PouchAisle() {
             <span>{aisleStory.gauge.right}</span>
           </div>
           <div style={{ animationName: 'pa-cta' }} className="sa mt-4 hidden justify-center md:flex">
-            <a href={buyUrl()} className="rounded-full bg-navy px-8 py-3.5 text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-white shadow-[0_12px_30px_rgba(26,46,74,0.3)]">
+            <a href={buyUrl} className="rounded-full bg-navy px-8 py-3.5 text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-white shadow-[0_12px_30px_rgba(26,46,74,0.3)]">
               {aisleStory.aire.cta}
             </a>
           </div>

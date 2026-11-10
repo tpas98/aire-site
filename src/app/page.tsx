@@ -8,12 +8,13 @@ import Navbar from '@/components/Navbar'
 import SaleBanner from '@/components/SaleBanner'
 import StickyMobileCTA from '@/components/StickyMobileCTA'
 import { Footer } from '@/components/CTAFooter'
-import { saleActive } from '@/lib/sale'
+import { SALE_CODE, SALE_PERCENT } from '@/lib/sale'
 import { faqs, hero } from './discover/content'
 import Hero from './discover/sections/Hero'
 import PouchAisle from './discover/sections/PouchAisle'
 import CaseForCalm from './discover/sections/CaseForCalm'
 import Inside from './discover/sections/Inside'
+import ProductFilm from './discover/sections/ProductFilm'
 import Aisle from './discover/sections/Aisle'
 import HowItWorks from './discover/sections/HowItWorks'
 import Moments from './discover/sections/Moments'
@@ -112,18 +113,18 @@ const faqSchema = {
 export const revalidate = 3600
 
 export default function Home() {
-  const sale = saleActive()
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      {sale && <SaleBanner />}
-      <Navbar belowBanner={sale} />
+      <SaleBanner />
+      <Navbar />
       <main>
         <Hero />
         <PouchAisle />
         <CaseForCalm />
         <Inside />
+        <ProductFilm />
         <Aisle />
         <HowItWorks />
         <Moments />
@@ -132,7 +133,7 @@ export default function Home() {
         <Offer />
       </main>
       <Footer />
-      <StickyMobileCTA label="Black Friday" price="40% off · BF40" cta="Try Aire" />
+      <StickyMobileCTA saleOffer={{ label: 'Black Friday', price: `${SALE_PERCENT}% off · ${SALE_CODE}`, cta: 'Try Aire' }} />
     </>
   )
 }

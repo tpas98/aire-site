@@ -1,11 +1,12 @@
 'use client'
 import { motion, useReducedMotion } from 'framer-motion'
 import StackedAlphaVideo from '@/components/StackedAlphaVideo'
-import { buyUrl } from '@/lib/checkout'
+import { useBuyUrl } from '@/lib/useSale'
 import { hero } from '../content'
 import Dag, { Eyebrow } from './Dag'
 
 export default function DiscoverHero() {
+  const buyUrl = useBuyUrl()
   const reduce = useReducedMotion()
   const enter = (delay: number) =>
     reduce
@@ -59,7 +60,7 @@ export default function DiscoverHero() {
           </motion.ul>
           <div className="flex flex-wrap items-center gap-5">
             <a
-              href={buyUrl()}
+              href={buyUrl}
               className="btn-primary inline-block whitespace-nowrap rounded-full bg-navy px-8 py-4 text-[0.8rem] font-semibold uppercase tracking-[0.1em] text-white shadow-[0_10px_36px_rgba(26,46,74,0.28)]"
             >
               {hero.ctaPrimary}
