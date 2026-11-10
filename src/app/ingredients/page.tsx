@@ -14,16 +14,16 @@ const actives = [
   {
     name: "Rhodiola Rosea",
     kind: "Adaptogenic herb",
-    source: "Root extract of Rhodiola rosea",
+    source: "Root extract of Rhodiola Rosea",
     detail:
       "The one true adaptogen in the formula. Supports resilience to mental fatigue and stress, helping sustain clarity across a long day.",
   },
   {
-    name: "Saffron (Affron®)",
+    name: "Saffron",
     kind: "Botanical extract",
-    source: "Patented, standardized extract of Crocus sativus",
+    source: "Standardized extract of Crocus sativus",
     detail:
-      "Supports mood and emotional balance. Affron® is one of the more rigorously studied saffron extracts, with multiple randomized placebo-controlled trials behind it.",
+      "Supports mood and emotional balance. Standardized saffron extracts have been studied in multiple randomized placebo-controlled trials.",
   },
   {
     name: "L-Tyrosine",
@@ -55,7 +55,7 @@ const schema = {
 export const metadata = {
   title: "Aire Ingredients | What's In a Nicotine-Free Wellness Pouch",
   description:
-    "Full ingredient list for Aire wellness pouches: L-Theanine, Rhodiola Rosea, Affron® saffron and L-Tyrosine in a 185 mg blend per pouch. No nicotine, no caffeine.",
+    "Full ingredient list for Aire wellness pouches: L-Theanine, Rhodiola Rosea, Saffron and L-Tyrosine in a 185 mg blend per pouch. No nicotine, no caffeine.",
   alternates: { canonical: 'https://airepouches.com/ingredients' },
   openGraph: {
     title: "Aire Ingredients",

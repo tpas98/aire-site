@@ -9,7 +9,7 @@ Aire Calm Mint Pouches - 4 Pack
 - Price: $45.99 USD
 - Contents: 60 pouches (15 per can, 4 cans)
 - Flavor: Calm Mint
-- Actives per pouch: L-Theanine, Rhodiola Rosea, Saffron (Affron(R)), L-Tyrosine
+- Actives per pouch: L-Theanine, Rhodiola Rosea, Saffron, L-Tyrosine
 - Contains zero nicotine, zero caffeine, zero sugar
 - Non-habit-forming
 

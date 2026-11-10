@@ -14,6 +14,9 @@
  */
 export const SALE_CODE = 'BF40'
 export const SALE_PERCENT = 40
+/** Regular and sale price of one 4-pack, as display strings (list price x 0.60 = 27.60). */
+export const LIST_PACK_PRICE = '45.99'
+export const SALE_PACK_PRICE = '27.60'
 /** November 9, 2026, 2:05 PM Eastern (EST, UTC−5). */
 export const SALE_STARTS_AT = new Date('2026-11-09T14:05:00-05:00')
 /**
