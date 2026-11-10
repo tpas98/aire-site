@@ -183,11 +183,11 @@ function clockText(p: number) {
   const h24 = Math.floor(mins / 60) % 24
   const m = mins % 60
   const h12 = h24 % 12 === 0 ? 12 : h24 % 12
-  return `${h12}:${String(m).padStart(2, '0')} ${h24 >= 12 ? 'PM' : 'AM'}`
+  return [`${h12}:${String(m).padStart(2, '0')}`, h24 >= 12 ? 'PM' : 'AM'] as const
 }
 
 /** Callouts: x = time, anchored above/below the series. Appear as the cursor passes. */
-/** `drop` pushes a 'below' pill further down (px), clear of neighbours on a narrow chart. */
+/** `drop` pushes a 'below' pill further down (% of chart height, so it scales), clear of neighbours. */
 type Callout = { key: Key; hour: number; text: string; place: 'above' | 'below'; align: 'center' | 'right'; drop?: number }
 const CALLOUTS: Callout[] = [
   { key: 'nic', hour: 10, text: 'pouch #2', place: 'above', align: 'center' },
@@ -195,7 +195,7 @@ const CALLOUTS: Callout[] = [
   { key: 'nic', hour: 18, text: 'pouch #6', place: 'above', align: 'center' },
   { key: 'caf', hour: 13, text: 'the 1 p.m. slide', place: 'below', align: 'center' },
   { key: 'caf', hour: 19.4, text: 'still in you at 8 p.m.', place: 'above', align: 'right' },
-  { key: 'aire', hour: 16, text: 'Aire: level', place: 'below', align: 'center', drop: 40 },
+  { key: 'aire', hour: 16, text: 'Aire: level', place: 'below', align: 'center', drop: 13 },
 ]
 const calloutT = (c: Callout) => (c.hour - 8) / 12
 
@@ -242,6 +242,7 @@ function Story({ reduce }: { reduce: boolean }) {
   const { chart } = caseForCalm
   const wrapRef = useRef<HTMLDivElement>(null)
   const clockRef = useRef<HTMLSpanElement>(null)
+  const ampmRef = useRef<HTMLSpanElement>(null)
   const [hl, setHl] = useState<Key | null>(null)
 
   const { scrollYProgress } = useScroll({ target: wrapRef, offset: ['start start', 'end end'] })
@@ -249,7 +250,9 @@ function Story({ reduce }: { reduce: boolean }) {
 
   // The clock is text, so it stays on the main thread (a late digit is invisible).
   const tick = (sp: number) => {
-    if (clockRef.current) clockRef.current.textContent = clockText(clamp01(sp / END))
+    const [time, ampm] = clockText(clamp01(sp / END))
+    if (clockRef.current) clockRef.current.textContent = time
+    if (ampmRef.current) ampmRef.current.textContent = ampm
   }
   useIsoLayoutEffect(() => {
     if (!reduce) tick(scrollYProgress.get())
@@ -262,6 +265,8 @@ function Story({ reduce }: { reduce: boolean }) {
   const dim = (k: Key) => (hl && hl !== k ? 0.2 : 1)
   const fade = { transition: 'opacity 0.3s ease' }
 
+  const [endTime, endAmpm] = clockText(1)
+
   return (
     <div
       ref={wrapRef}
@@ -270,190 +275,213 @@ function Story({ reduce }: { reduce: boolean }) {
       className="relative h-[260vh] bg-ink motion-reduce:h-auto"
     >
       <Keyframes css={STORY_CSS} />
-      <div className="sticky top-0 flex h-[100svh] flex-col bg-ink px-5 pb-[96px] pt-[110px] text-white motion-reduce:static motion-reduce:h-auto motion-reduce:min-h-[100svh] motion-reduce:py-24 md:px-10 md:pb-10">
-        <div className="mx-auto flex w-full max-w-[980px] min-h-0 flex-1 flex-col justify-center">
+      <div className="sticky top-0 flex h-[100svh] flex-col overflow-hidden bg-ink px-5 pb-[96px] pt-[104px] text-white motion-reduce:static motion-reduce:h-auto motion-reduce:min-h-[100svh] motion-reduce:py-24 md:px-16 md:pb-12 md:pt-[112px]">
+        {/* Depth: a soft pool of light behind the chart, hairline at the top */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(80%_55%_at_50%_52%,#13294a_0%,rgba(10,20,36,0)_70%)] md:bg-[radial-gradient(60%_60%_at_38%_55%,#13294a_0%,rgba(10,20,36,0)_70%)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+
+        <div className="relative mx-auto flex w-full max-w-[1180px] min-h-0 flex-1 flex-col justify-center">
           {/* Header: title + illustration tag, live clock */}
-          <div className="mb-3 flex items-end justify-between gap-4 md:mb-5">
+          <div className="mb-4 flex items-end justify-between gap-4 border-b border-white/10 pb-4 md:mb-9 md:pb-7">
             <div>
-              <span className="mb-1.5 inline-block rounded-full border border-white/15 px-2 py-[2px] text-[0.58rem] font-semibold uppercase tracking-[0.18em] text-white/60">
-                Illustration
-              </span>
-              <h3 className="font-serif text-[1.6rem] leading-none md:text-[2.4rem]">{chart.title}</h3>
+              <div className="mb-2 flex items-center gap-3 md:mb-3">
+                <span aria-hidden="true" className="block h-px w-8 bg-sky-deep/70" />
+                <span className="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-sky-deep">Illustration</span>
+              </div>
+              <h3 className="font-serif text-[1.75rem] leading-none tracking-[-0.01em] md:text-[3.4rem]">{chart.title}</h3>
             </div>
             <div className="text-right" aria-hidden="true">
-              <div className="mb-1 text-[0.58rem] uppercase tracking-[0.18em] text-white/45">Time</div>
-              <span
-                ref={clockRef}
-                className="block whitespace-nowrap text-[1.7rem] leading-none text-sky-light md:text-[3rem]"
-                style={{ fontFamily: '"Courier New", Courier, monospace', fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em' }}
-              >
-                {clockText(1)}
-              </span>
-            </div>
-          </div>
-
-          {/* Chart: keeps its aspect and is capped so it never outgrows the pinned stage.
-              --cap is everything else in the stage (padding, header, legend, caption):
-              phones reserve more because the legend wraps to three rows there. */}
-          <div
-            className="mx-auto w-full [--cap:470px] md:[--cap:450px]"
-            style={{ maxWidth: 'min(100%, calc((100svh - var(--cap)) * 1.133 + 44px))' }}
-          >
-            <div className="relative ml-11">
-              {/* Axis labels, HTML so they never distort */}
-              <div aria-hidden="true" className="pointer-events-none absolute right-full top-0 mr-2 h-full text-[0.58rem] font-semibold uppercase tracking-[0.14em]">
-                <span className="absolute right-0 -translate-y-1/2 text-white/55" style={{ top: `${(toY(0.04) / H) * 100}%` }}>Wired</span>
-                <span className="absolute right-0 -translate-y-1/2 text-sky-light" style={{ top: '50%' }}>Level</span>
-                <span className="absolute right-0 -translate-y-1/2 text-white/55" style={{ top: `${(toY(0.96) / H) * 100}%` }}>Out</span>
-              </div>
-
-              <div className="relative">
-                {/* Static frame: hour ticks, level band, dashed level line */}
-                <svg
-                  viewBox={`0 0 ${W} ${H}`}
-                  className="block h-auto w-full overflow-visible"
-                  role="img"
-                  aria-label="Illustration: nicotine rises and falls about every two hours, caffeine spikes and slides, Aire stays in the level band."
-                >
-                  <defs>
-                    <linearGradient id="cfc-band" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0" stopColor="#7ec2df" stopOpacity="0" />
-                      <stop offset="0.5" stopColor="#7ec2df" stopOpacity="0.2" />
-                      <stop offset="1" stopColor="#7ec2df" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  {TICKS.map((t) => (
-                    <line key={t} x1={t * W} x2={t * W} y1={0} y2={H} stroke="#fff" strokeOpacity="0.06" />
-                  ))}
-                  <rect x={0} y={toY(0.4)} width={W} height={toY(0.6) - toY(0.4)} fill="url(#cfc-band)" />
-                  <line x1={0} x2={W} y1={toY(0.5)} y2={toY(0.5)} stroke="#c8e6f5" strokeOpacity="0.3" strokeDasharray="3 4" />
-                </svg>
-
-                {/* Series, revealed up to the cursor: the window slides right, its
-                    contents slide left by the same amount, so the lines hold still. */}
-                <div
-                  aria-hidden="true"
-                  className="sa pointer-events-none absolute -bottom-8 -top-8 overflow-hidden"
-                  style={{ animationName: 'cfc-reveal', left: `${-OVER * 100}%`, right: `${-OVER * 100}%` }}
-                >
-                  <div className="sa absolute inset-0" style={{ animationName: 'cfc-unreveal' }}>
-                    <div className="absolute bottom-8 top-8" style={{ left: `${(OVER / (1 + 2 * OVER)) * 100}%`, width: `${(1 / (1 + 2 * OVER)) * 100}%` }}>
-                      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="block h-full w-full overflow-visible">
-                        <path
-                          d={PATHS.aire}
-                          fill="none"
-                          stroke={COLORS.aire}
-                          strokeOpacity={0.22}
-                          strokeWidth={12}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          style={{ opacity: dim('aire'), ...fade }}
-                        />
-                        {(['nic', 'caf', 'aire'] as Key[]).map((k) => (
-                          <path
-                            key={k}
-                            d={PATHS[k]}
-                            fill="none"
-                            stroke={COLORS[k]}
-                            strokeWidth={k === 'aire' ? 4 : 2.2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            style={{ opacity: dim(k), ...fade }}
-                          />
-                        ))}
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Time cursor */}
-                <div aria-hidden="true" className="sa pointer-events-none absolute inset-0" style={{ animationName: 'cfc-x' }}>
-                  <div className="absolute inset-y-0 left-0 w-px -translate-x-1/2 bg-white/40" />
-                </div>
-
-                {/* Dots riding each series: x and y on separate layers */}
-                {KEYS.map((k) => (
-                  <div key={k} aria-hidden="true" className="sa pointer-events-none absolute inset-0" style={{ animationName: 'cfc-x', opacity: dim(k), ...fade }}>
-                    <div className="sa absolute inset-0" style={{ animationName: `cfc-y-${k}` }}>
-                      <span
-                        className="absolute left-0 top-0 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
-                        style={{ width: DOT[k][0], height: DOT[k][0], background: `${COLORS[k]}4d` }}
-                      >
-                        <span className="block rounded-full border border-[#0a1424]" style={{ width: DOT[k][1], height: DOT[k][1], background: COLORS[k] }} />
-                      </span>
-                    </div>
-                  </div>
-                ))}
-
-                {/* Callouts: HTML pills placed against the chart plus its hour-label
-                    row (mt-2 + h-4), the spacing the approved layout was tuned on. */}
-                <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-6 top-0">
-                  {CALLOUTS.map((c, i) => {
-                    const t = calloutT(c)
-                    const y = (toY(FN[c.key](t)) / H) * 100
-                    const above = c.place === 'above'
-                    const tx = c.align === 'right' ? '-100%' : '-50%'
-                    return (
-                      <div
-                        key={c.text}
-                        className="absolute"
-                        style={{
-                          left: `${t * 100}%`,
-                          top: `${y}%`,
-                          transform: `translate(${tx}, ${above ? 'calc(-100% - 9px)' : `${9 + (c.drop ?? 0)}px`})`,
-                          opacity: dim(c.key),
-                          ...fade,
-                        }}
-                      >
-                        <div
-                          className="sa whitespace-nowrap rounded-full border border-white/15 bg-[#1a2638] px-2 py-[3px] text-[11px] leading-none text-white/90"
-                          style={{ animationName: `cfc-pill${i}` }}
-                        >
-                          {c.text}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* Hour labels */}
-              <div aria-hidden="true" className="relative mt-2 h-4 text-[0.62rem] tracking-[0.1em] text-white/50">
-                {chart.hours.map((h, i) => (
-                  <span key={h} className="absolute -translate-x-1/2" style={{ left: `${TICKS[i] * 100}%` }}>
-                    {h}
-                  </span>
-                ))}
+              <div className="mb-1 text-[0.58rem] font-semibold uppercase tracking-[0.22em] text-white/45 md:mb-2">Time</div>
+              <div className="flex items-baseline justify-end whitespace-nowrap leading-none">
+                <span ref={clockRef} className="text-[2rem] font-light tracking-[-0.04em] text-white md:text-[3.6rem]" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                  {endTime}
+                </span>
+                <span ref={ampmRef} className="ml-1.5 w-[1.7em] text-left text-[0.68rem] font-semibold tracking-[0.18em] text-sky-deep md:ml-2 md:text-[0.85rem]">
+                  {endAmpm}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Legend chips: tap to isolate a series */}
-          <ul className="mx-auto mt-3 flex w-full flex-wrap justify-center gap-1.5 md:mt-6 md:gap-2">
-            {chart.lines.map((l) => {
-              const k = l.key as Key
-              const on = hl === k
-              return (
-                <li key={l.key}>
-                  <button
-                    type="button"
-                    aria-pressed={on}
-                    onClick={() => setHl(on ? null : k)}
-                    className={`flex min-h-[36px] items-center gap-2 rounded-full border px-3.5 py-1.5 text-[12px] leading-none transition-colors md:min-h-[40px] md:py-2 md:text-[0.82rem] ${
-                      on ? 'border-white/40 bg-white/15 text-white' : 'border-white/15 bg-white/[0.04] text-white/75 hover:bg-white/10'
-                    }`}
+          <div className="md:grid md:grid-cols-[minmax(0,1fr)_248px] md:items-center md:gap-x-14">
+            {/* Chart: keeps its aspect and is capped so it never outgrows the pinned stage.
+                --cap is everything else in the stage (padding, header, legend, caption);
+                --ar is the plot's width / height: near-square on phones, wide on desktop. */}
+            <div
+              className="mx-auto w-full [--ar:1.133] [--cap:486px] md:[--ar:1.9] md:[--cap:372px]"
+              style={{ maxWidth: 'min(100%, calc((100svh - var(--cap)) * var(--ar) + 44px))' }}
+            >
+              <div className="relative ml-11">
+                {/* Axis labels, HTML so they never distort */}
+                <div aria-hidden="true" className="pointer-events-none absolute right-full top-0 mr-2.5 h-full text-[0.56rem] font-semibold uppercase tracking-[0.16em]">
+                  <span className="absolute right-0 -translate-y-1/2 text-white/50" style={{ top: `${(toY(0.04) / H) * 100}%` }}>Wired</span>
+                  <span className="absolute right-0 -translate-y-1/2 text-sky-light" style={{ top: '50%' }}>Level</span>
+                  <span className="absolute right-0 -translate-y-1/2 text-white/50" style={{ top: `${(toY(0.96) / H) * 100}%` }}>Out</span>
+                </div>
+
+                <div className="relative aspect-[340/300] md:aspect-[340/179]">
+                  {/* Static frame: hour ticks, wired / out rules, level band, dashed level line */}
+                  <svg
+                    viewBox={`0 0 ${W} ${H}`}
+                    preserveAspectRatio="none"
+                    className="absolute inset-0 block h-full w-full overflow-visible"
+                    role="img"
+                    aria-label="Illustration: nicotine rises and falls about every two hours, caffeine spikes and slides, Aire stays in the level band."
                   >
-                    <span aria-hidden="true" className="h-[3px] w-4 shrink-0 rounded-full" style={{ background: COLORS[k] }} />
-                    <span>
-                      <Dag>{l.label}</Dag>
-                    </span>
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
+                    <defs>
+                      <linearGradient id="cfc-band" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0" stopColor="#7ec2df" stopOpacity="0" />
+                        <stop offset="0.5" stopColor="#7ec2df" stopOpacity="0.24" />
+                        <stop offset="1" stopColor="#7ec2df" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    {TICKS.map((t) => (
+                      <line key={t} x1={t * W} x2={t * W} y1={0} y2={H} stroke="#fff" strokeOpacity="0.07" vectorEffect="non-scaling-stroke" />
+                    ))}
+                    {[0.04, 0.96].map((v) => (
+                      <line key={v} x1={0} x2={W} y1={toY(v)} y2={toY(v)} stroke="#fff" strokeOpacity="0.07" vectorEffect="non-scaling-stroke" />
+                    ))}
+                    <rect x={0} y={toY(0.36)} width={W} height={toY(0.64) - toY(0.36)} fill="url(#cfc-band)" />
+                    <line x1={0} x2={W} y1={toY(0.5)} y2={toY(0.5)} stroke="#c8e6f5" strokeOpacity="0.35" strokeDasharray="2 5" vectorEffect="non-scaling-stroke" />
+                  </svg>
 
-          <p className="mt-3 text-center text-[0.7rem] text-white/50 md:mt-4">{chart.caption}</p>
+                  {/* Series, revealed up to the cursor: the window slides right, its
+                      contents slide left by the same amount, so the lines hold still. */}
+                  <div
+                    aria-hidden="true"
+                    className="sa pointer-events-none absolute -bottom-8 -top-8 overflow-hidden"
+                    style={{ animationName: 'cfc-reveal', left: `${-OVER * 100}%`, right: `${-OVER * 100}%` }}
+                  >
+                    <div className="sa absolute inset-0" style={{ animationName: 'cfc-unreveal' }}>
+                      <div className="absolute bottom-8 top-8" style={{ left: `${(OVER / (1 + 2 * OVER)) * 100}%`, width: `${(1 / (1 + 2 * OVER)) * 100}%` }}>
+                        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="block h-full w-full overflow-visible">
+                          {/* Soft halo under each line: a wide, faint copy of the stroke */}
+                          {KEYS.map((k) => (
+                            <path
+                              key={`${k}-halo`}
+                              d={PATHS[k]}
+                              fill="none"
+                              stroke={COLORS[k]}
+                              strokeOpacity={k === 'aire' ? 0.24 : 0.1}
+                              strokeWidth={k === 'aire' ? 16 : 7}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              vectorEffect="non-scaling-stroke"
+                              style={{ opacity: dim(k), ...fade }}
+                            />
+                          ))}
+                          {KEYS.map((k) => (
+                            <path
+                              key={k}
+                              d={PATHS[k]}
+                              fill="none"
+                              stroke={COLORS[k]}
+                              strokeWidth={k === 'aire' ? 3.5 : 1.75}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              vectorEffect="non-scaling-stroke"
+                              style={{ opacity: dim(k), ...fade }}
+                            />
+                          ))}
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Time cursor */}
+                  <div aria-hidden="true" className="sa pointer-events-none absolute inset-0" style={{ animationName: 'cfc-x' }}>
+                    <div className="absolute -bottom-2 -top-2 left-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/55 to-transparent" />
+                  </div>
+
+                  {/* Dots riding each series: x and y on separate layers */}
+                  {KEYS.map((k) => (
+                    <div key={k} aria-hidden="true" className="sa pointer-events-none absolute inset-0" style={{ animationName: 'cfc-x', opacity: dim(k), ...fade }}>
+                      <div className="sa absolute inset-0" style={{ animationName: `cfc-y-${k}` }}>
+                        <span
+                          className="absolute left-0 top-0 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full"
+                          style={{ width: DOT[k][0], height: DOT[k][0], background: `${COLORS[k]}40` }}
+                        >
+                          <span className="block rounded-full border-2 border-ink" style={{ width: DOT[k][1], height: DOT[k][1], background: COLORS[k] }} />
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Callouts: HTML labels placed against the chart plus its hour-label row. */}
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-6 top-0">
+                    {CALLOUTS.map((c, i) => {
+                      const t = calloutT(c)
+                      const y = (toY(FN[c.key](t)) / H) * 100
+                      const above = c.place === 'above'
+                      const tx = c.align === 'right' ? '-100%' : '-50%'
+                      return (
+                        <div
+                          key={c.text}
+                          className="absolute"
+                          style={{
+                            left: `${t * 100}%`,
+                            top: `${y + (c.drop ?? 0)}%`,
+                            transform: `translate(${tx}, ${above ? 'calc(-100% - 9px)' : '9px'})`,
+                            opacity: dim(c.key),
+                            ...fade,
+                          }}
+                        >
+                          <div
+                            className="sa flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/10 bg-[#122038] px-2 py-[3px] text-[10px] font-medium md:px-2.5 md:py-[4px] md:text-[10.5px] leading-none tracking-[0.01em] text-white/85 shadow-[0_6px_16px_rgba(0,0,0,0.35)]"
+                            style={{ animationName: `cfc-pill${i}` }}
+                          >
+                            <span className="hidden h-1 w-1 rounded-full md:block" style={{ background: COLORS[c.key] }} />
+                            {c.text}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Hour labels */}
+                <div aria-hidden="true" className="relative mt-2.5 h-4 text-[0.6rem] font-medium uppercase tracking-[0.14em] text-white/45">
+                  {chart.hours.map((h, i) => (
+                    <span key={h} className="absolute -translate-x-1/2" style={{ left: `${TICKS[i] * 100}%` }}>
+                      {h}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Legend, as a ruled index: tap a row to isolate its line */}
+            <div className="mt-4 md:mt-0">
+              <ul className="border-t border-white/10">
+                {chart.lines.map((l) => {
+                  const k = l.key as Key
+                  const on = hl === k
+                  const [name, rest = ''] = l.label.split(': ')
+                  const desc = rest.charAt(0).toUpperCase() + rest.slice(1)
+                  return (
+                    <li key={l.key} className="border-b border-white/10">
+                      <button
+                        type="button"
+                        aria-pressed={on}
+                        onClick={() => setHl(on ? null : k)}
+                        className="flex min-h-[40px] w-full items-center gap-3 py-2 text-left transition-opacity duration-300 md:items-start md:gap-4 md:py-[18px]"
+                        style={{ opacity: hl && !on ? 0.4 : 1 }}
+                      >
+                        <span aria-hidden="true" className="h-[3px] w-5 shrink-0 rounded-full md:mt-[0.6rem]" style={{ background: COLORS[k], boxShadow: `0 0 10px ${COLORS[k]}80` }} />
+                        <span className="flex min-w-0 flex-1 items-baseline justify-between gap-3 md:block">
+                          <span className={`text-[0.92rem] font-medium md:block md:text-[1.08rem] ${k === 'aire' ? 'text-white' : 'text-white/90'}`}>{name}</span>
+                          <span className="text-[0.78rem] text-white/55 md:mt-1 md:block md:text-[0.86rem]">
+                            <Dag>{desc}</Dag>
+                          </span>
+                        </span>
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+              <p className="mt-3 text-[0.68rem] leading-[1.5] text-white/40 md:mt-5">{chart.caption}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
