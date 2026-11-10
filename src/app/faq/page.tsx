@@ -1,11 +1,12 @@
 import Link from "next/link"
 import Image from "next/image"
+import FourPackAnswer from "@/components/FourPackAnswer"
 
 const faqData = [
   { question: "What is Aire?", answer: "Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence. Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience. 100% nicotine-free and caffeine-free." },
   { question: "How do I use Aire pouches?", answer: "Most people feel the effects within 5–15 minutes. Place the pouch between your upper lip and gum. The botanicals and adaptogens absorb through your gum tissue. A gentle tingle lets you know it's working. Enjoy for up to 60 minutes." },
   { question: "What's in a can? And what's in a pouch?", answer: "Each can of Aire contains 15 pouches. Active ingredients per pouch: the AireComplex Blend containing L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, and Saffron. Other Ingredients: Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Maltitol, Cooling Agent." },
-  { question: "How many pouches are in each can?", answer: "Each can of Aire contains 15 pouches. A 4-pack ($45.99) gives you 60 pouches total." },
+  { question: "How many pouches are in each can?", answer: "Each can of Aire contains 15 pouches. A 4-pack gives you 60 pouches total. The regular price is $45.99; current offers are shown at checkout." },
   { question: "What does Aire taste like?", answer: "Aire comes in Calm Mint, a smooth, refreshing mint flavor that's not overpowering. It's designed to be pleasant and subtle so you can use it comfortably throughout the day." },
   { question: "Is Aire a nicotine replacement or cessation product?", answer: "Aire is not marketed as a nicotine replacement therapy. It's a wellness pouch for anyone who wants support in finding their balance, whether you're replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former nicotine pouch users who wanted a clean alternative." },
   { question: "What are the active ingredients?", answer: "Each Aire pouch contains four active ingredients: L-Theanine for calm alertness, Rhodiola Rosea for stress resilience, L-Tyrosine for focus and cognitive performance under stress, and Saffron, a botanical extract to support mood balance." },
@@ -32,7 +33,7 @@ const faqSchema = {
 
 export const metadata = {
   title: "FAQ: Aire Wellness Pouches | Ingredients, Usage, Shipping & More",
-  description: "Everything you need to know about Aire nicotine-free wellness pouches: ingredients, how to use, pricing ($45.99/4-pack), side effects, shipping, and more.",
+  description: "Everything you need to know about Aire nicotine-free wellness pouches: ingredients, how to use, pricing, side effects, shipping, and more.",
   alternates: {
     canonical: 'https://airepouches.com/faq',
   },
@@ -105,7 +106,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How many pouches are in each can?</h2>
-            <p>Each can of Aire contains 15 pouches. A 4-pack ($45.99) gives you 60 pouches total.</p>
+            <p><FourPackAnswer /></p>
           </section>
 
           <section>

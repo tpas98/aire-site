@@ -34,7 +34,7 @@ export default function Hero() {
       {!reduce && <Keyframes css={CSS} />}
       <div style={reduce ? undefined : { animationName: 'hero-img' }} className={`absolute inset-0 ${reduce ? '' : 'sa'}`}>
         <div className={`h-full w-full ${reduce ? '' : 'hero-in'}`}>
-          <div className="h-full w-full [@media(max-height:720px)_and_(max-width:767px)]:translate-y-[9%]">
+          <div className="h-full w-full [@media(max-height:720px)_and_(max-width:767px)]:translate-y-[9%] [@media(min-height:761px)_and_(max-height:820px)_and_(max-width:374px)]:translate-y-[4%] [@media(max-height:760px)_and_(max-width:374px)]:translate-y-[9%]">
           <picture>
             <source media="(min-width: 768px)" srcSet="/images/discover/hero-wide.webp" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -65,9 +65,9 @@ export default function Hero() {
           <p className="mt-4 max-w-[440px] text-[0.98rem] font-light leading-[1.55] text-white/85 md:mt-6 md:text-[1.12rem]">
             <Dag>{hero.sub}</Dag>
           </p>
-            <ul aria-label="What's not in it" className="mt-5 flex flex-wrap gap-2 md:mt-7">
+            <ul aria-label="What's not in it" className="mt-5 flex flex-wrap gap-2 max-[374px]:gap-1.5 md:mt-7">
               {hero.chips.map((c) => (
-                <li key={c} className="rounded-full border border-white/20 bg-ink/60 px-3.5 py-1.5 text-[0.72rem] font-semibold tracking-[0.04em] text-white">
+                <li key={c} className="rounded-full border border-white/20 bg-ink/60 px-3.5 py-1.5 text-[0.72rem] max-[374px]:px-2.5 max-[374px]:text-[0.68rem] font-semibold tracking-[0.04em] text-white">
                   {c}
                 </li>
               ))}

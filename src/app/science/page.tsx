@@ -12,15 +12,15 @@ const evidence = [
   {
     name: "Rhodiola Rosea",
     claim:
-      "In a double-blind, placebo-controlled crossover trial, a standardized rhodiola extract (SHR-5) was associated with reduced stress-induced fatigue and improved mental performance in healthy physicians working night duty.",
+      "In a double-blind, placebo-controlled crossover trial, a standardized Rhodiola Rosea extract (SHR-5) was associated with reduced stress-induced fatigue and improved mental performance in healthy physicians working night duty.",
     cite: "Darbinyan V, et al. Rhodiola rosea in stress induced fatigue — a double blind cross-over study of a standardized extract SHR-5 on the mental performance of healthy physicians during night duty. Phytomedicine. 2000;7(5):365–371.",
     pmid: "11081987",
   },
   {
-    name: "Saffron (Affron®)",
+    name: "Saffron",
     claim:
-      "Affron® is a patented, standardized Crocus sativus extract studied in randomized, double-blind, placebo-controlled trials for its effects on mood and general wellbeing in adults, including adults experiencing low mood.",
-    cite: "Lopresti AL, et al. An Examination into the Effects of a Saffron Extract (Affron) on Mood and General Wellbeing in Adults Experiencing Low Mood: A Randomized, Double-Blind, Placebo-Controlled Trial. J Nutr. 2025.",
+      "A standardized saffron (Crocus sativus) extract has been studied in randomized, double-blind, placebo-controlled trials for its effects on mood and general wellbeing in adults, including adults experiencing low mood.",
+    cite: "Lopresti AL, et al. An Examination into the Effects of a Saffron Extract [...] on Mood and General Wellbeing in Adults Experiencing Low Mood: A Randomized, Double-Blind, Placebo-Controlled Trial. J Nutr. 2025.",
     pmid: "40414301",
   },
   {
@@ -47,7 +47,7 @@ const schema = {
 }
 
 export const metadata = {
-  title: "The Science Behind Aire | Research on L-Theanine, Rhodiola, Saffron & L-Tyrosine",
+  title: "The Science Behind Aire | Research on L-Theanine, Rhodiola Rosea, Saffron & L-Tyrosine",
   description:
     "The published human research behind each Aire ingredient — with PubMed citations and an honest account of what the evidence does and does not show.",
   alternates: { canonical: 'https://airepouches.com/science' },

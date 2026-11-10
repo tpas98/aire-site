@@ -3,7 +3,8 @@ import Image from 'next/image'
 import FadeUp from './FadeUp'
 import { motion } from 'framer-motion'
 
-import { useBuyUrl } from '@/lib/useSale'
+import { useBuyUrl, useSaleActive } from '@/lib/useSale'
+import { SALE_PERCENT } from '@/lib/sale'
 
 const grain = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")"
 
@@ -17,7 +18,7 @@ const footerLinks = (buyUrl: string) => ({
   Explore: [
     { label: 'Home', href: '/' },
     { label: 'Shop Aire', href: buyUrl },
-    { label: 'The Science', href: '/#ingredients' },
+    { label: 'The Science', href: '/science' },
     { label: 'About Us', href: '/about' },
   ],
   Support: [
@@ -33,6 +34,7 @@ const footerLinks = (buyUrl: string) => ({
 
 export function CTA() {
   const buyUrl = useBuyUrl()
+  const sale = useSaleActive()
   return (
     <section id="shop" className="bg-navy py-24 px-6 md:px-16 relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.035] pointer-events-none z-0"
@@ -59,7 +61,7 @@ export function CTA() {
           </div>
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <a href={buyUrl} className="btn-primary inline-block bg-white text-navy px-8 py-4 rounded-full text-[0.8rem] font-semibold tracking-[0.08em] uppercase text-center">
-              Order Now - $45.99 / 4-Pack
+              {sale ? `Order Now · ${SALE_PERCENT}% off` : 'Order Now - $45.99 / 4-Pack'}
             </a>
             <a href="#ingredients" className="inline-block text-white border border-white/30 px-8 py-4 rounded-full text-[0.8rem] font-medium tracking-[0.08em] uppercase hover:border-white/60 transition-all duration-200 text-center">
               Learn the Science
