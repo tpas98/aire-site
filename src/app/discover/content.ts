@@ -34,6 +34,13 @@ export const hero = {
   ctaPrimarySale: `Try Aire · ${SALE_PERCENT}% off`,
   ctaPrimarySaleAria: `Try Aire · ${SALE_PERCENT}% off with code ${SALE_CODE}`,
   ctaSecondary: 'Why it’s different',
+  /** Plain product facts, shown as a ruled strip under the hero on desktop. */
+  facts: [
+    { k: 'In every can', v: '15 Calm Mint pouches' },
+    { k: 'In every pouch', v: '185 mg AireComplex Blend' },
+    { k: 'Shipping', v: 'Free on U.S. orders over $50' },
+  ],
+  factLine: '15 pouches per can · Free shipping over $50',
 }
 
 /**

@@ -118,7 +118,7 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <SaleBanner />
-      <Navbar />
+      <Navbar overHero />
       <main>
         <Hero />
         <PouchAisle />

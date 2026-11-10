@@ -50,13 +50,14 @@ export default function Hero() {
       </div>
       {/* Legibility scrims */}
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/10 to-ink/85 md:bg-gradient-to-r md:from-ink/90 md:via-ink/40 md:to-transparent" />
+      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 hidden h-48 bg-gradient-to-t from-ink/85 to-transparent md:block" />
 
       <div
         style={reduce ? undefined : { animationName: 'hero-text' }}
-        className={`${reduce ? '' : 'sa '}relative z-10 mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-between px-6 pb-10 pt-[112px] md:justify-center md:px-16 md:pb-20`}
+        className={`${reduce ? '' : 'sa '}relative z-10 mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-between px-6 pb-10 pt-[112px] md:justify-center md:px-16 md:pb-32`}
       >
         <div className="max-w-[620px]">
-          <Eyebrow dark>{hero.eyebrow}</Eyebrow>
+          <div className="[@media(max-height:720px)_and_(max-width:767px)]:hidden"><Eyebrow dark>{hero.eyebrow}</Eyebrow></div>
           <h1 className="font-serif text-[clamp(2.9rem,12vw,6.6rem)] leading-[0.98] tracking-[-0.03em] [@media(max-height:720px)_and_(max-width:767px)]:text-[2.6rem]">
             {hero.titleLine1}
             <br />
@@ -65,13 +66,13 @@ export default function Hero() {
           <p className="mt-4 max-w-[440px] text-[0.98rem] font-light leading-[1.55] text-white/85 md:mt-6 md:text-[1.12rem]">
             <Dag>{hero.sub}</Dag>
           </p>
-            <ul aria-label="What's not in it" className="mt-5 flex flex-wrap gap-2 max-[374px]:gap-1.5 md:mt-7">
-              {hero.chips.map((c) => (
-                <li key={c} className="rounded-full border border-white/20 bg-ink/60 px-3.5 py-1.5 text-[0.72rem] max-[374px]:px-2.5 max-[374px]:text-[0.68rem] font-semibold tracking-[0.04em] text-white">
-                  {c}
-                </li>
-              ))}
-            </ul>
+          <ul aria-label="What's not in it" className="mt-5 flex items-center text-[0.66rem] font-semibold uppercase tracking-[0.14em] text-white/85 max-[374px]:text-[0.6rem] max-[374px]:tracking-[0.1em] md:mt-8 md:text-[0.7rem] md:tracking-[0.18em]">
+            {hero.chips.map((c, i) => (
+              <li key={c} className={`whitespace-nowrap ${i ? 'ml-3 border-l border-white/30 pl-3 md:ml-5 md:pl-5' : ''}`}>
+                {c}
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="md:mt-8">
@@ -79,16 +80,28 @@ export default function Hero() {
             <a
               href={buyUrl}
               aria-label={sale ? hero.ctaPrimarySaleAria : undefined}
-              className="inline-block whitespace-nowrap rounded-full bg-white px-9 py-4 text-[0.82rem] font-semibold uppercase tracking-[0.1em] text-navy shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5"
+              className="group/cta inline-flex items-center gap-3 whitespace-nowrap rounded-full bg-white py-4 pl-8 pr-6 text-[0.82rem] font-semibold uppercase tracking-[0.1em] text-navy shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-transform duration-200 hover:-translate-y-0.5"
             >
               {sale ? hero.ctaPrimarySale : hero.ctaPrimary}
+              <span aria-hidden="true" className="transition-transform duration-200 group-hover/cta:translate-x-1">→</span>
             </a>
-            <a href="#why" className="group flex min-h-[44px] items-center gap-1.5 whitespace-nowrap px-1 text-[0.85rem] font-medium text-white/85 transition-colors hover:text-white">
+            <a href="#why" className="group hidden min-h-[44px] items-center md:flex gap-1.5 whitespace-nowrap px-1 text-[0.85rem] font-medium text-white/85 transition-colors hover:text-white">
               {hero.ctaSecondary}
               <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-y-0.5">↓</span>
             </a>
           </div>
+          <p className="mt-3.5 text-[0.72rem] tracking-[0.02em] text-white/65 md:hidden">{hero.factLine}</p>
         </div>
+
+        {/* Desktop: plain product facts on a ruled strip along the bottom */}
+        <dl className="absolute inset-x-16 bottom-9 hidden grid-cols-3 border-t border-white/15 pt-5 md:grid">
+          {hero.facts.map((f, i) => (
+            <div key={f.k} className={i ? 'border-l border-white/15 pl-8' : ''}>
+              <dt className="text-[0.6rem] font-semibold uppercase tracking-[0.22em] text-sky-deep">{f.k}</dt>
+              <dd className="mt-1.5 text-[0.98rem] font-light text-white/90">{f.v}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   )
