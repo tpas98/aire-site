@@ -4,6 +4,7 @@ import EmailPopup from '@/components/EmailPopup'
 import TikTokPixel from '@/components/TikTokPixel'
 import RedditPixel from '@/components/RedditPixel'
 import AttributionCarry from '@/components/AttributionCarry'
+import Measurement from '@/components/Measurement'
 import { SaleProvider } from '@/lib/useSale'
 import { saleActive } from '@/lib/sale'
 
@@ -111,6 +112,7 @@ export default function RootLayout({
         <TikTokPixel />
         <RedditPixel />
         <AttributionCarry />
+        <Measurement />
       </body>
     </html>
   )
