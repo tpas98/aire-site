@@ -3,17 +3,17 @@ import Image from "next/image"
 import FourPackAnswer from "@/components/FourPackAnswer"
 
 const faqData = [
-  { question: "What is Aire?", answer: "Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence. Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience. 100% nicotine-free and caffeine-free." },
+  { question: "What is Aire?", answer: "Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence. Each pouch contains 4 active ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience. 100% nicotine-free and caffeine-free." },
   { question: "How do I use Aire pouches?", answer: "Most people feel the effects within 5–15 minutes. Place the pouch between your upper lip and gum. The botanicals and adaptogens absorb through your gum tissue. A gentle tingle lets you know it's working. Enjoy for up to 60 minutes." },
   { question: "What's in a can? And what's in a pouch?", answer: "Each can of Aire contains 15 pouches. Active ingredients per pouch: the AireComplex Blend containing L-Theanine, Rhodiola Rosea Extract, L-Tyrosine, and Saffron. Other Ingredients: Microcrystalline Cellulose, Mint Extract, Menthol, Leaf Alcohol, Sweetener, Maltitol, Cooling Agent." },
   { question: "How many pouches are in each can?", answer: "Each can of Aire contains 15 pouches. A 4-pack gives you 60 pouches total. The regular price is $45.99; current offers are shown at checkout." },
   { question: "What does Aire taste like?", answer: "Aire comes in Calm Mint, a smooth, refreshing mint flavor that's not overpowering. It's designed to be pleasant and subtle so you can use it comfortably throughout the day." },
-  { question: "Is Aire a nicotine replacement or cessation product?", answer: "Aire is not marketed as a nicotine replacement therapy. It's a wellness pouch for anyone who wants support in finding their balance, whether you're replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former nicotine pouch users who wanted a clean alternative." },
+  { question: "Is Aire a nicotine replacement or cessation product?", answer: "Aire is not a nicotine replacement therapy or a cessation product. It's a dietary supplement pouch that contains no nicotine and no caffeine, for anyone who wants a mint pouch without either." },
   { question: "What are the active ingredients?", answer: "Each Aire pouch contains four active ingredients: L-Theanine for calm alertness, Rhodiola Rosea for stress resilience, L-Tyrosine for focus and cognitive performance under stress, and Saffron, a botanical extract to support mood balance." },
   { question: "Are there any side effects?", answer: "Aire is made with well-studied, naturally derived ingredients and is generally well-tolerated. Some people may experience mild gum sensitivity when first using oral pouches. If you have any medical conditions, are pregnant or nursing, or take prescription medication, we recommend consulting your healthcare provider before use." },
   { question: "Is Aire FDA approved?", answer: "Aire is classified as a dietary supplement and is manufactured in an FDA-registered, GMP-certified facility. Like all dietary supplements, Aire has not been evaluated by the FDA to diagnose, treat, cure, or prevent any disease." },
   { question: "Can I use Aire with other supplements or medications?", answer: "While Aire's ingredients are generally considered safe, we recommend consulting your healthcare provider before combining with other supplements or medications, especially if you take SSRIs, anti-anxiety medication, or blood thinners." },
-  { question: "How many pouches can I use per day?", answer: "We recommend 4–6 pouches throughout the day. No nicotine or caffeine means no crash, dependency risk, or sleep consequences." },
+  { question: "How many pouches can I use per day?", answer: "We recommend 4–6 pouches throughout the day. Aire contains no nicotine and no caffeine." },
   { question: "Where do you ship?", answer: "We currently ship within the United States. Orders are packed in 1 to 2 business days and arrive 5 to 7 days after that. Free shipping on orders over $50." },
   { question: "How do I contact Aire?", answer: "Have a question that's not covered here? Reach out to us at hello@airepouches.com and we'll get back to you within 24-48 hours." },
 ]
@@ -66,7 +66,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">What is Aire?</h2>
-            <p>Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.</p>
+            <p>Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 active ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.</p>
           </section>
 
           <section>
@@ -116,7 +116,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">Is Aire a nicotine replacement or cessation product?</h2>
-            <p>Aire is not marketed as a nicotine replacement therapy. It&apos;s a wellness pouch for anyone who wants support in finding their balance, whether you&apos;re replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former nicotine pouch users who wanted a clean alternative.</p>
+            <p>Aire is not a nicotine replacement therapy or a cessation product. It&apos;s a dietary supplement pouch that contains no nicotine and no caffeine, for anyone who wants a mint pouch without either.</p>
           </section>
 
           <section>
@@ -141,7 +141,7 @@ export default function FAQPage() {
 
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">How many pouches can I use per day?</h2>
-            <p>We recommend 4–6 pouches throughout the day. No nicotine or caffeine means no crash, dependency risk, or sleep consequences.</p>
+            <p>We recommend 4–6 pouches throughout the day. Aire contains no nicotine and no caffeine.</p>
           </section>
 
           <section>

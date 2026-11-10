@@ -49,7 +49,7 @@ export default function About() {
               poster="/images/story-can-poster.webp"
               width={1052}
               height={996}
-              alt="Aire Calm Mint pouch tin rotating"
+              alt="Aire Calm Mint pouch can rotating"
               className="[filter:drop-shadow(0_22px_30px_rgba(26,46,74,0.12))_drop-shadow(0_44px_92px_rgba(26,46,74,0.14))]"
             />
           </div>

@@ -5,7 +5,7 @@ import FadeUp from './FadeUp'
 const faqs = [
   {
     q: 'What is Aire?',
-    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 science-backed ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
+    a: 'Aire is a premium oral pouch designed to support individuals in finding calmness, clarity, and mental presence.† Each pouch contains 4 active ingredients: L-Theanine, Rhodiola Rosea, L-Tyrosine, and Saffron, working together to support mood, mental clarity, and stress resilience.† 100% nicotine-free and caffeine-free.',
   },
   {
     q: 'What does it taste like?',
@@ -17,11 +17,11 @@ const faqs = [
   },
   {
     q: 'Is Aire a nicotine replacement?',
-    a: 'Aire is not marketed as a nicotine replacement therapy. It\'s a wellness pouch for anyone who wants support in finding their balance, whether you\'re replacing a nicotine habit or simply looking for a healthier daily ritual. Many customers are former nicotine pouch users who wanted a clean alternative.',
+    a: 'Aire is not a nicotine replacement therapy or a cessation product. It\'s a dietary supplement pouch that contains no nicotine and no caffeine, for anyone who wants a mint pouch without either.',
   },
   {
     q: 'How many pouches can I use per day?',
-    a: 'We recommend 4–6 pouches throughout the day. No nicotine or caffeine means no crash, dependency risk, or sleep consequences.',
+    a: 'We recommend 4–6 pouches throughout the day. Aire contains no nicotine and no caffeine.',
   },
   {
     q: 'What\'s your return policy?',

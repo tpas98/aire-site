@@ -9,8 +9,8 @@ import { SALE_PERCENT } from '@/lib/sale'
 const grain = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")"
 
 const trust = [
-  { icon: '🚚', label: 'Free Shipping Over $50' },
-  { icon: '🧪', label: '4 Clinically-Studied Ingredients' },
+  { icon: '✦', label: 'Free Shipping Over $50' },
+  { icon: '✦', label: '4 Active Ingredients' },
   { icon: '✦', label: 'Zero Nicotine. Zero Caffeine.' },
 ]
 
@@ -49,7 +49,7 @@ export function CTA() {
             Your <em className="italic text-sky-deep">balance</em> is<br />one pouch away.
           </h2>
           <p className="text-[0.96rem] text-white/55 font-light leading-[1.84] max-w-[400px] mb-8">
-            Join the Aire community. Science-backed botanicals and adaptogens, delivered to your door.
+            Join the Aire community. L-theanine, Rhodiola Rosea, L-tyrosine, and Saffron, delivered to your door.
           </p>
           <div className="flex flex-col gap-3 mb-8">
             {trust.map(({ icon, label }) => (
@@ -85,7 +85,7 @@ export function CTA() {
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-[14%] bottom-[4%] h-[18%] rounded-full bg-[radial-gradient(circle,rgba(5,12,22,0.30)_0%,rgba(5,12,22,0.14)_44%,rgba(5,12,22,0)_76%)] blur-2xl"
             />
-            <Image src="/images/open-can-updated-cutout-2026-site-safe.png" alt="Aire tin open showing pouches" width={1212} height={776}
+            <Image src="/images/open-can-updated-cutout-2026-site-safe.png" alt="Open Aire Calm Mint can with its lid beside it, showing white pouches inside" width={1212} height={776}
               className="relative z-10 w-full max-w-[240px] md:max-w-[440px] object-contain [filter:drop-shadow(0_20px_26px_rgba(5,12,22,0.18))_drop-shadow(0_40px_80px_rgba(5,12,22,0.16))]" />
           </motion.div>
         </FadeUp>

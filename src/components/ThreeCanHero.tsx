@@ -471,7 +471,7 @@ export default function ThreeCanHero({ className = '', ...rest }: { className?: 
     <div
       ref={mountRef}
       role="img"
-      aria-label="Aire nicotine-free wellness pouch tins rendered in 3D"
+      aria-label="Aire nicotine-free wellness pouch cans rendered in 3D"
       className={`w-full h-full ${className}`}
       style={{
         opacity: loaded ? 1 : 0,
