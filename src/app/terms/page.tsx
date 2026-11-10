@@ -44,7 +44,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">4. Orders, Pricing, and Payment</h2>
             <p>By placing an order, you offer to purchase the product(s) at the listed price, subject to acceptance by Aire. We reserve the right to refuse or cancel any order for any reason, including suspected fraud, inaccurate pricing, or product unavailability. Prices are listed in U.S. dollars and are subject to change without notice. Payment is due in full at the time of purchase.</p>
-            <p className="mt-3">If we cancel your order after payment has been processed, we will issue a full refund to your original payment method within 5–10 business days.</p>
+            <p className="mt-3">If we cancel your order after payment has been processed, we will issue a full refund to your original payment method within 5–7 business days.</p>
           </section>
 
           <section>
@@ -56,7 +56,7 @@ export default function TermsOfService() {
           <section>
             <h2 className="font-serif text-[1.4rem] text-navy mb-3">6. Returns and Refunds</h2>
             <p>Except where required by law, we do not accept returns or exchanges. If your order arrives damaged, defective, or incorrect, contact us at <a href="mailto:hello@airepouches.com" className="text-accent hover:underline">hello@airepouches.com</a> within 7 days of the delivery date with your order number and a photo of the issue, and we will provide a replacement or a refund.</p>
-            <p className="mt-3">Approved refunds for damaged, defective, or incorrect items are issued to the original payment method within 5–10 business days of our confirming the issue. Original shipping charges are non-refundable except where the refund is due to our error.</p>
+            <p className="mt-3">Approved refunds for damaged, defective, or incorrect items are issued to the original payment method within 5–7 business days of our confirming the issue. Original shipping charges are non-refundable except where the refund is due to our error.</p>
           </section>
 
           <section>
