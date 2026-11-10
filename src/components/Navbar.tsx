@@ -14,13 +14,27 @@ const MENU_LINKS: [string, string][] = [
   ['Contact', CONTACT],
 ]
 
-/** Sits under the fixed SaleBanner (36px) while the sale is live. */
-export default function Navbar() {
+/**
+ * Sits under the fixed SaleBanner (36px) while the sale is live.
+ * `overHero`: on a page that opens on a dark full-bleed hero, the bar starts
+ * clear with white type and turns into the solid white bar once you scroll.
+ */
+export default function Navbar({ overHero = false }: { overHero?: boolean }) {
   const sale = useSaleActive()
   const buyUrl = useBuyUrl()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
+  const [solid, setSolid] = useState(!overHero)
+
+  useEffect(() => {
+    if (!overHero) return
+    const on = () => setSolid(window.scrollY > 24)
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    return () => window.removeEventListener('scroll', on)
+  }, [overHero])
+  const clear = !solid
 
   const openMenu = () => {
     dialogRef.current?.showModal()
@@ -64,24 +78,24 @@ export default function Navbar() {
       initial={{ transform: 'translateY(-80px)', opacity: 0 }}
       animate={{ transform: 'translateY(0px)', opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed ${sale ? 'top-9' : 'top-0'} left-0 right-0 z-50 flex items-center justify-between px-4 md:px-16 h-[64px] bg-white border-b border-sky-deep/20`}
+      className={`fixed ${sale ? 'top-9' : 'top-0'} left-0 right-0 z-50 flex items-center justify-between px-4 md:px-16 h-[64px] border-b transition-[background-color,border-color] duration-300 ${clear ? 'bg-transparent border-white/10' : 'bg-white border-sky-deep/20'}`}
     >
       <a href="/">
-        <Image src="/images/logo.png" alt="Aire" width={120} height={40} className="h-7 w-auto" style={{ mixBlendMode: 'multiply' }} />
+        <Image src="/images/logo.png" alt="Aire" width={120} height={40} className="h-7 w-auto transition-[filter] duration-300" style={clear ? { filter: 'brightness(0) invert(1)' } : { mixBlendMode: 'multiply' }} />
       </a>
       <ul className="hidden md:flex items-center gap-10 list-none">
         {[['Why Aire', '/#why'], ['Ingredients', '/#ingredients'], ['FAQ', '/#faq']].map(([item, href]) => (
           <li key={item}>
-            <a href={href} className="text-[0.78rem] font-medium tracking-[0.08em] uppercase text-navy-mid hover:text-accent transition-colors duration-200">{item}</a>
+            <a href={href} className={`text-[0.78rem] font-medium tracking-[0.08em] uppercase transition-colors duration-200 ${clear ? 'text-white/85 hover:text-white' : 'text-navy-mid hover:text-accent'}`}>{item}</a>
           </li>
         ))}
         <li>
-          <a href={buyUrl} className="text-[0.78rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-5 py-2.5 rounded-full hover:bg-accent transition-colors duration-200">Shop Now</a>
+          <a href={buyUrl} className={`text-[0.78rem] font-semibold tracking-[0.08em] uppercase px-5 py-2.5 rounded-full transition-colors duration-200 ${clear ? 'bg-white/10 text-white ring-1 ring-white/35 hover:bg-white hover:text-navy' : 'bg-navy text-white hover:bg-accent'}`}>Shop Now</a>
         </li>
       </ul>
 
       <div className="md:hidden flex items-center gap-1">
-        <a href={buyUrl} className="text-[0.72rem] font-semibold tracking-[0.08em] uppercase bg-navy text-white px-4 py-2.5 rounded-full">
+        <a href={buyUrl} className={`text-[0.72rem] font-semibold tracking-[0.08em] uppercase px-4 py-2.5 rounded-full transition-colors duration-300 ${clear ? 'bg-white/10 text-white ring-1 ring-white/35' : 'bg-navy text-white'}`}>
           Shop Now
         </a>
         <button
@@ -92,7 +106,7 @@ export default function Navbar() {
           aria-haspopup="dialog"
           aria-expanded={open}
           aria-controls="mobile-menu"
-          className="flex h-11 w-11 items-center justify-center rounded-full text-navy"
+          className={`flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-300 ${clear ? 'text-white' : 'text-navy'}`}
         >
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" />
