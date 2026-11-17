@@ -9,8 +9,10 @@ const KEYS = [
   'utm_campaign',
   'utm_content',
   'utm_term',
+  'utm_id',
   'rdt_cid',
   'ttclid',
+  'tt_campaignid',
   'fbclid',
   'gclid',
 ]
@@ -75,8 +77,13 @@ export default function AttributionCarry() {
     }
 
     // Capture phase, so the href is rewritten before the browser follows it.
+    // auxclick covers middle-click "open in new tab", which never fires click.
     document.addEventListener('click', onClick, true)
-    return () => document.removeEventListener('click', onClick, true)
+    document.addEventListener('auxclick', onClick, true)
+    return () => {
+      document.removeEventListener('click', onClick, true)
+      document.removeEventListener('auxclick', onClick, true)
+    }
   }, [])
 
   return null
